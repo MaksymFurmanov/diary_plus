@@ -5,10 +5,10 @@ const MainPage = () => {
     const navigate = useNavigate();
 
     const enterHandler = () => {
-        navigate("/");
+        navigate("/log_in");
     }
 
-    return <div className={"MainPage"}>
+    return <div className={"MainPage align-center"}>
         <h1>Diary Plus</h1>
         <Button click={enterHandler}>
             PRIHLASENIE
