@@ -1,38 +1,29 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: Kurale;
+    src: url("fig/fonts/Kurale-Regular.ttf");
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Button {
+    padding: 0.5em 2em;
+    border: 2px black solid;
+    border-radius: 15px;
+    font-weight: lighter;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.MainPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.MainPage h1 {
+    font-family: Kurale, serif;
+    font-weight: normal;
+    font-size: 4em;
+    margin-top: 12rem;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MainPage button {
+    font-size: 1.1rem;
+    margin-top: 2em;
 }
