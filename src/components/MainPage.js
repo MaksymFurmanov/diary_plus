@@ -8,7 +8,7 @@ const MainPage = () => {
         navigate("/log_in");
     }
 
-    return <div className={"MainPage align-center"}>
+    return <div className={"MainPage v-center"}>
         <h1>Diary Plus</h1>
         <Button click={enterHandler}>
             PRIHLASENIE

@@ -3,14 +3,33 @@
     src: url("fig/fonts/Kurale-Regular.ttf");
 }
 
+@font-face {
+    font-family: Saira;
+    src: url("fig/fonts/Saira-Regular.ttf");
+}
+
+body {
+    font-family: Saira, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    letter-spacing: -1.28px;
+}
+
 .Button {
-    padding: 0.5em 2em;
-    border: 2px black solid;
-    border-radius: 15px;
+    border: 0;
+    font-size: 1.1rem;
+    padding: 0.5rem 2rem;
+    border-radius: 10px;
     font-weight: lighter;
 }
 
-.align-center {
+.Button:hover {
+    cursor: pointer;
+}
+
+.v-center {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,17 +37,90 @@
 
 .MainPage h1 {
     font-family: Kurale, serif;
-    font-weight: normal;
     font-size: 4em;
     margin-top: 12rem;
 }
 
 .MainPage button {
-    font-size: 1.1rem;
     margin-top: 2em;
 }
 
 .log-in-background {
     background-color: black;
-    color: white;
+    color: #F8F8F8;
+    padding: 4em 0;
+    margin-bottom: 3em;
+}
+
+.LogInPage h1 {
+    font-size: 2.5rem;
+}
+
+.LogInPage label {
+    font-size: 2rem;
+    margin-right: 1em;
+}
+
+.LogInPage input {
+    outline: 0;
+    border: 0;
+    padding: 1em;
+    width: 20em;
+    border-radius: 10px;
+    letter-spacing: 1px;
+}
+
+.LogInPage input:focus-visible {
+    filter: drop-shadow(0 0 0.5rem #F8F8F8);
+}
+
+.LogInPage form div {
+    display: flex;
+    margin-top: 2em;
+    align-items: center;
+}
+
+.eye-img {
+    transform: translate(-2.5em, 0);
+    width: 1.5em;
+}
+
+.eye-img:hover {
+    cursor: pointer;
+}
+
+.SystemNavigation {
+    display: flex;
+    gap: 8em;
+    margin: 1rem auto;
+    justify-content: center;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7em;
+    text-align: center;
+}
+
+.user-info button {
+    display: block;
+    margin-bottom: 1em;
+    width: 12rem;
+}
+
+.user-info img {
+    width: 13em;
+}
+
+.nav-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+}
+
+.nav-panel button {
+    width: 13em;
+    height: 5em;
 }
