@@ -1,5 +1,9 @@
+import BackButton from "./PageTitle";
+
 const TestingsPage = () => {
-    return <></>
+    return <div>
+        <BackButton/>
+    </div>
 }
 
 export default TestingsPage;

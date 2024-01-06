@@ -1,5 +1,9 @@
+import PageTitle from "./PageTitle";
+
 const QualityControlPage = () => {
-    return <></>
+    return <div>
+        <PageTitle name={"Kontrola kvality"}/>
+    </div>
 }
 
 export default QualityControlPage

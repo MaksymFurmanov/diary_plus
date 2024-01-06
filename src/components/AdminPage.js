@@ -1,5 +1,10 @@
+import PageTitle from "./PageTitle";
+
 const AdminPage = () => {
-    return <></>
+    return <>
+        <PageTitle name={"Správa systému"}/>
+
+    </>
 }
 
 export default AdminPage

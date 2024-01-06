@@ -1,5 +1,10 @@
+import PageTitle from "./PageTitle";
+
+
 const OrdersPage = () => {
-    return <></>
+    return <>
+        <PageTitle name={""}/>
+    </>
 }
 
 export default OrdersPage;

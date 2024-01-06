@@ -1,16 +1,12 @@
-import Button from "./Button";
+import Button from "./Button.tsx";
 import {useNavigate} from "react-router-dom";
 
 const MainPage = () => {
     const navigate = useNavigate();
 
-    const enterHandler = () => {
-        navigate("/log_in");
-    }
-
     return <div className={"MainPage v-center"}>
         <h1>Diary Plus</h1>
-        <Button click={enterHandler}>
+        <Button onClick={() => navigate("/log_in")}>
             PRIHLASENIE
         </Button>
     </div>

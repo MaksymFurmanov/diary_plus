@@ -1,5 +1,5 @@
-import Button from "../Button";
-import personImg from "../../fig/img/Person.svg";
+import Button from "../Button.tsx";
+import {IoPerson} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import navItemsList from "./NavItemsList";
 
@@ -12,20 +12,24 @@ const SystemNavigation = () => {
     const navItems = navItemsList.map((item,
                                        index) => {
         return <Button key={index}
-            click={() => navigate(item.navigation)}>
+                       onClick={() => navigate(item.navigation)}>
             {item.name}
         </Button>
     })
 
     return (
         <div className={"SystemNavigation"}>
-            <div className={"user-info"}>
+            <div className={"user-info v-center"}>
                 <div>
-                    <Button>ODHLASIŤ SA</Button>
-                    <Button>O systéme</Button>
+                    <Button onClick={() => navigate("/")}>
+                        ODHLASIŤ SA
+                    </Button>
+                    <Button onClick={() => navigate("/about_system")}>
+                        O systéme
+                    </Button>
                 </div>
                 <div>
-                    <img src={personImg} alt={""}/>
+                    <IoPerson/>
                     <p>{name}</p>
                     <p>{position}</p>
                 </div>

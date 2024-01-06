@@ -10,6 +10,8 @@ import StockPage from "./components/StockPage";
 import AdminPage from "./components/AdminPage";
 import TestingsPage from "./components/TestingsPage";
 import QualityControlPage from "./components/QualityControlPage";
+import AboutSystem from "./components/AboutSystem";
+import ProductInfo from "./components/ProductInfo";
 
 
 function App() {
@@ -31,6 +33,10 @@ function App() {
                            element={<OrdersPage/>}/>
                     <Route path={"/products"}
                            element={<ProductsPage/>}/>
+                    <Route path={"/products/new_product"}
+                           element={<ProductInfo existing={false}/>}/>
+                    <Route path={"/products/edit/:productId"}
+                           element={<ProductInfo existing={true}/>}/>
                     <Route path={"/stock/input"}
                            element={<StockPage/>}/>
                     <Route path={"/stock/output"}
@@ -43,7 +49,8 @@ function App() {
                            element={<QualityControlPage/>}/>
                     <Route path={"/admin"}
                            element={<AdminPage/>}/>
-
+                    <Route path={"/about_system"}
+                           element={<AboutSystem/>}/>
                 </Routes>
             </div>
         </BrowserRouter>

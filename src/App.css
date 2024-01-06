@@ -10,23 +10,134 @@
 
 body {
     font-family: Saira, serif;
+    letter-spacing: -1.3px;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    letter-spacing: -1.28px;
+}
+
+p {
+    margin: 0.4rem 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+svg {
+    height: auto;
+}
+
+a:visited {
+    color: inherit;
+}
+
+button {
+    border: 0;
+    background: none;
+}
+
+button svg {
+    cursor: pointer;
+}
+
+label {
+    font-size: 1.5rem;
+    margin-right: 0.5em;
+}
+
+.Input {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.Input input, .Input select {
+    background: black;
+    color: #F8F8F8;
+    border: 0;
+    outline: none;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+}
+
+.plus-button {
+    margin: 2em;
+}
+
+.plus-button svg {
+    width: 4.5em;
+    height: auto;
 }
 
 .Button {
-    border: 0;
-    font-size: 1.1rem;
-    padding: 0.5rem 2rem;
-    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 0.5em 2em;
+    border-radius: 20px;
     font-weight: lighter;
+    cursor: pointer;
 }
 
-.Button:hover {
-    cursor: pointer;
+.PalletColor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    color: #F8F8F8;
+    border-radius: 15px;
+    padding: 1em 2em;
+    width: fit-content;
+}
+
+.PalletColor h3 {
+    margin: 0;
+}
+
+.PalletColor div {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.2em 0.5em;
+    background: #F8F8F8;
+    border-radius: 25px;
+    width: 5.5em;
+}
+
+.PalletColor svg {
+    color: black;
+    width: 1em;
+    margin-top: 0.1em;
+}
+
+.PalletColor input[type="color"]{
+    width: 3em;
+    height: 3em;
+    margin: 1.5em 0;
+    box-shadow: 0 0 4px 3px #F8F8F8;
+    border: 1px solid black;
+    outline: 1px solid black;
+    padding: 0;
+}
+
+.PalletColor input[type="text"]{
+    border: 0;
+    background: inherit;
+    width: 4.5em;
+    outline: none;
+    text-align: center;
+    color: black;
+    padding: 0;
+}
+
+.PageTitle {
+    display: flex;
+    font-size: 1.4rem;
+}
+
+.PageTitle svg {
+    width: 4em;
+    height: auto;
+    margin: 0 1.5em 0 2em;
 }
 
 .v-center {
@@ -68,6 +179,8 @@ h1, h2, h3, h4, h5, h6 {
     width: 20em;
     border-radius: 10px;
     letter-spacing: 1px;
+    background: #F8F8F8;
+    color: black;
 }
 
 .LogInPage input:focus-visible {
@@ -80,37 +193,31 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
-.eye-img {
-    transform: translate(-2.5em, 0);
+.password-eye svg {
+    transform: translate(-3em, 0);
     width: 1.5em;
-}
-
-.eye-img:hover {
-    cursor: pointer;
+    height: auto;
 }
 
 .SystemNavigation {
     display: flex;
     gap: 8em;
-    margin: 1rem auto;
+    margin: 2em auto;
     justify-content: center;
 }
 
 .user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7em;
+    gap: 5.5em;
     text-align: center;
 }
 
 .user-info button {
     display: block;
     margin-bottom: 1em;
-    width: 12rem;
+    width: 12em;
 }
 
-.user-info img {
+.user-info svg {
     width: 13em;
 }
 
@@ -121,6 +228,106 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-panel button {
-    width: 13em;
-    height: 5em;
+    width: 12em;
+    height: 4em;
+}
+
+.product-cards {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.product-card {
+    padding: 1.5em 2.5em;
+    background-color: black;
+    border-radius: 15px;
+    color: #F8F8F8;
+}
+
+.product-card img {
+    width: 7em;
+}
+
+.product-card button {
+    font-size: inherit;
+    display: block;
+    margin: 1em auto 0 auto;
+}
+
+.ProductsPage .plus-button {
+    float: right;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+}
+
+.arrow svg {
+    width: 4em;
+}
+
+.left-arrow {
+    visibility: hidden;
+}
+
+.ProductInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.ProductInfo button[type="delete"] {
+    margin-right: 1.5em;
+}
+
+.add-product-image {
+    background: black;
+    padding: 1.5em;
+    width: 7.5em;
+    border-radius: 15px;
+    margin-bottom: 1em;
+}
+
+.add-product-image img {
+    width: inherit;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.ProductionPlan {
+    display: flex;
+    align-items: center;
+    width: 30em;
+    overflow: scroll;
+    margin: 1em 0 2em 0;
+}
+
+.ProductionPlan p {
+    white-space: nowrap;
+}
+
+.ProductionPlan svg {
+    width: 2em;
+}
+
+.production-plan_item {
+    background: black;
+    color: #F8F8F8;
+    padding: 1em 1.5em;
+    width: fit-content;
+    height: inherit;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.details-box {
+    background: black;
+    color: #F8F8F8;
+    width: 4em;
 }

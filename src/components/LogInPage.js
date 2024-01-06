@@ -1,42 +1,39 @@
-import Button from "./Button";
+import Button from "./Button.tsx";
 import {useState} from "react";
-import eye from "../fig/img/mdi_eye.svg"
-import eyeClosed from "../fig/img/closed_eye.png"
+import {IoMdEye} from "react-icons/io";
+import {IoMdEyeOff} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
 
 const LogInPage = () => {
     const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         login: "",
         password: ""
     });
-    const [passwordToggle, setPasswordToggle] = useState(false);
-    const passwordHandler = () => {
+    const inputHandler = (e) => {
+        const {name, value} = e.target;
+        setFormData({...formData, [name]: value});
+    };
+
+    const [passwordToggle, setPasswordToggle] =
+        useState(false);
+    const passwordHandler = (e) => {
+        e.preventDefault();
         setPasswordToggle(!passwordToggle);
     }
-    const inputHandler = (e, type) => {
-        switch (type) {
-            case "login":
-                setFormData(prevState => (
-                    {...prevState, login: e.target.value}
-                ));
-                break
-            case "password":
-                setFormData(prevState => (
-                    {...prevState, password: e.target.value}
-                ));
-                break
-            default:
-        }
+
+    const submitHandler = () => {
     }
 
     return <div className={"LogInPage"}>
         <div className="log-in-background v-center">
             <h1>PRIHLÁSENIE</h1>
-            <form>
+            <form onSubmit={submitHandler}>
                 <div>
                     <label>Meno</label>
                     <input type={"text"}
+                           name={"login"}
                            value={formData.login}
                            onChange={(e) =>
                                inputHandler(e, 'login')}
@@ -45,26 +42,25 @@ const LogInPage = () => {
                 <div>
                     <label>Heslo</label>
                     <input type={passwordToggle ? "text" : "password"}
+                           name={"password"}
                            value={formData.password}
                            onChange={(e) =>
                                inputHandler(e, 'password')}
                     />
-                    {passwordToggle
-                        ? <img className={"eye-img"}
-                             alt={""}
-                             src={eyeClosed}
-                             onClick={passwordHandler}
-                        />
-                        : <img className={"eye-img"}
-                               alt={""}
-                               src={eye}
-                               onClick={passwordHandler}
-                        />}
+                    <button className={"password-eye"}
+                            onClick={(e) =>
+                                passwordHandler(e)}>
+                        {passwordToggle
+                            ? <IoMdEyeOff/>
+                            : <IoMdEye/>
+                        }
+                    </button>
                 </div>
             </form>
         </div>
         <div className={"v-center"}>
-            <Button click={() => navigate("/navigation")}>
+            <Button type={"submit"}
+                    onClick={() => navigate("/navigation")}>
                 PRIHLÁSIŤ SA
             </Button>
         </div>
