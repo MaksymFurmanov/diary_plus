@@ -1,12 +1,12 @@
-import PageTitle from "./PageTitle";
+import PageTitle from "../BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import products from "../data/products";
-import addImage from "../fig/img/add_image.png"
-import Button from "./Button.tsx";
-import PalletColor from "./PalletColor";
+import products from "../../data/products";
+import addImage from "../../fig/img/add_image.png"
+import Button from "../BasicComponents/Button.tsx";
+import PalletColor from "../PalletColor";
 import ProductionPlan from "./ProductionPlan";
-import Input from "./Input.tsx";
+import Input from "../BasicComponents/Input.tsx";
 
 const ProductInfo = ({existing}) => {
     let {productId} = useParams();
@@ -26,7 +26,6 @@ const ProductInfo = ({existing}) => {
         const {name, value} = e.target;
         setProduct({...product, [name]: value, changed: true});
     };
-
     const numberInputHandler = (e) => {
         const {name, value} = e.target;
         const numericRegex = /^[0-9]*$/;
@@ -34,6 +33,9 @@ const ProductInfo = ({existing}) => {
             setProduct({...product, [name]: value, changed: true});
         }
     };
+    const imageInputHandler = () => {
+
+    }
 
     //fetch data later
     useEffect(() => {
@@ -51,14 +53,26 @@ const ProductInfo = ({existing}) => {
         return "/products"
     }
 
+    const deleteHandler = () => {
+
+    }
+
+    const saveHandler = () => {
+
+    }
+
     return <>
         <PageTitle name={existing ? "Produkt" : "Nový produkt"}
                    prev={unsavedChangesHandler()}/>
         <form className={"ProductInfo"}>
             <div>
                 <div className={"add-product-image"}>
-                    <img src={addImage} alt={""}/>
-                    {/*<input type={"image"}/>*/}
+                    <img src={addImage} alt={""} onClick={imageInputHandler}/>
+                    <input type={"image"}
+                           name={"img"}
+                           value={product.img}
+                           style={{display: "none"}}
+                           />
                 </div>
                 <PalletColor/>
             </div>
@@ -96,10 +110,10 @@ const ProductInfo = ({existing}) => {
                 <div>
                     {existing
                         ? <>
-                            <Button type={"delete"}>
-                                VYMAZAŤ
-                            </Button>
-                            <Button type={"edit"}>ÚPRAVIŤ</Button>
+                            <Button onClick={deleteHandler}
+                                    type={"delete"}>VYMAZAŤ</Button>
+                            <Button onClick={saveHandler}
+                                    type={"edit"}>ÚPRAVIŤ</Button>
                         </>
                         : <Button type={"submit"}>PRIDAŤ</Button>
                     }

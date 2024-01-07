@@ -1,17 +1,17 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import MainPage from "./components/MainPage";
-import LogInPage from "./components/LogInPage";
+import MainPage from "./components/MainPages/MainPage";
+import LogInPage from "./components/MainPages/LogInPage";
 import SystemNavigation from "./components/SystemNavigation/SystemNavigation";
-import OrdersPage from "./components/OrdersPage";
-import ProductionPage from "./components/ProductionPage";
-import ProductsPage from "./components/ProductsPage";
-import StockPage from "./components/StockPage";
-import AdminPage from "./components/AdminPage";
-import TestingsPage from "./components/TestingsPage";
-import QualityControlPage from "./components/QualityControlPage";
-import AboutSystem from "./components/AboutSystem";
-import ProductInfo from "./components/ProductInfo";
+import OrdersPage from "./components/Orders/OrdersPage";
+import ProductionPage from "./components/Production/ProductionPage";
+import ProductsPage from "./components/Products/ProductsPage";
+import StockPage from "./components/Stocks/StockPage";
+import AdminPage from "./components/Administration/AdminPage";
+import TestingsPage from "./components/Testing/TestingsPage";
+import QualityControlPage from "./components/QualityControl/QualityControlPage";
+import AboutSystem from "./components/MainPages/AboutSystem";
+import ProductInfo from "./components/Products/ProductInfo";
 
 
 function App() {

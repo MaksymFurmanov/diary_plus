@@ -1,4 +1,4 @@
-import { FaCircleArrowLeft } from "react-icons/fa6";
+import {FaCircleArrowLeft} from "react-icons/fa6";
 import {useNavigate} from "react-router-dom";
 
 const PageTitle = ({name, prev = "/navigation"}) => {

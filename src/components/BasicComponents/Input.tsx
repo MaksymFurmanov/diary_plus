@@ -1,16 +1,17 @@
 import {FC, InputHTMLAttributes} from "react";
 
-interface InputProps extends
-    InputHTMLAttributes<HTMLInputElement  | HTMLSelectElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectElement> {
     size?: number,
     position?: string,
 }
 
-const Input: FC<InputProps> = ({children,
+const Input: FC<InputProps> = ({
+                                   children,
                                    size,
                                    position,
                                    type = "text",
-                                   ...rest}) => {
+                                   ...rest
+                               }) => {
     let width;
     switch (size) {
         case 0:
@@ -41,16 +42,16 @@ const Input: FC<InputProps> = ({children,
     return <div className={"Input"}
                 style={{justifyContent: positionType}}>
         {type !== "select"
-        ? <>
-            <label>{children}</label>
-            <input type={type}
-                   style={{width: width}}
-                   {...rest}/>
+            ? <>
+                <label>{children}</label>
+                <input type={type}
+                       style={{width: width}}
+                       {...rest}/>
             </>
-        : <select style={{ width: width }} {...rest}>
+            : <select style={{width: width}} {...rest}>
                 {children}
             </select>}
-        </div>
+    </div>
 }
 
 export default Input;

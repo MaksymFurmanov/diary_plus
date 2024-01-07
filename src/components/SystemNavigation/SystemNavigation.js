@@ -1,4 +1,4 @@
-import Button from "../Button.tsx";
+import Button from "../BasicComponents/Button.tsx";
 import {IoPerson} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import navItemsList from "./NavItemsList";

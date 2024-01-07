@@ -1,4 +1,4 @@
-import BackButton from "./PageTitle";
+import BackButton from "../BasicComponents/PageTitle";
 
 const StockPage = () => {
     return <div>

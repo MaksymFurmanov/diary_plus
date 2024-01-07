@@ -48,6 +48,17 @@ label {
     margin-right: 0.5em;
 }
 
+input, select {
+    border: 0;
+    outline: none;
+    border-radius: 10px;
+    letter-spacing: 1px;
+}
+
+.white-outline input:focus-visible {
+    filter: drop-shadow(0 0 0.5rem #F8F8F8);
+}
+
 .Input {
     display: flex;
     margin-bottom: 1em;
@@ -56,10 +67,7 @@ label {
 .Input input, .Input select {
     background: black;
     color: #F8F8F8;
-    border: 0;
-    outline: none;
     padding: 0.5em 1em;
-    border-radius: 10px;
 }
 
 .plus-button {
@@ -117,13 +125,12 @@ label {
     border: 1px solid black;
     outline: 1px solid black;
     padding: 0;
+    border-radius: 0;
 }
 
 .PalletColor input[type="text"]{
-    border: 0;
     background: inherit;
     width: 4.5em;
-    outline: none;
     text-align: center;
     color: black;
     padding: 0;
@@ -173,18 +180,10 @@ label {
 }
 
 .LogInPage input {
-    outline: 0;
-    border: 0;
     padding: 1em;
     width: 20em;
-    border-radius: 10px;
-    letter-spacing: 1px;
     background: #F8F8F8;
     color: black;
-}
-
-.LogInPage input:focus-visible {
-    filter: drop-shadow(0 0 0.5rem #F8F8F8);
 }
 
 .LogInPage form div {
@@ -316,7 +315,7 @@ label {
     width: 2em;
 }
 
-.production-plan_item {
+.ProductionPlanItem {
     background: black;
     color: #F8F8F8;
     padding: 1em 1.5em;
@@ -326,8 +325,34 @@ label {
     cursor: pointer;
 }
 
-.details-box {
+.ProductionProcessDetails {
+    display: flex;
+    flex-direction: column;
+    gap:0.5em;
     background: black;
     color: #F8F8F8;
-    width: 4em;
+    border: 1px solid #F8F8F8;
+    width: 12em;
+    text-align: center;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+.ProductionProcessDetails label {
+    font-size: 1.1rem;
+}
+
+.ProductionProcessDetails input,  .ProductionProcessDetails select {
+    width: 12em;
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 0.5em 1em;
+    border-radius: 15px;
+}
+
+.ProductionProcessDetails svg {
+    width: 2em;
+    color: #F8F8F8;
 }

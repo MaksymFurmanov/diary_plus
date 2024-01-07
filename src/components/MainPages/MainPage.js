@@ -1,4 +1,4 @@
-import Button from "./Button.tsx";
+import Button from "../BasicComponents/Button.tsx";
 import {useNavigate} from "react-router-dom";
 
 const MainPage = () => {

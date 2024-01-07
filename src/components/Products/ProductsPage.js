@@ -1,6 +1,6 @@
-import products from "../data/products"
-import PageTitle from "./PageTitle";
-import Button from "./Button.tsx";
+import products from "../../data/products"
+import PageTitle from "../BasicComponents/PageTitle";
+import Button from "../BasicComponents/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {BsPlusCircleFill} from "react-icons/bs";
 import {IoIosArrowBack} from "react-icons/io";
@@ -12,7 +12,7 @@ const ProductsPage = () => {
     const productCards = products.map((product, index) => {
         return <div key={index} className={"product-card"}>
             <img src={product.img} alt={""}/>
-            <p>Product: {product.product}</p>
+            <p>Product: {product.name}</p>
             <p>Typ: {product.type}</p>
             <Button onClick={() => navigate(`edit/${product.id}`)}
                     colorType={2}>

@@ -1,4 +1,4 @@
-import Button from "./Button.tsx";
+import Button from "../BasicComponents/Button.tsx";
 import {useState} from "react";
 import {IoMdEye} from "react-icons/io";
 import {IoMdEyeOff} from "react-icons/io";
@@ -27,7 +27,7 @@ const LogInPage = () => {
     }
 
     return <div className={"LogInPage"}>
-        <div className="log-in-background v-center">
+        <div className="log-in-background v-center white-outline">
             <h1>PRIHLÁSENIE</h1>
             <form onSubmit={submitHandler}>
                 <div>

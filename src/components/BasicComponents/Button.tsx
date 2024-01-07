@@ -1,13 +1,14 @@
 import {ButtonHTMLAttributes, FC} from "react";
 
-interface ButtonProps extends
-    ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     colorType?: number
 }
 
-const Button: FC<ButtonProps> = ({children,
+const Button: FC<ButtonProps> = ({
+                                     children,
                                      colorType,
-                                     ...rest}) => {
+                                     ...rest
+                                 }) => {
     const colorStyles = colorType === 2
         ? {backgroundColor: 'white', color: 'black'}
         : {backgroundColor: 'black', color: 'white'}
