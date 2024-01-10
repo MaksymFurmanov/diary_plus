@@ -3,9 +3,13 @@ import {useEffect, useState} from "react";
 import ProductionPlanItem from "./ProductionPlanItem";
 import {FaCirclePlus} from "react-icons/fa6";
 import ProductionProcessDetails from "./ProductionProcessDetails";
+import AddProcess from "./AddProcess";
+import {GoArrowRight} from "react-icons/go";
 
 const ProductionPlan = ({productId}) => {
     const [processes, setProcesses] = useState([]);
+    const [addProcessToggle, setAddProcessToggle] =
+        useState(false);
     const [detailsBox, setDetailsBox] = useState({
         process_queue: -1,
         toggle: false,
@@ -47,6 +51,7 @@ const ProductionPlan = ({productId}) => {
 
     const addHandler = (e) => {
         e.preventDefault();
+        setAddProcessToggle(!addProcessToggle);
     }
 
     const deleteHandler = (e) => {
@@ -80,6 +85,10 @@ const ProductionPlan = ({productId}) => {
                     closeHandler={closeDetails}
                 />
             )}
+            {addProcessToggle && <>
+                <div><GoArrowRight/></div>
+                <AddProcess queue={processes.length + 1}/>
+            </>}
             <button onClick={addHandler}>
                 <FaCirclePlus/>
             </button>

@@ -7,15 +7,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectEl
 
 const Input: FC<InputProps> = ({
                                    children,
+                                   name,
+                                   type = "text",
                                    size,
                                    position,
-                                   type = "text",
                                    ...rest
                                }) => {
     let width;
     switch (size) {
         case 0:
-            width = "2em";
+            width = "3em";
             break;
         case 1:
             width = "3em";
@@ -24,7 +25,7 @@ const Input: FC<InputProps> = ({
             width = "10em";
             break;
         case 3:
-            width = "13em";
+            width = "20em";
             break;
         default:
             width = "18em";
@@ -43,8 +44,10 @@ const Input: FC<InputProps> = ({
                 style={{justifyContent: positionType}}>
         {type !== "select"
             ? <>
-                <label>{children}</label>
+                <label htmlFor={name}>{children}</label>
                 <input type={type}
+                       name={name}
+                       id={name}
                        style={{width: width}}
                        {...rest}/>
             </>

@@ -5,6 +5,7 @@ const orders = [
         production_process_id: 0,
         customer: "Kaufland",
         volume: 200,
+        pallet_color: "#F9CC5A",
         deadline: "26.10.2023"
     },
     {
@@ -13,6 +14,7 @@ const orders = [
         production_process_id: 1,
         customer: "Lidl",
         volume: 200,
+        pallet_color: "#9DB3FF",
         deadline: "26.10.2023"
     },
     {
@@ -21,6 +23,7 @@ const orders = [
         production_process_id: 2,
         customer: "Kaufland",
         volume: 200,
+        pallet_color: "#E32A4B",
         deadline: "26.10.2023"
     },
 ]

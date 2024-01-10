@@ -1,4 +1,4 @@
-const output_stock_places = [
+const output_stock_place = [
     //group 0
     {
         stock_place_id: 0,
@@ -744,4 +744,4 @@ const output_stock_places = [
     }
 ]
 
-export default output_stock_places
+export default output_stock_place

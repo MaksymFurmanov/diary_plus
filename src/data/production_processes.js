@@ -46,7 +46,7 @@ const production_processes = [
         name: "Balenie a označovanie",
         queue: 5,
         done_name: "Pobalené"
-    },
+    }
 ]
 
 export default production_processes;

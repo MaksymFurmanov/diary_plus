@@ -88,9 +88,6 @@ input, select {
 }
 
 .PalletColor {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background-color: black;
     color: #F8F8F8;
     border-radius: 15px;
@@ -117,7 +114,7 @@ input, select {
     margin-top: 0.1em;
 }
 
-.PalletColor input[type="color"]{
+.PalletColor input[type="color"] {
     width: 3em;
     height: 3em;
     margin: 1.5em 0;
@@ -128,7 +125,7 @@ input, select {
     border-radius: 0;
 }
 
-.PalletColor input[type="text"]{
+.PalletColor input[type="text"] {
     background: inherit;
     width: 4.5em;
     text-align: center;
@@ -181,21 +178,19 @@ input, select {
 
 .LogInPage input {
     padding: 1em;
-    width: 20em;
     background: #F8F8F8;
     color: black;
 }
 
 .LogInPage form div {
     display: flex;
-    margin-top: 2em;
+    margin: 1em 0 0 0;
     align-items: center;
 }
 
 .password-eye svg {
-    transform: translate(-3em, 0);
+    transform: translate(-3em, 0.7em);
     width: 1.5em;
-    height: auto;
 }
 
 .SystemNavigation {
@@ -289,7 +284,9 @@ input, select {
 }
 
 .add-product-image img {
-    width: inherit;
+    width: 5em;
+    height: 6.5em;
+    cursor: pointer;
 }
 
 .inputs {
@@ -307,7 +304,8 @@ input, select {
     margin: 1em 0 2em 0;
 }
 
-.ProductionPlan p {
+.ProductionPlan p,
+.ProductionPlan input {
     white-space: nowrap;
 }
 
@@ -328,7 +326,7 @@ input, select {
 .ProductionProcessDetails {
     display: flex;
     flex-direction: column;
-    gap:0.5em;
+    gap: 0.5em;
     background: black;
     color: #F8F8F8;
     border: 1px solid #F8F8F8;
@@ -344,7 +342,8 @@ input, select {
     font-size: 1.1rem;
 }
 
-.ProductionProcessDetails input,  .ProductionProcessDetails select {
+.ProductionProcessDetails input,
+.ProductionProcessDetails select {
     width: 12em;
     font-size: 0.7rem;
     text-align: center;
@@ -355,4 +354,118 @@ input, select {
 .ProductionProcessDetails svg {
     width: 2em;
     color: #F8F8F8;
+}
+
+.AddProcess input {
+    background: inherit;
+    color: #F8F8F8;
+    width: inherit;
+    letter-spacing: 0;
+    margin: 0.4rem 0;
+    font-size: 0.9rem;
+}
+
+.AddProcess div {
+    display: flex;
+    width: inherit;
+}
+
+.AddProcess p {
+    margin-right: 0.1em;
+}
+
+.ProductionItem {
+    display: flex;
+    flex-direction: column;
+    width: 50em;
+    float: right;
+    margin-right: 1em;
+}
+
+.order-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 1.2rem;
+}
+
+.order-info div {
+    display: flex;
+}
+
+.order-info svg {
+    width: 1.5em;
+    margin: 0.4em 0.3em 0 0;
+    cursor: pointer;
+}
+
+.line {
+    height: 2px;
+    width: inherit;
+    background: black;
+}
+
+.production-info {
+    display: flex;
+    overflow: scroll;
+}
+
+.production-info img {
+    width: 5em;
+    height: 5em;
+}
+
+.production-info svg {
+    width: 1.5em;
+}
+
+.process-item {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 1em;
+    margin: 1em 0;
+    text-align: center;
+    font-size: 0.8rem;
+    width: max-content;
+}
+
+.StockPage {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.StockBox {
+    background: black;
+    padding: 1em;
+    gap: 0.5em;
+}
+
+.vertical-stock-box {
+    width: 1.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+.vertical-stock-boxes {
+    display: flex;
+    gap: 3em;
+    margin: 2em 0;
+}
+
+.horizontal-stock-box {
+    width: 8em;
+    height: 3.5em;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.StockPlace {
+    border: 1px solid black;
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+}
+
+.StockPlace svg {
+    width: 1.5em;
 }

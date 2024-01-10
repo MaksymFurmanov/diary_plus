@@ -17,7 +17,7 @@ const NavItemsList = [
     },
     {
         name: "Vstupný sklad",
-        navigation: "/stock/input"
+        navigation: "/stock/entry"
     },    {
         name: "Výstupný sklad",
         navigation: "/stock/output"

@@ -35,7 +35,7 @@ const PalletColor = () => {
     };
 
     return (
-        <div className="PalletColor">
+        <div className="PalletColor v-center">
             <h3>Farba palety:</h3>
             <input
                 type="color"

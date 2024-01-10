@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import products from "../../data/products";
 import addImage from "../../fig/img/add_image.png"
 import Button from "../BasicComponents/Button.tsx";
-import PalletColor from "../PalletColor";
+import PalletColor from "../BasicComponents/PalletColor";
 import ProductionPlan from "./ProductionPlan";
 import Input from "../BasicComponents/Input.tsx";
 
@@ -13,12 +13,12 @@ const ProductInfo = ({existing}) => {
     productId = parseInt(productId);
 
     const [product, setProduct] = useState({
-        id: null,
+        product_id: null,
         name: "",
         type: "",
         per_pallet: 20,
         pallet_color: "",
-        img: null,
+        img: addImage,
         quality_standards: "",
         changed: false
     });
@@ -33,15 +33,28 @@ const ProductInfo = ({existing}) => {
             setProduct({...product, [name]: value, changed: true});
         }
     };
-    const imageInputHandler = () => {
 
-    }
+    const imageInputHandler = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setProduct({
+                    ...product,
+                    img: reader.result,
+                    changed: true
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     //fetch data later
     useEffect(() => {
         if (existing) {
             const existingProduct = products.find((product) =>
-                product.id === productId);
+                product.product_id === productId);
             if (existingProduct) setProduct(existingProduct);
         }
     }, [existing, productId]);
@@ -67,12 +80,18 @@ const ProductInfo = ({existing}) => {
         <form className={"ProductInfo"}>
             <div>
                 <div className={"add-product-image"}>
-                    <img src={addImage} alt={""} onClick={imageInputHandler}/>
-                    <input type={"image"}
+                    <input type={"file"}
+                           accept={"image/*"}
                            name={"img"}
-                           value={product.img}
+                           value={undefined}
+                           id={"img"}
                            style={{display: "none"}}
-                           />
+                           onChange={imageInputHandler}
+                    />
+                    <label htmlFor={"img"}>
+                        <img src={product.img}
+                             alt={""}/>
+                    </label>
                 </div>
                 <PalletColor/>
             </div>
@@ -103,7 +122,9 @@ const ProductInfo = ({existing}) => {
                         Počet na paletu:
                     </Input>
                     <div>
-                        <label>Produkčný plán:</label>
+                        <label htmlFor={"production_plan"}>
+                            Produkčný plán:
+                        </label>
                         <ProductionPlan productId={productId}/>
                     </div>
                 </div>

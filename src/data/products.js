@@ -4,29 +4,29 @@ import Milk1PercentImage from '../data/images/Milk_1%.png';
 
 const products = [
     {
-        id: 0,
+        product_id: 0,
         name: "Mlieko",
         type: "2%",
         per_pallet: 30,
-        pallet_color: "F9CC5A",
+        pallet_color: "#F9CC5A",
         img: Milk2PercentImage,
         quality_standards: ""
     },
     {
-        id: 1,
+        product_id: 1,
         name: "Mlieko",
         type: "1.5%",
         per_pallet: 30,
-        pallet_color: "9DB3FF",
+        pallet_color: "#9DB3FF",
         img: Milk1Point5PercentImage,
         quality_standards: ""
     },
     {
-        id: 2,
+        product_id: 2,
         name: "Mlieko",
         type: "1%",
         per_pallet: 30,
-        pallet_color: "E32A4B",
+        pallet_color: "#E32A4B",
         img: Milk1PercentImage,
         quality_standards: ""
     },

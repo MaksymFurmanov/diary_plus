@@ -14,7 +14,8 @@ const ProductsPage = () => {
             <img src={product.img} alt={""}/>
             <p>Product: {product.name}</p>
             <p>Typ: {product.type}</p>
-            <Button onClick={() => navigate(`edit/${product.id}`)}
+            <Button onClick={() =>
+                navigate(`edit/${product.product_id}`)}
                     colorType={2}>
                 Viac
             </Button>
@@ -37,7 +38,8 @@ const ProductsPage = () => {
                     </button>
                 </div>
             </div>
-            <button className={"plus-button"} onClick={() => navigate("new_product")}>
+            <button className={"plus-button"}
+                    onClick={() => navigate("new_product")}>
                 <BsPlusCircleFill/>
             </button>
         </div>

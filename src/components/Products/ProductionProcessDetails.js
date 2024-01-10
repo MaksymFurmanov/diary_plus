@@ -60,8 +60,9 @@ const ProductionProcessDetails = ({
                 }}
                 ref={containerRef}>
         <div>
-            <label>Oddelenie:</label>
+            <label htmlFor={"department_id"}>Oddelenie:</label>
             <select name={"department_id"}
+                    id={"department_id"}
                     value={process.department_id}
                     onChange={inputHandler}>
                 <option value={-1}></option>
@@ -69,8 +70,9 @@ const ProductionProcessDetails = ({
             </select>
         </div>
         <div>
-            <label>Kedy vykonané:</label>
+            <label htmlFor={"done_name"}>Kedy vykonané:</label>
             <input name={"done_name"}
+                   id={"done_name"}
                    value={process.done_name}
                    onChange={inputHandler}/>
         </div>
