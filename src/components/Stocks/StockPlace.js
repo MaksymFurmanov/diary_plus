@@ -11,7 +11,9 @@ const StockPlace = React.memo(({palletColor}) => {
 
     return <div className={"StockPlace"}
                 style={{backgroundColor: palletColor}}
-                onClick={selectHandler}>{selected && <RxCross2/>}</div>
+                onClick={selectHandler}>
+        {selected && <RxCross2/>}
+    </div>
 })
 
 export default StockPlace

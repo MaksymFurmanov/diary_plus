@@ -7,7 +7,7 @@ const materials = [
         per_pallet: 10,
         date_of_order: "05.11.2023",
         arriving_date: "09.11.2023",
-        pallet_color: "81FFBB"
+        pallet_color: "#81FFBB"
     },
     {
         material_id: 1,
@@ -17,7 +17,7 @@ const materials = [
         per_pallet: 10,
         date_of_order: "05.11.2023",
         arriving_date: "09.11.2023",
-        pallet_color: "81D2FF"
+        pallet_color: "#81D2FF"
     },
     {
         material_id: 2,
@@ -27,7 +27,7 @@ const materials = [
         per_pallet: 10,
         date_of_order: "05.11.2023",
         arriving_date: "09.11.2023",
-        pallet_color: "DE81FF"
+        pallet_color: "#DE81FF"
     },
     {
         material_id: 3,
@@ -37,7 +37,7 @@ const materials = [
         per_pallet: 10,
         date_of_order: "05.11.2023",
         arriving_date: null,
-        pallet_color: "F04C6A"
+        pallet_color: "#F04C6A"
     },
 ]
 

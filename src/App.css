@@ -26,12 +26,12 @@ a {
     color: inherit;
 }
 
-svg {
-    height: auto;
-}
-
 a:visited {
     color: inherit;
+}
+
+svg {
+    height: auto;
 }
 
 button {
@@ -85,6 +85,7 @@ input, select {
     border-radius: 20px;
     font-weight: lighter;
     cursor: pointer;
+    height: fit-content;
 }
 
 .PalletColor {
@@ -301,6 +302,7 @@ input, select {
     align-items: center;
     width: 30em;
     overflow: scroll;
+    overflow-y: hidden;
     margin: 1em 0 2em 0;
 }
 
@@ -430,6 +432,17 @@ input, select {
 
 .StockPage {
     display: flex;
+    justify-content: space-around;
+}
+
+.stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-header .Button {
+    margin-right: 2em;
 }
 
 .graphical-stock {
@@ -462,12 +475,42 @@ input, select {
     grid-template-rows: repeat(4, 1fr);
 }
 
-.StockPlace {
-    height: 1.3em;
+.StockPlace, .StockPlace svg {
     cursor: pointer;
+    min-width: 1.3rem;
+    height: 1.3rem;
 }
 
-.StockPlace, .StockPlace svg,
-.vertical-stock-box {
-    width: 1.3em;
+.StockPlace {
+    border: 1px solid black;
+}
+
+.StockTable {
+    border: 2px solid black;
+    border-radius: 15px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 16em;
+}
+
+.StockTable li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 1em 1.5em;
+    font-size: 0.7rem;
+    letter-spacing: 0;
+}
+
+.StockTable h3 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.stock-pallets {
+    width: inherit;
+    max-height: 19em;
+    overflow: scroll;
+    overflow-x: hidden;
 }

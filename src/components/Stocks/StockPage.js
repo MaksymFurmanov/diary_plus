@@ -4,6 +4,7 @@ import StockBox from "./StockBox";
 import {useOutputStock} from "../../providers/OutputStockProvider";
 import {useEnteryStock} from "../../providers/EnteryStockProvider";
 import StockTable from "./StockTable";
+import Button from "../BasicComponents/Button.tsx";
 
 const StockPage = () => {
     const {type} = useParams();
@@ -27,7 +28,6 @@ const StockPage = () => {
 
     const stockPlacesRow1 = groupsSplit.slice(0, 4)
         .map((group, index) => {
-            console.log(index);
             return <StockBox
                 key={index}
                 type={type}
@@ -41,7 +41,6 @@ const StockPage = () => {
         const group1 = slicedVerticals[i];
         const group2 = slicedVerticals[i + 1];
 
-        console.log(4 + i, 5 + i);
         stockPlacesRow2.push(
             <div className={"vertical-stock-boxes"}>
                 <StockBox
@@ -60,7 +59,6 @@ const StockPage = () => {
 
     const stockPlacesRow3 = groupsSplit.slice(12, 16)
         .map((group, index) => {
-            console.log(index + 12);
             return <StockBox
                 key={index + 12}
                 type={type}
@@ -72,9 +70,15 @@ const StockPage = () => {
         stockPlacesRow3];
 
     return <>
-        <PageTitle name={title[type]}/>
+        <div className={"stock-header"}>
+            <PageTitle name={title[type]}/>
+            <div>
+                <Button>Vymazať</Button>
+                <Button>Odznačiť všetko</Button>
+            </div>
+        </div>
         <div className={"StockPage"}>
-            <StockTable items={places[type]}/>
+            <StockTable type={type}/>
             <div className={"graphical-stock"}>
                 {allStockPlaces}
             </div>
