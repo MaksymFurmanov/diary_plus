@@ -3,23 +3,23 @@ import {useParams} from "react-router-dom";
 import StockBox from "./StockBox";
 import {useOutputStock} from "../../providers/OutputStockProvider";
 import {useEnteryStock} from "../../providers/EnteryStockProvider";
+import StockTable from "./StockTable";
 
 const StockPage = () => {
-    let {type} = useParams();
-    const enteryStock = useEnteryStock();
-    const outputStock = useOutputStock();
+    const {type} = useParams();
 
-    let title, pallets;
-    if (type === "entry") {
-        pallets = enteryStock;
-        title = "Vstupný sklad"
-    } else if (type === "output") {
-        pallets = outputStock;
-        title = "Výstupný sklad"
+    const places = {
+        entry: useEnteryStock(),
+        output: useOutputStock()
+    }
+
+    const title = {
+        entry: "Vstupný sklad",
+        output: "Výstupný sklad"
     }
 
     let groupsSplit = [];
-    pallets.forEach((place) => {
+    places[type].forEach((place) => {
         let group = place.group.toString();
         if (!(group in groupsSplit)) groupsSplit[group] = [place];
         else groupsSplit[group].push(place);
@@ -68,12 +68,16 @@ const StockPage = () => {
             />
         });
 
-    const allStockPlaces = [stockPlacesRow1, stockPlacesRow2, stockPlacesRow3];
+    const allStockPlaces = [stockPlacesRow1, stockPlacesRow2,
+        stockPlacesRow3];
 
     return <>
-        <PageTitle name={title}/>
+        <PageTitle name={title[type]}/>
         <div className={"StockPage"}>
-            {allStockPlaces}
+            <StockTable items={places[type]}/>
+            <div className={"graphical-stock"}>
+                {allStockPlaces}
+            </div>
         </div>
     </>
 }
