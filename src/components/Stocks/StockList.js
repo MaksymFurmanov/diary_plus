@@ -3,7 +3,7 @@ import products from "../../data/products";
 import {RxCross2} from "react-icons/rx";
 import React from "react";
 
-const StockTable = ({type}) => {
+const StockList = ({type}) => {
     const data = {
         entry: materials,
         output: products
@@ -30,7 +30,7 @@ const StockTable = ({type}) => {
         </>
     })
 
-    return <ul className={"StockTable v-center"}>
+    return <ul className={"StockList v-center"}>
         <li><h3>Výber paliet</h3></li>
         <div className={"line"}/>
         <div className={"stock-pallets"}>
@@ -46,4 +46,4 @@ const StockTable = ({type}) => {
     </ul>
 }
 
-export default StockTable
+export default StockList

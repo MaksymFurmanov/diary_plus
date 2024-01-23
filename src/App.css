@@ -59,6 +59,17 @@ input, select {
     filter: drop-shadow(0 0 0.5rem #F8F8F8);
 }
 
+.v-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.evenly {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .Input {
     display: flex;
     margin-bottom: 1em;
@@ -101,8 +112,6 @@ input, select {
 }
 
 .PalletColor div {
-    display: flex;
-    justify-content: space-around;
     padding: 0.2em 0.5em;
     background: #F8F8F8;
     border-radius: 25px;
@@ -145,11 +154,6 @@ input, select {
     margin: 0 1.5em 0 2em;
 }
 
-.v-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .MainPage h1 {
     font-family: Kurale, serif;
@@ -227,11 +231,6 @@ input, select {
     height: 4em;
 }
 
-.product-cards {
-    display: flex;
-    justify-content: space-evenly;
-}
-
 .product-card {
     padding: 1.5em 2.5em;
     background-color: black;
@@ -267,9 +266,7 @@ input, select {
 }
 
 .ProductInfo {
-    display: flex;
     align-items: center;
-    justify-content: space-evenly;
 }
 
 .ProductInfo button[type="delete"] {
@@ -430,11 +427,6 @@ input, select {
     width: max-content;
 }
 
-.StockPage {
-    display: flex;
-    justify-content: space-around;
-}
-
 .stock-header {
     display: flex;
     justify-content: space-between;
@@ -485,7 +477,7 @@ input, select {
     border: 1px solid black;
 }
 
-.StockTable {
+.StockList {
     border: 2px solid black;
     border-radius: 15px;
     margin: 0;
@@ -494,7 +486,7 @@ input, select {
     width: 16em;
 }
 
-.StockTable li {
+.StockList li {
     display: flex;
     align-items: center;
     gap: 0.5em;
@@ -503,7 +495,7 @@ input, select {
     letter-spacing: 0;
 }
 
-.StockTable h3 {
+.StockList h3 {
     font-size: 1rem;
     margin: 0;
 }
@@ -513,4 +505,39 @@ input, select {
     max-height: 19em;
     overflow: scroll;
     overflow-x: hidden;
+}
+
+.table-container {
+    border-collapse: collapse;
+    border-radius: 15px;
+    border: 1px solid black;
+    overflow: hidden;
+    width: fit-content;
+    height: 25em;
+}
+
+.OrdersPage table {
+    border-collapse: collapse;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.OrdersPage th, .OrdersPage td {
+    text-align: center;
+    padding: 0.5em;
+    border: 1px solid;
+}
+
+.OrdersPage th {
+    background-color: black;
+    border-color: #F8F8F8;
+    color: #F8F8F8;
+}
+
+.OrdersPage td {
+    border-color: black;
+}
+
+.OrdersPage td button {
+    font-size: 0.8rem;
 }

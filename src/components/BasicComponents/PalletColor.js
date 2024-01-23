@@ -42,7 +42,7 @@ const PalletColor = () => {
                 value={color}
                 onChange={(e) => colorInputHandler(e)}
             />
-            <div>
+            <div className={"evenly"}>
                 <MdInvertColors />
                 <input
                     type="text"

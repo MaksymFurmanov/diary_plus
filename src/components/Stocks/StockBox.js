@@ -34,7 +34,8 @@ const StockBox = ({group, type}) => {
         }
 
         return (
-            <StockPlace key={index} palletColor={palletColor} />
+            <StockPlace key={index} palletColor={palletColor}
+                        date={place.date_of_putting}/>
         );
     });
 

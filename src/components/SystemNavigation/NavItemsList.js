@@ -24,11 +24,11 @@ const NavItemsList = [
     },
     {
         name: "Testovania (Laboratórium 1)",
-        navigation: "/testings/laboratory1"
+        navigation: "/testings/laboratory_1"
     },
     {
         name: "Testovania (Laboratórium 2)",
-        navigation: "/testings/laboratory2"
+        navigation: "/testings/laboratory_2"
     },
     {
         name: "Kontrola kvality",

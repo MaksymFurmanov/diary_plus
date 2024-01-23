@@ -77,7 +77,7 @@ const ProductInfo = ({existing}) => {
     return <>
         <PageTitle name={existing ? "Produkt" : "Nový produkt"}
                    prev={unsavedChangesHandler()}/>
-        <form className={"ProductInfo"}>
+        <form className={"ProductInfo evenly"}>
             <div>
                 <div className={"add-product-image"}>
                     <input type={"file"}

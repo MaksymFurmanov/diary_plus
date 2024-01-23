@@ -13,6 +13,8 @@ import AdminPage from "./components/Administration/AdminPage";
 import AboutSystem from "./components/MainPages/AboutSystem";
 import OutputStockProvider from "./providers/OutputStockProvider";
 import EnteryStockProvider from "./providers/EnteryStockProvider";
+import OrdersProvider from "./providers/OrdersProvider";
+import MaterialsProvider from "./providers/MaterialsProvider";
 
 const routes = [
     {
@@ -31,19 +33,15 @@ const routes = [
         providers: [UserProvider]
     },
     {
-        path: "/orders/products_to_product",
+        path: "/orders/:type",
         element: <OrdersPage />,
-        providers: []
+        providers: [OrdersProvider,
+            MaterialsProvider]
     },
     {
         path: "/production",
         element: <ProductionPage />,
         providers: [UserProvider]
-    },
-    {
-        path: "/orders/raw_material",
-        element: <OrdersPage />,
-        providers: []
     },
     {
         path: "/products",
@@ -67,12 +65,7 @@ const routes = [
             EnteryStockProvider]
     },
     {
-        path: "/testings/laboratory1",
-        element: <TestingsPage />,
-        providers: []
-    },
-    {
-        path: "/testings/laboratory2",
+        path: "/testings/:laboratory",
         element: <TestingsPage />,
         providers: []
     },

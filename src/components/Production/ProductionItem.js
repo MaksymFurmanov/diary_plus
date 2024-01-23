@@ -3,7 +3,7 @@ import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {useState} from "react";
 import production_processes from "../../data/production_processes";
 import ProductionProcess from "./ProductionProcess";
-import arrow from "../../fig/img/arrow_wave.svg";
+import arrowImg from "../../fig/img/arrow_wave.svg";
 
 const ProductionItem = ({order}) => {
     const [showToggle, setShowToggle] = useState(true);
@@ -18,13 +18,15 @@ const ProductionItem = ({order}) => {
 
     const lastProcess = production_processes.length - 1;
 
+    const arrow = (<img src={arrowImg} alt=""/>);
+
     const processes = production_processes.map((production_process,
                                                 index) => <>
         <ProductionProcess key={index}
                            production_process={production_process}
                            actualProcess={actualProcess}/>
         {production_process.queue !== lastProcess
-            && <img src={arrow} alt=""/>}
+            && arrow}
     </>);
 
     return <div className={"ProductionItem"}>

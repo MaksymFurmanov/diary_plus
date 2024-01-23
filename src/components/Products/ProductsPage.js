@@ -25,7 +25,7 @@ const ProductsPage = () => {
     return <>
         <PageTitle name={"Produkty"}/>
         <div className={"ProductsPage"}>
-            <div className={"product-cards"}>
+            <div className={"evenly"}>
                 <div className={"arrow"}>
                     <button className={"left-arrow"}>
                         <IoIosArrowBack/>

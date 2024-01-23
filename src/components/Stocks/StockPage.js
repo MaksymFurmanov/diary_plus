@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import StockBox from "./StockBox";
 import {useOutputStock} from "../../providers/OutputStockProvider";
 import {useEnteryStock} from "../../providers/EnteryStockProvider";
-import StockTable from "./StockTable";
+import StockList from "./StockList";
 import Button from "../BasicComponents/Button.tsx";
 
 const StockPage = () => {
@@ -77,8 +77,8 @@ const StockPage = () => {
                 <Button>Odznačiť všetko</Button>
             </div>
         </div>
-        <div className={"StockPage"}>
-            <StockTable type={type}/>
+        <div className={"StockPage evenly"}>
+            <StockList type={type}/>
             <div className={"graphical-stock"}>
                 {allStockPlaces}
             </div>

@@ -63,56 +63,56 @@ const output_stock_place = [
         product_id: null,
         group: 1,
         index: 0,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 9,
         product_id: null,
         group: 1,
         index: 1,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 10,
         product_id: null,
         group: 1,
         index: 2,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 11,
         product_id: null,
         group: 1,
         index: 3,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 12,
         product_id: null,
         group: 1,
         index: 4,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 13,
         product_id: null,
         group: 1,
         index: 5,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 14,
         product_id: null,
         group: 1,
         index: 6,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
     {
         stock_place_id: 15,
         product_id: null,
         group: 1,
         index: 7,
-        date_of_putting: "02.11.2023"
+        date_of_putting: null
     },
 
     //group 2
@@ -121,48 +121,56 @@ const output_stock_place = [
         product_id: null,
         group: 2,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 17,
         product_id: null,
         group: 2,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 18,
         product_id: null,
         group: 2,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 19,
         product_id: null,
         group: 2,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 20,
         product_id: null,
         group: 2,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 21,
         product_id: null,
         group: 2,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 22,
         product_id: null,
         group: 2,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 23,
         product_id: null,
         group: 2,
         index: 7,
+        date_of_putting: null
     },
 
     //group 3
@@ -171,48 +179,56 @@ const output_stock_place = [
         product_id: null,
         group: 3,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 25,
         product_id: null,
         group: 3,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 26,
         product_id: null,
         group: 3,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 27,
         product_id: null,
         group: 3,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 28,
         product_id: null,
         group: 3,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 29,
         product_id: null,
         group: 3,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 30,
         product_id: null,
         group: 3,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 31,
         product_id: null,
         group: 3,
         index: 7,
+        date_of_putting: null
     },
 
     //group 4
@@ -397,36 +413,42 @@ const output_stock_place = [
         product_id: null,
         group: 8,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 57,
         product_id: null,
         group: 8,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 58,
         product_id: null,
         group: 8,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 59,
         product_id: null,
         group: 8,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 60,
         product_id: null,
         group: 8,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 61,
         product_id: null,
         group: 8,
         index: 5,
+        date_of_putting: null
     },
 
     //group 9
@@ -435,36 +457,42 @@ const output_stock_place = [
         product_id: null,
         group: 9,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 63,
         product_id: null,
         group: 9,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 64,
         product_id: null,
         group: 9,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 65,
         product_id: null,
         group: 9,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 66,
         product_id: null,
         group: 9,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 67,
         product_id: null,
         group: 9,
         index: 5,
+        date_of_putting: null
     },
 
     //group 10
@@ -473,36 +501,42 @@ const output_stock_place = [
         product_id: null,
         group: 10,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 69,
         product_id: null,
         group: 10,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 70,
         product_id: null,
         group: 10,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 71,
         product_id: null,
         group: 10,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 72,
         product_id: null,
         group: 10,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 73,
         product_id: null,
         group: 10,
         index: 5,
+        date_of_putting: null
     },
 
     //group 11
@@ -511,36 +545,42 @@ const output_stock_place = [
         product_id: null,
         group: 11,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 75,
         product_id: null,
         group: 11,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 76,
         product_id: null,
         group: 11,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 77,
         product_id: null,
         group: 11,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 78,
         product_id: null,
         group: 11,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 79,
         product_id: null,
         group: 11,
         index: 5,
+        date_of_putting: null
     },
 
     //group 12
@@ -549,48 +589,56 @@ const output_stock_place = [
         product_id: null,
         group: 12,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 81,
         product_id: null,
         group: 12,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 82,
         product_id: null,
         group: 12,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 83,
         product_id: null,
         group: 12,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 84,
         product_id: null,
         group: 12,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 85,
         product_id: null,
         group: 12,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 86,
         product_id: null,
         group: 12,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 87,
         product_id: null,
         group: 12,
         index: 7,
+        date_of_putting: null
     },
 
     //group 13
@@ -599,48 +647,56 @@ const output_stock_place = [
         product_id: 3,
         group: 13,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 89,
         product_id: 3,
         group: 13,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 90,
         product_id: 3,
         group: 13,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 91,
         product_id: 3,
         group: 13,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 92,
         product_id: 3,
         group: 13,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 93,
         product_id: 3,
         group: 13,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 94,
         product_id: 3,
         group: 13,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 95,
         product_id: 3,
         group: 13,
         index: 7,
+        date_of_putting: null
     },
 
     //group 14
@@ -649,48 +705,56 @@ const output_stock_place = [
         product_id: null,
         group: 14,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 97,
         product_id: null,
         group: 14,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 98,
         product_id: null,
         group: 14,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 99,
         product_id: null,
         group: 14,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 100,
         product_id: null,
         group: 14,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 101,
         product_id: null,
         group: 14,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 102,
         product_id: null,
         group: 14,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 103,
         product_id: null,
         group: 14,
         index: 7,
+        date_of_putting: null
     },
 
     //group 15
@@ -699,48 +763,56 @@ const output_stock_place = [
         product_id: null,
         group: 15,
         index: 0,
+        date_of_putting: null
     },
     {
         stock_place_id: 105,
         product_id: null,
         group: 15,
         index: 1,
+        date_of_putting: null
     },
     {
         stock_place_id: 106,
         product_id: null,
         group: 15,
         index: 2,
+        date_of_putting: null
     },
     {
         stock_place_id: 107,
         product_id: null,
         group: 15,
         index: 3,
+        date_of_putting: null
     },
     {
         stock_place_id: 108,
         product_id: null,
         group: 15,
         index: 4,
+        date_of_putting: null
     },
     {
         stock_place_id: 109,
         product_id: null,
         group: 15,
         index: 5,
+        date_of_putting: null
     },
     {
         stock_place_id: 110,
         product_id: null,
         group: 15,
         index: 6,
+        date_of_putting: null
     },
     {
         stock_place_id: 111,
         product_id: null,
         group: 15,
         index: 7,
+        date_of_putting: null
     }
 ]
 
