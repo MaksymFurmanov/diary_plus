@@ -38,7 +38,7 @@ const materials = [
         date_of_order: "05.11.2023",
         arriving_date: null,
         pallet_color: "#F04C6A"
-    },
+    }
 ]
 
 export default materials

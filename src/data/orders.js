@@ -6,7 +6,8 @@ const orders = [
         customer: "Kaufland",
         volume: 200,
         pallet_color: "#F9CC5A",
-        deadline: "26.10.2023"
+        deadline: "26.10.2023",
+        done_date: "02.11.2023"
     },
     {
         order_id: 1,
@@ -15,7 +16,8 @@ const orders = [
         customer: "Lidl",
         volume: 200,
         pallet_color: "#9DB3FF",
-        deadline: "26.10.2023"
+        deadline: "26.10.2023",
+        done_date: "02.11.2023"
     },
     {
         order_id: 2,
@@ -24,7 +26,8 @@ const orders = [
         customer: "Kaufland",
         volume: 200,
         pallet_color: "#E32A4B",
-        deadline: "26.10.2023"
+        deadline: "26.10.2023",
+        done_date: "02.11.2023"
     },
 ]
 

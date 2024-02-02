@@ -456,7 +456,7 @@ input, select {
 
 .vertical-stock-boxes {
     display: flex;
-    gap: 2.4em;
+    gap: 2.3em;
 }
 
 .horizontal-stock-box {
@@ -562,4 +562,9 @@ input, select {
 .OrdersGraph {
     width: 25em;
     height: 23em;
+}
+
+.TestingPage {
+    width: max-content;
+    margin: 1em 1em;
 }
