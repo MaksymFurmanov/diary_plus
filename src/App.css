@@ -516,15 +516,24 @@ input, select {
     height: 25em;
 }
 
+.OrdersPage {
+    display: flex;
+    justify-content: space-around;
+}
+
 .OrdersPage table {
     border-collapse: collapse;
     border-radius: 15px;
     overflow: hidden;
 }
 
+.OrdersPage tbody {
+    overflow: scroll;
+}
+
 .OrdersPage th, .OrdersPage td {
     text-align: center;
-    padding: 0.5em;
+    padding: 0.5em 1em;
     border: 1px solid;
 }
 
@@ -540,4 +549,17 @@ input, select {
 
 .OrdersPage td button {
     font-size: 0.8rem;
+}
+
+.OrdersPage td button svg {
+    width: 1.2em;
+}
+
+.OrdersPage td:last-child div {
+    display: flex;
+}
+
+.OrdersGraph {
+    width: 25em;
+    height: 23em;
 }

@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import OrdersTable from "./OrdersTable";
+import OrdersGraph from "./OrdersGraph";
 
 const OrdersPage = () => {
     const {type} = useParams();
@@ -20,7 +21,8 @@ const OrdersPage = () => {
     return <>
         <PageTitle name={title[type]}/>
         <div className={"OrdersPage"}>
-        <OrdersTable items={items[type]} type={type}/>
+            <OrdersGraph items={items[type]} type={type}/>
+            <OrdersTable items={items[type]} type={type}/>
         </div>
     </>
 }

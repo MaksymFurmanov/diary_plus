@@ -11,6 +11,9 @@ const TestingsPage = () => {
 
     return <div>
         <BackButton name={title[laboratory]}/>
+        <div className={"TestingPage"}>
+
+        </div>
     </div>
 }
 
