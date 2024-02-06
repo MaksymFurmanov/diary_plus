@@ -1,10 +1,14 @@
-import materials from "../../data/materials";
-import orders from "../../data/orders";
-import products from "../../data/products";
 import {FaArrowRight} from "react-icons/fa6";
 import {useState} from "react";
+import {useMaterials} from "../../providers/MaterialsProvider";
+import {useOrders} from "../../providers/OrdersProvider";
+import {useProducts} from "../../providers/ProductsProvider";
 
 const TestingItem = ({item, laboratory}) => {
+    const materials = useMaterials();
+    const orders = useOrders();
+    const products = useProducts();
+
     const [status, setStatus] = useState(item.status);
     const selectHandler = (e) => {
         setStatus(e.target.value);

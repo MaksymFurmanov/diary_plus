@@ -29,7 +29,7 @@ const products = [
         pallet_color: "#E32A4B",
         img: Milk1PercentImage,
         quality_standards: ""
-    },
+    }
 ];
 
 export default products;

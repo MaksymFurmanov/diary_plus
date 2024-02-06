@@ -45,7 +45,7 @@ button svg {
 
 label {
     font-size: 1.5rem;
-    margin-right: 0.5em;
+    margin-right: 1em;
 }
 
 input, select {
@@ -63,6 +63,27 @@ input, select {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.h-center {
+    display: flex;
+    align-items: center;
+}
+
+.h-end {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.h-stretch-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.h-stretch-center .Button {
+    margin-right: 2em;
 }
 
 .evenly {
@@ -252,12 +273,7 @@ input, select {
     float: right;
 }
 
-.arrow {
-    display: flex;
-    align-items: center;
-}
-
-.arrow svg {
+.left-arrow svg, .right-arrow svg {
     width: 4em;
 }
 
@@ -427,16 +443,6 @@ input, select {
     width: max-content;
 }
 
-.stock-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.stock-header .Button {
-    margin-right: 2em;
-}
-
 .graphical-stock {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -594,12 +600,13 @@ input, select {
     margin-top: 2em;
 }
 
-.testing-items p, .testing-items select {
+.testing-items p,
+.testing-items select {
     margin: 0;
     padding: 1.5em 1em;
 }
 
-.testing-items p {
+.side-white-border {
     border-right: 2px solid #F8F8F8;
 }
 
@@ -618,4 +625,160 @@ input, select {
 .testing-items svg {
     width: 2em;
     color: #F8F8F8;
+}
+
+.QualityControlPage {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ResultsTable {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.results-head {
+    background-color: black;
+    color: #F8F8F8;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.5em 0.5em;
+}
+
+.results-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    margin: 1em;
+    padding-right: 1em;
+    height: 18em;
+    overflow: scroll;
+}
+
+.ResultsItem {
+    display: flex;
+    gap: 2em;
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    padding: 0.2em 2em;
+    font-size: 0.8rem;
+}
+
+.ResultsItem div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.ResultsItem .test-info {
+    padding: 1em 0;
+}
+
+.ResultsItem .test-info p {
+    border-bottom: 2px solid #F8F8F8;
+    margin-right: 1em;
+}
+
+.ResultsItem, .ResultsItem button {
+    font-size: 0.8rem;
+}
+
+.document-boxes div {
+    border: 1px solid #F8F8F8;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.document-boxes div p{
+    padding: 0.1em 0.5em;
+}
+
+.document-boxes div p:last-child {
+    border-top: 1px solid #F8F8F8;
+    cursor: pointer;
+}
+
+.AdminPage {
+    height: 24em;
+    overflow: scroll;
+}
+
+.EmployeeList {
+    margin: 0 3em;
+}
+
+.department-title {
+    display: flex;
+    align-items: end;
+}
+
+.department-title h2 {
+    display: inline;
+    margin-bottom: 0.3em;
+}
+
+.department-title svg {
+    width: 1.5em;
+    cursor: pointer;
+    margin: 0 0.5em 0.5em 0;
+}
+
+.EmployeeList .line {
+    margin-bottom: 1em;
+}
+
+.employee-cards {
+    display: flex;
+    gap: 2em;
+    overflow: scroll;
+}
+
+.EmployeeCard {
+    font-size: 0.8rem;
+    letter-spacing: 0.05px;
+    border: 1px solid black;
+    padding: 1em 1.5em;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 7em;
+}
+
+.EmployeeCard svg {
+    width: 4em;
+}
+
+.EmployeeCard button {
+    font-size: 0.7rem;
+}
+
+.authorization-data {
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0 1em;
+}
+
+.EmployeeInfo, .OrderInfo,
+.MaterialInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2em 5em 0 5em;
+    min-height: 23em;
+}
+
+.input-field {
+    width: fit-content;
+}
+
+.bottom-buttons {
+    display: flex;
+    justify-content: end;
+}
+
+/*apply to others*/
+.bottom-buttons button:last-child {
+    margin-left: 2em;
 }

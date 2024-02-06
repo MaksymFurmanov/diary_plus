@@ -7,8 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: FC<ButtonProps> = ({
                                      children,
                                      colorType,
-                                     ...rest
-                                 }) => {
+                                     ...rest}) => {
     const colorStyles = colorType === 2
         ? {backgroundColor: 'white', color: 'black'}
         : {backgroundColor: 'black', color: 'white'}

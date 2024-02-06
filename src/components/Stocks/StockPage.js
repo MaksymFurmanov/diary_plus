@@ -26,14 +26,9 @@ const StockPage = () => {
         else groupsSplit[group].push(place);
     })
 
-    const stockPlacesRow1 = groupsSplit.slice(0, 4)
-        .map((group, index) => {
-            return <StockBox
-                key={index}
-                type={type}
-                group={group}
-            />
-        });
+    const stockPlacesRow1 = groupsSplit.slice(0, 4).map((group, index) => (
+        <StockBox key={`row1-${index}`} type={type} group={group} />
+    ));
 
     let stockPlacesRow2 = [];
     const slicedVerticals = groupsSplit.slice(4, 12);
@@ -42,35 +37,21 @@ const StockPage = () => {
         const group2 = slicedVerticals[i + 1];
 
         stockPlacesRow2.push(
-            <div className={"vertical-stock-boxes"}>
-                <StockBox
-                    key={4 + i}
-                    type={type}
-                    group={group1}
-                />
-                <StockBox
-                    key={5 + i}
-                    type={type}
-                    group={group2}
-                />
+            <div className={"vertical-stock-boxes"} key={`row2-${i / 2}`}>
+                <StockBox key={`row2-${i}`} type={type} group={group1} />
+                <StockBox key={`row2-${i + 1}`} type={type} group={group2} />
             </div>
         );
     }
 
-    const stockPlacesRow3 = groupsSplit.slice(12, 16)
-        .map((group, index) => {
-            return <StockBox
-                key={index + 12}
-                type={type}
-                group={group}
-            />
-        });
+    const stockPlacesRow3 = groupsSplit.slice(12, 16).map((group, index) => (
+        <StockBox key={`row3-${index}`} type={type} group={group} />
+    ));
 
-    const allStockPlaces = [stockPlacesRow1, stockPlacesRow2,
-        stockPlacesRow3];
+    const allStockPlaces = [stockPlacesRow1, stockPlacesRow2, stockPlacesRow3];
 
     return <>
-        <div className={"stock-header"}>
+        <div className={"h-stretch-center"}>
             <PageTitle name={title[type]}/>
             <div>
                 <Button>Vymazať</Button>

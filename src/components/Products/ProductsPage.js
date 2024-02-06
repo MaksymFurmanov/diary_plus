@@ -1,13 +1,14 @@
-import products from "../../data/products"
 import PageTitle from "../BasicComponents/PageTitle";
 import Button from "../BasicComponents/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {BsPlusCircleFill} from "react-icons/bs";
 import {IoIosArrowBack} from "react-icons/io";
 import {IoIosArrowForward} from "react-icons/io";
+import {useProducts} from "../../providers/ProductsProvider";
 
 const ProductsPage = () => {
     const navigate = useNavigate();
+    const products = useProducts();
 
     const productCards = products.map((product, index) => {
         return <div key={index} className={"product-card"}>
@@ -26,13 +27,13 @@ const ProductsPage = () => {
         <PageTitle name={"Produkty"}/>
         <div className={"ProductsPage"}>
             <div className={"evenly"}>
-                <div className={"arrow"}>
+                <div className={"h-center"}>
                     <button className={"left-arrow"}>
                         <IoIosArrowBack/>
                     </button>
                 </div>
                 {productCards}
-                <div className={"arrow"}>
+                <div className={"h-center"}>
                     <button className={"right-arrow"}>
                         <IoIosArrowForward/>
                     </button>

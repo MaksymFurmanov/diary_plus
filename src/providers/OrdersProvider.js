@@ -1,12 +1,12 @@
 import {createContext, useContext, useState} from "react";
-import OrdersData from "../data/orders";
+import ordersData from "../data/orders";
 
 const OrdersContext = createContext(undefined);
 const SetOrdersContext = createContext(undefined);
 
 
 const OrdersProvider = ({children}) => {
-    const [orders, setOrders] = useState(OrdersData);
+    const [orders, setOrders] = useState(ordersData);
 
     return <SetOrdersContext.Provider value={setOrders}>
         <OrdersContext.Provider value={orders}>

@@ -1,12 +1,14 @@
-import production_processes from "../../data/production_processes";
 import {useEffect, useState} from "react";
 import ProductionPlanItem from "./ProductionPlanItem";
 import {FaCirclePlus} from "react-icons/fa6";
 import ProductionProcessDetails from "./ProductionProcessDetails";
 import AddProcess from "./AddProcess";
 import {GoArrowRight} from "react-icons/go";
+import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 
 const ProductionPlan = ({productId}) => {
+    const production_processes = useProductionProcesses();
+
     const [processes, setProcesses] = useState([]);
     const [addProcessToggle, setAddProcessToggle] =
         useState(false);
@@ -22,7 +24,7 @@ const ProductionPlan = ({productId}) => {
                 return process.product_id === productId;
             });
         setProcesses(filteredProcesses);
-    }, [productId]);
+    }, [productId, production_processes]);
 
     const inputHandler = (e) => {
         const {name, value} = e.target;

@@ -1,10 +1,12 @@
 import BackButton from "../BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
-import test_materials from "../../data/test_materials";
-import test_products from "../../data/test_products";
 import TestingItem from "./TestingItem";
+import {useTestMaterials} from "../../providers/TestMaterialsProvider";
+import {useTestProducts} from "../../providers/TestProductsProvider";
 
 const TestingsPage = () => {
+    const test_materials = useTestMaterials();
+    const test_products = useTestProducts();
     const {laboratory} = useParams();
 
     const data = {
@@ -23,7 +25,7 @@ const TestingsPage = () => {
                             laboratory={laboratory}/>
     })
 
-    return <div>
+    return <>
         <BackButton name={"Testovanie"}/>
         <div className={"TestingPage"}>
             <h1>{title[laboratory]}</h1>
@@ -32,7 +34,7 @@ const TestingsPage = () => {
                 {testingItems}
             </div>
         </div>
-    </div>
+    </>
 }
 
 export default TestingsPage;

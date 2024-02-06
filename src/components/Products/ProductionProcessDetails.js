@@ -1,6 +1,6 @@
 import {IoMdTrash} from "react-icons/io";
 import {useEffect, useRef, useState} from "react";
-import departments from "../../data/departments";
+import {useDepartments} from "../../providers/DepartmentsProvider";
 
 const ProductionProcessDetails = ({
                                       process,
@@ -9,6 +9,8 @@ const ProductionProcessDetails = ({
                                       closeHandler,
                                       coordinates
                                   }) => {
+    const departments = useDepartments();
+
     const containerRef = useRef(null);
     const [dimensions, setDimensions] = useState({
         width: 0,
@@ -65,7 +67,7 @@ const ProductionProcessDetails = ({
                     id={"department_id"}
                     value={process.department_id}
                     onChange={inputHandler}>
-                <option value={-1}></option>
+                <option value={-1}/>
                 {departmentsOptions}
             </select>
         </div>

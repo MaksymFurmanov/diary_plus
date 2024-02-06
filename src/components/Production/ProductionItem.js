@@ -1,12 +1,14 @@
-import products from "../../data/products";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
-import {useState} from "react";
-import production_processes from "../../data/production_processes";
+import {Fragment, useState} from "react";
 import ProductionProcess from "./ProductionProcess";
 import arrowImg from "../../fig/img/arrow_wave.svg";
+import {useProducts} from "../../providers/ProductsProvider";
+import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 
 const ProductionItem = ({order}) => {
     const [showToggle, setShowToggle] = useState(true);
+    const products = useProducts();
+    const production_processes = useProductionProcesses();
 
     const product = products.find((product) =>
         product.product_id === order.product_id);
@@ -18,23 +20,26 @@ const ProductionItem = ({order}) => {
 
     const lastProcess = production_processes.length - 1;
 
-    const arrow = (<img src={arrowImg} alt=""/>);
-
     const processes = production_processes.map((production_process,
-                                                index) => <>
-        <ProductionProcess key={index}
-                           production_process={production_process}
-                           actualProcess={actualProcess}/>
-        {production_process.queue !== lastProcess
-            && arrow}
-    </>);
+                                                index) => {
+        return <Fragment key={index}>
+                <ProductionProcess key={`process-${index}`}
+                                   production_process={production_process}
+                                   actualProcess={actualProcess}/>
+                {production_process.queue !== lastProcess
+                    && <img key={`arrow-${index}`}
+                            src={arrowImg}
+                            alt=""/>}
+            </Fragment>
+        }
+    );
 
     return <div className={"ProductionItem"}>
         <div className={"order-info"}>
             <div>
-                <span onClick={() => setShowToggle(!showToggle)}>
+                <picture onClick={() => setShowToggle(!showToggle)}>
                     {showToggle ? <IoIosArrowDown/> : <IoIosArrowUp/>}
-                </span>
+                </picture>
                 <p>{order.deadline}</p>
             </div>
             <p>{`${product.name}: ${product.type}`}</p>

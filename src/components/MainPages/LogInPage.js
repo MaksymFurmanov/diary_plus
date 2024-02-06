@@ -11,10 +11,6 @@ const LogInPage = () => {
         login: "",
         password: ""
     });
-    const inputHandler = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
-    };
 
     const [passwordToggle, setPasswordToggle] =
         useState(false);
@@ -35,8 +31,8 @@ const LogInPage = () => {
                            name={"login"}
                            size={3}
                            value={formData.login}
-                           onChange={(e) =>
-                               inputHandler(e, 'login')}>
+                           setter={setFormData}
+                           state={formData}>
                         Meno</Input>
                 </div>
                 <div>
@@ -44,8 +40,8 @@ const LogInPage = () => {
                            size={3}
                            name={"password"}
                            value={formData.password}
-                           onChange={(e) =>
-                               inputHandler(e, 'password')}>
+                           setter={setFormData}
+                           state={formData}>
                         Heslo</Input>
                     <button className={"password-eye"}
                             onClick={(e) =>

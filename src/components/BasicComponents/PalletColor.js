@@ -46,6 +46,8 @@ const PalletColor = () => {
                 <MdInvertColors />
                 <input
                     type="text"
+                    name={"pallet_color"}
+                    id={"pallet_color"}
                     maxLength={7}
                     onFocus={textOnFocusHandler}
                     onChange={(e) => textInputHandler(e)}

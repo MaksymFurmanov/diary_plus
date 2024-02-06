@@ -1,16 +1,17 @@
 import PageTitle from "../BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import products from "../../data/products";
 import addImage from "../../fig/img/add_image.png"
 import Button from "../BasicComponents/Button.tsx";
 import PalletColor from "../BasicComponents/PalletColor";
 import ProductionPlan from "./ProductionPlan";
 import Input from "../BasicComponents/Input.tsx";
+import {useProducts} from "../../providers/ProductsProvider";
 
 const ProductInfo = ({existing}) => {
     let {productId} = useParams();
     productId = parseInt(productId);
+    const products = useProducts();
 
     const [product, setProduct] = useState({
         product_id: null,
@@ -22,17 +23,13 @@ const ProductInfo = ({existing}) => {
         quality_standards: "",
         changed: false
     });
-    const textInputHandler = (e) => {
-        const {name, value} = e.target;
-        setProduct({...product, [name]: value, changed: true});
-    };
-    const numberInputHandler = (e) => {
-        const {name, value} = e.target;
-        const numericRegex = /^[0-9]*$/;
-        if (numericRegex.test(value)) {
-            setProduct({...product, [name]: value, changed: true});
+    useEffect(() => {
+        if (existing) {
+            const existingProduct = products.find((product) =>
+                product.product_id === productId);
+            if (existingProduct) setProduct(existingProduct);
         }
-    };
+    }, [existing, productId, products]);
 
     const imageInputHandler = (e) => {
         const file = e.target.files[0];
@@ -49,15 +46,6 @@ const ProductInfo = ({existing}) => {
             reader.readAsDataURL(file);
         }
     };
-
-    //fetch data later
-    useEffect(() => {
-        if (existing) {
-            const existingProduct = products.find((product) =>
-                product.product_id === productId);
-            if (existingProduct) setProduct(existingProduct);
-        }
-    }, [existing, productId]);
 
     const unsavedChangesHandler = () => {
         if (product.changed) {
@@ -99,18 +87,21 @@ const ProductInfo = ({existing}) => {
                 <div>
                     <Input name={"name"}
                            value={product.name}
-                           onChange={textInputHandler}>
+                           setter={setProduct}
+                           state={product}>
                         Produkt:
                     </Input>
                     <Input name={"type"}
                            value={product.type}
-                           onChange={textInputHandler}>
+                           setter={setProduct}
+                           state={product}>
                         Typ:
                     </Input>
                     <Input type={"file"}
                            name={"quality_standards"}
                            value={product.quality_standards}
-                           onChange={textInputHandler}>
+                           setter={setProduct}
+                           state={product}>
                         Štandardy kvality:
                     </Input>
                     <Input type={"number"}
@@ -118,7 +109,8 @@ const ProductInfo = ({existing}) => {
                            size={2}
                            name={"per_pallet"}
                            value={product.per_pallet}
-                           onChange={numberInputHandler}>
+                           setter={setProduct}
+                           state={product}>
                         Počet na paletu:
                     </Input>
                     <div>

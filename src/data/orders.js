@@ -28,7 +28,7 @@ const orders = [
         pallet_color: "#E32A4B",
         deadline: "26.10.2023",
         done_date: "02.11.2023"
-    },
+    }
 ]
 
 export default orders;

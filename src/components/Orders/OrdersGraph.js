@@ -1,7 +1,9 @@
 import {PieChart} from "@mui/x-charts";
-import products from "../../data/products";
+import {useProducts} from "../../providers/ProductsProvider";
 
 const OrdersGraph = ({items, type}) => {
+    const products = useProducts();
+
     let data = [], pieArcLabelClasses = [], size = 0;
 
     if (type === "products_to_product") {

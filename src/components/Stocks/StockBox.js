@@ -1,9 +1,11 @@
 import StockPlace from "./StockPlace";
-import orders from "../../data/orders";
-import materials from "../../data/materials";
+import {useOrders} from "../../providers/OrdersProvider";
+import {useMaterials} from "../../providers/MaterialsProvider";
 
 const StockBox = ({group, type}) => {
+    const materials = useMaterials();
     const size = group.length;
+    const orders = useOrders();
 
     let className = "";
     if (size === 6) {

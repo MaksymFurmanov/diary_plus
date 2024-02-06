@@ -1,10 +1,14 @@
-import materials from "../../data/materials";
 import {RxCross2} from "react-icons/rx";
 import React from "react";
-import orders from "../../data/orders";
-import products from "../../data/products";
+import {useOrders} from "../../providers/OrdersProvider";
+import {useProducts} from "../../providers/ProductsProvider";
+import {useMaterials} from "../../providers/MaterialsProvider";
 
 const StockList = ({type}) => {
+    const orders = useOrders();
+    const products = useProducts();
+    const materials = useMaterials();
+
     const data = {
         entry: materials,
         output: orders

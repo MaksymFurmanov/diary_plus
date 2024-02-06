@@ -1,18 +1,49 @@
-import {FC, InputHTMLAttributes} from "react";
+import {EventHandler, FC, InputHTMLAttributes} from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectElement> {
+    setter: Function,
+    state: object,
     size?: number,
     position?: string,
+    options?: JSX.Element[],
 }
 
 const Input: FC<InputProps> = ({
                                    children,
+                                   setter,
+                                   state,
                                    name,
                                    type = "text",
                                    size,
                                    position,
+                                   options,
                                    ...rest
                                }) => {
+
+    let inputHandler: EventHandler<any>;
+    switch (type) {
+        case "number":
+            inputHandler = (e) => {
+                const {name, value} = e.target;
+                const numericRegex = /^[0-9]*$/;
+                if (numericRegex.test(value)) {
+                    setter({...state, [name]: value, changed: true});
+                }
+            };
+            break;
+        case "checkbox":
+            inputHandler = (e) => {
+                const {name, checked} = e.target;
+                setter({...state, [name]: checked, changed: true});
+            }
+            break;
+        default:
+            inputHandler = (e) => {
+                const {name, value} = e.target;
+                setter({...state, [name]: value, changed: true});
+            };
+    }
+
     let width;
     switch (size) {
         case 0:
@@ -48,12 +79,21 @@ const Input: FC<InputProps> = ({
                 <input type={type}
                        name={name}
                        id={name}
+                       onChange={inputHandler}
                        style={{width: width}}
                        {...rest}/>
             </>
-            : <select style={{width: width}} {...rest}>
-                {children}
-            </select>}
+            : <>
+                <label htmlFor={name}>{children}</label>
+                <select id={name}
+                        name={name}
+                        onChange={inputHandler}
+                        style={{width: width}}
+                        {...rest}>
+                    <option value={-1}></option>
+                    {options}
+                </select>
+            </>}
     </div>
 }
 

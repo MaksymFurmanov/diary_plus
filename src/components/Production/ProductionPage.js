@@ -1,13 +1,13 @@
 import PageTitle from "../BasicComponents/PageTitle";
-import orders from "../../data/orders"
 import ProductionItem from "./ProductionItem";
+import {useOrders} from "../../providers/OrdersProvider";
 
 const ProductionPage = () => {
-
+    const orders = useOrders();
 
     const productionItems = orders.map((order, index) => {
-        return <ProductionItem order={order}
-                               key={index}/>
+        return <ProductionItem key={index}
+                               order={order}/>
     });
 
     return <>

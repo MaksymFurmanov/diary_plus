@@ -1,10 +1,15 @@
 import Button from "../BasicComponents/Button.tsx";
-import products from "../../data/products";
-import production_processes from "../../data/production_processes";
 import {FaPen} from "react-icons/fa";
 import {BiSolidTrashAlt} from "react-icons/bi";
+import {useNavigate} from "react-router-dom";
+import {useProducts} from "../../providers/ProductsProvider";
+import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 
 const OrdersTable = ({items, type}) => {
+    const navigate = useNavigate();
+    const products = useProducts();
+    const production_processes = useProductionProcesses();
+
     let tableItems, colNames;
     if (type === 'products_to_product') {
         colNames = ["Produkt", "Typ", "Zákazník", "Status",
@@ -27,8 +32,13 @@ const OrdersTable = ({items, type}) => {
                 <td>{order.deadline}</td>
                 <td>
                     <div>
-                        <button><FaPen/></button>
-                        <button><BiSolidTrashAlt/></button>
+                        <button onClick={() =>
+                            navigate(`/orders/products_to_product/${order.order_id}`)}>
+                            <FaPen/>
+                        </button>
+                        <button>
+                            <BiSolidTrashAlt/>
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -50,7 +60,10 @@ const OrdersTable = ({items, type}) => {
                 </td>
                 <td>
                     <div>
-                        <button><FaPen/></button>
+                        <button onClick={() =>
+                            navigate(`/orders/raw_materials/${material.material_id}`)}>
+                            <FaPen/>
+                        </button>
                         <button><BiSolidTrashAlt/></button>
                     </div>
                 </td>
