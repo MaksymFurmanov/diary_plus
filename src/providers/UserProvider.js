@@ -1,16 +1,10 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import employees from "../data/employees";
+import {createContext, useContext, useState} from "react";
 
 const UserContext = createContext(undefined);
 const ChangeUserContext = createContext(undefined);
 
 const UserProvider = ({children}) => {
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        setUser(employees.find((employee) =>
-            employee.employee_id === 0))
-    }, [])
+    const [user, setUser] = useState();
 
     return <ChangeUserContext.Provider value={setUser}>
         <UserContext.Provider value={user}>

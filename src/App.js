@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import routes from "./routes";
+import ServerProvider from "./providers/SereverProvider";
 
 
 function App() {
@@ -17,11 +18,13 @@ function App() {
 
     return (
         <BrowserRouter>
-            <div className="App">
-                <Routes>
-                    {routesItems}
-                </Routes>
-            </div>
+            <ServerProvider>
+                <div className="App">
+                    <Routes>
+                        {routesItems}
+                    </Routes>
+                </div>
+            </ServerProvider>
         </BrowserRouter>
     );
 }
