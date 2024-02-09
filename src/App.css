@@ -215,15 +215,23 @@ input, select {
     color: black;
 }
 
-.LogInPage .log-in-background div {
+.login-inputs {
     display: flex;
-    margin: 1em 0 0 0;
+    flex-direction: column;
+}
+
+.login-inputs .Input {
+    margin-bottom: 1.5em;
+}
+
+.password {
+    display: flex;
     align-items: center;
 }
 
-.password-eye svg {
-    transform: translate(-3em, 0.7em);
-    width: 1.5em;
+.password svg {
+    transform: translate(-3.5em, -0.7em);
+    width: 1.7em;
 }
 
 .SystemNavigation {

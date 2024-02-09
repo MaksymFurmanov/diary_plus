@@ -26,53 +26,81 @@ const LogInPage = () => {
     const loginResult = async () => {
         try {
             const response = await fetch(
-                `${api}/user/log_in?username=${userForm.login}&password=${userForm.password}`
+                `${api}/user/log-in?username=${userForm.login}&password=${userForm.password}`
             );
             if (response.ok) {
                 const data = await response.json();
                 setUser(data);
                 navigate("/navigation");
             } else {
-                setUserForm(prevState => ({...prevState, wrong: true}));
+                setUserForm(prevState => ({
+                    ...prevState, wrong: true
+                }));
             }
         } catch (e) {
             console.log(e);
         }
     }
 
+/*    const loadEmployees = async () => {
+        try {
+            const response = await fetch(
+                `${api}/employees/load-employees`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify()
+                });
+            if (response.ok) {
+                console.log("OK");
+            } else {
+                console.log("ERROR");
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }*/
+
     const submitHandler = (e) => {
         e.preventDefault();
+
         loginResult();
     }
 
     return <form onSubmit={submitHandler} className={"LogInPage"}>
-        <div className="log-in-background v-center white-outline">
+        <div className="log-in-background v-center">
             <h1>PRIHLÁSENIE</h1>
-            <div>
-                <Input type={"text"}
-                       name={"login"}
-                       size={3}
-                       value={userForm.login}
-                       setter={setUserForm}
-                       state={userForm}>
-                    Meno</Input>
-            </div>
-            <div>
-                <Input type={passwordToggle ? "text" : "password"}
-                       size={3}
-                       name={"password"}
-                       value={userForm.password}
-                       setter={setUserForm}
-                       state={userForm}>
-                    Heslo</Input>
-                <button className={"password-eye"}
-                        onClick={(e) =>
-                            passwordHandler(e)}>
-                    {passwordToggle
-                        ? <IoMdEyeOff/>
-                        : <IoMdEye/>
-                    }
-                </button>
+            <div className={"white-outline login-inputs"}>
+                <div>
+                    <Input type={"text"}
+                           name={"login"}
+                           position={"close"}
+                           size={3}
+                           value={userForm.login}
+                           setter={setUserForm}
+                           state={userForm}
+                           autoComplete={"username"}>
+                        Meno</Input>
+                </div>
+                <div className={"password"}>
+                    <Input type={passwordToggle ? "text" : "password"}
+                           position={"close"}
+                           size={3}
+                           name={"password"}
+                           value={userForm.password}
+                           setter={setUserForm}
+                           state={userForm}
+                           autoComplete="current-password">
+                        Heslo</Input>
+                    <button onClick={(e) =>
+                        passwordHandler(e)}>
+                        {passwordToggle
+                            ? <IoMdEyeOff/>
+                            : <IoMdEye/>
+                        }
+                    </button>
+                </div>
             </div>
         </div>
         <div className={"v-center"}>

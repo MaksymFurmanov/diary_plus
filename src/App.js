@@ -17,15 +17,15 @@ function App() {
     ))
 
     return (
-        <BrowserRouter>
-            <ServerProvider>
+        <ServerProvider>
+            <BrowserRouter>
                 <div className="App">
                     <Routes>
                         {routesItems}
                     </Routes>
                 </div>
-            </ServerProvider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </ServerProvider>
     );
 }
 

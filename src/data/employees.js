@@ -1,14 +1,5 @@
 const employees = [
     {
-        employee_id: 0,
-        department_id: 2,
-        name: "Maksym Furmanov",
-        position: "Riaditeľ podniku",
-        date_of_birth: "17.03.2004",
-        login: "admin",
-        password: "admin"
-    },
-    {
         employee_id: 1,
         department_id: 0,
         name: "Ing. Eric Šoltésov",
