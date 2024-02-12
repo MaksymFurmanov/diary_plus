@@ -2,12 +2,11 @@ import Button from "../BasicComponents/Button.tsx";
 import {IoPerson} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import navItemsList from "./NavItemsList";
+import {useUser} from "../../providers/UserProvider";
 
 const SystemNavigation = () => {
     const navigate = useNavigate();
-
-    const name = "Maksym Furmanov";
-    const position = "Riaditeľ podniku";
+    const user = useUser();
 
     const navItems = navItemsList.map((item,
                                        index) => {
@@ -30,8 +29,8 @@ const SystemNavigation = () => {
                 </div>
                 <div>
                     <IoPerson/>
-                    <p>{name}</p>
-                    <p>{position}</p>
+                    <p>{user.name}</p>
+                    <p>{user.position}</p>
                 </div>
             </div>
             <nav className={"nav-panel"}>

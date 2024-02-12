@@ -1,15 +1,17 @@
-import {createContext, useContext, useState} from "react";
-import departmentsData from "../data/departments";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const DepartmentsContext = createContext(undefined);
 const SetDepartmentsContext = createContext(undefined);
 
 const DepartmentsProvider = ({children}) => {
-    const [departments, setDepartments] = useState(departmentsData);
+    const [departments, setDepartments, loading] =
+        useReadData("departments");
+
 
     return <SetDepartmentsContext.Provider value={setDepartments}>
         <DepartmentsContext.Provider value={departments}>
-            {children}
+            {loading ? <p>Loading...</p>: children}
         </DepartmentsContext.Provider>
     </SetDepartmentsContext.Provider>
 }

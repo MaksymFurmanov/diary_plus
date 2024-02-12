@@ -1,15 +1,16 @@
-import {createContext, useContext, useState} from "react";
-import productsData from "../data/products";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const ProductsContext = createContext(undefined);
 const SetProductsContext = createContext(undefined);
 
 const ProductsProvider = ({children}) => {
-    const [products, setProducts] = useState(productsData);
+    const [products, setProducts, loading] =
+        useReadData("products");
 
     return <SetProductsContext.Provider value={setProducts}>
         <ProductsContext.Provider value={products}>
-            {children}
+            {loading ? <p>Loading...</p>: children}
         </ProductsContext.Provider>
     </SetProductsContext.Provider>
 }

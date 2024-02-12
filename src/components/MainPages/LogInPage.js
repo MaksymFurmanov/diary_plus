@@ -3,7 +3,7 @@ import {useState} from "react";
 import {IoMdEye, IoMdEyeOff} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
 import Input from "../BasicComponents/Input.tsx";
-import {useServer} from "../../providers/SereverProvider";
+import {useServer} from "../../providers/ServerProvider";
 import {useSetUser} from "../../providers/UserProvider";
 
 const LogInPage = () => {
@@ -42,29 +42,8 @@ const LogInPage = () => {
         }
     }
 
-/*    const loadEmployees = async () => {
-        try {
-            const response = await fetch(
-                `${api}/employees/load-employees`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify()
-                });
-            if (response.ok) {
-                console.log("OK");
-            } else {
-                console.log("ERROR");
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }*/
-
     const submitHandler = (e) => {
         e.preventDefault();
-
         loginResult();
     }
 

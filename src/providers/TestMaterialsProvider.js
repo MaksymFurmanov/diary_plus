@@ -1,15 +1,15 @@
-import {createContext, useContext, useState} from "react";
-import testMaterialsData from "../data/test_materials";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const TestMaterialsContext = createContext(undefined);
 const SetTestMaterialsContext = createContext(undefined);
 
 const TestMaterialsProvider = ({children}) => {
-    const [testMaterials, setTestMaterials] = useState(testMaterialsData);
+    const [testMaterials, setTestMaterials, loading] = useReadData("tests-materials");
 
     return <SetTestMaterialsContext.Provider value={setTestMaterials}>
         <TestMaterialsContext.Provider value={testMaterials}>
-            {children}
+            {loading ? <p>Loading...</p>: children}
         </TestMaterialsContext.Provider>
     </SetTestMaterialsContext.Provider>
 }

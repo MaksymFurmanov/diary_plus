@@ -1,15 +1,16 @@
-import {createContext, useContext, useState} from "react";
-import output_stock_pallets from "../data/output_stock_place";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const OutputStockContext = createContext(undefined);
 const SetOutputStockContext = createContext(undefined);
 
 const OutputStockProvider = ({children}) => {
-    const [outputStock, setOutputStock] = useState(output_stock_pallets);
+    const [outputStock, setOutputStock, loading] =
+        useReadData("output-stock-places");
 
     return <SetOutputStockContext.Provider value={setOutputStock}>
         <OutputStockContext.Provider value={outputStock}>
-            {children}
+            {loading ? <p>Loading...</p>: children}
         </OutputStockContext.Provider>
     </SetOutputStockContext.Provider>
 }

@@ -19,33 +19,33 @@ const StockPage = () => {
         output: "Výstupný sklad"
     }
 
-    let groupsSplit = [];
+    let boxSplit = [];
     places[type].forEach((place) => {
-        let group = place.group.toString();
-        if (!(group in groupsSplit)) groupsSplit[group] = [place];
-        else groupsSplit[group].push(place);
+        let box = place.box.toString();
+        if (!(box in boxSplit)) boxSplit[box] = [place];
+        else boxSplit[box].push(place);
     })
 
-    const stockPlacesRow1 = groupsSplit.slice(0, 4).map((group, index) => (
-        <StockBox key={`row1-${index}`} type={type} group={group} />
+    const stockPlacesRow1 = boxSplit.slice(0, 4).map((box, index) => (
+        <StockBox key={`row1-${index}`} type={type} box={box} />
     ));
 
     let stockPlacesRow2 = [];
-    const slicedVerticals = groupsSplit.slice(4, 12);
+    const slicedVerticals = boxSplit.slice(4, 12);
     for (let i = 0; i < slicedVerticals.length; i += 2) {
-        const group1 = slicedVerticals[i];
-        const group2 = slicedVerticals[i + 1];
+        const box1 = slicedVerticals[i];
+        const box2 = slicedVerticals[i + 1];
 
         stockPlacesRow2.push(
             <div className={"vertical-stock-boxes"} key={`row2-${i / 2}`}>
-                <StockBox key={`row2-${i}`} type={type} group={group1} />
-                <StockBox key={`row2-${i + 1}`} type={type} group={group2} />
+                <StockBox key={`row2-${i}`} type={type} box={box1} />
+                <StockBox key={`row2-${i + 1}`} type={type} box={box2} />
             </div>
         );
     }
 
-    const stockPlacesRow3 = groupsSplit.slice(12, 16).map((group, index) => (
-        <StockBox key={`row3-${index}`} type={type} group={group} />
+    const stockPlacesRow3 = boxSplit.slice(12, 16).map((box, index) => (
+        <StockBox key={`row3-${index}`} type={type} box={box} />
     ));
 
     const allStockPlaces = [stockPlacesRow1, stockPlacesRow2, stockPlacesRow3];

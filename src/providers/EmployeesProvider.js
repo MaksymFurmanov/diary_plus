@@ -1,38 +1,16 @@
-import { createContext, useContext, useEffect, useState} from "react";
-import { useServer } from "./SereverProvider";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const EmployeesContext = createContext(undefined);
 const SetEmployeesContext = createContext(undefined);
 
-const EmployeesProvider = ({ children }) => {
-    const [employees, setEmployees] = useState([]);
-    const api = useServer();
-
-    useEffect(() => {
-        const fetchEmployees = async () => {
-            try {
-                const response = await fetch(
-                    `${api}/employees/get-employees`
-                );
-                if (response.ok) {
-                    const data = await response.json();
-                    setEmployees(data);
-                } else {
-                    console.log("No employees found");
-                }
-            } catch (e) {
-                console.error("Error fetching employees:",
-                    `${api}/employees/get-employees`, e);
-            }
-        };
-
-        fetchEmployees();
-    }, [api, employees]);
+const EmployeesProvider = ({children}) => {
+    const [employees, setEmployees, loading] = useReadData("employees");
 
     return (
         <SetEmployeesContext.Provider value={setEmployees}>
             <EmployeesContext.Provider value={employees}>
-                {children}
+                {loading ? <p>Loading...</p>: children}
             </EmployeesContext.Provider>
         </SetEmployeesContext.Provider>
     );

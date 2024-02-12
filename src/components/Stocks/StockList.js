@@ -26,7 +26,6 @@ const StockList = ({type}) => {
                     itemDetails: `Zdroj: ${item.supplier}`
                 }
             }
-            console.log(item);
         } else {
             if (item.done_date !== null) {
                 const foundProduct = products.find((product) =>

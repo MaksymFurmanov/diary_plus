@@ -2,9 +2,9 @@ import StockPlace from "./StockPlace";
 import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 
-const StockBox = ({group, type}) => {
+const StockBox = ({box, type}) => {
     const materials = useMaterials();
-    const size = group.length;
+    const size = box.length;
     const orders = useOrders();
 
     let className = "";
@@ -14,7 +14,7 @@ const StockBox = ({group, type}) => {
         className = "horizontal-stock-box"
     }
 
-    const places = group.map((place, index) => {
+    const places = box.map((place, index) => {
         let palletColor = "#F8F8F8";
         let date;
 

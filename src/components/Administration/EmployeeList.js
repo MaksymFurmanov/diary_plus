@@ -7,12 +7,12 @@ const EmployeeList = ({department}) => {
     const employees = useEmployees();
 
     const [showToggle, setShowToggle] = useState(true);
-    const listCards = employees.map((employee, index) => {
+    const listCards = employees ? employees.map((employee, index) => {
         if (employee.department_id === department.department_id)
             return <EmployeeCard key={index}
                                  employee={employee}/>
         else return undefined;
-    });
+    }) : [];
 
     const hideHandler = () => setShowToggle(!showToggle);
 

@@ -56,7 +56,7 @@ const TestingItem = ({item, laboratory}) => {
             backgroundColor: "#F8F8F8",
             color: "black"
         }}>
-            {item.file}
+            {item.document}
         </p>
         <button>
             {<FaArrowRight/>}

@@ -1,15 +1,16 @@
-import {createContext, useContext, useState} from "react";
-import entery_stock_pallets from "../data/entery_stock_place";
+import {createContext, useContext} from "react";
+import useReadData from "../hooks/useReadData";
 
 const EnteryStockContext = createContext(undefined);
 const SetEnteryStockContext = createContext(undefined);
 
 const EnteryStockProvider = ({children}) => {
-    const [enteryStock, setEnteryStock] = useState(entery_stock_pallets);
+    const [enteryStock, setEnteryStock, loading] =
+        useReadData("entery-stock-places");
 
     return <SetEnteryStockContext.Provider value={setEnteryStock}>
         <EnteryStockContext.Provider value={enteryStock}>
-            {children}
+            {loading ? <p>Loading...</p>: children}
         </EnteryStockContext.Provider>
     </SetEnteryStockContext.Provider>
 }

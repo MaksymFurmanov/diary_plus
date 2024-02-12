@@ -28,7 +28,7 @@ const ResultsItem = ({item, laboratory}) => {
 
     const handleDownload = (type) => {
         const link = document.createElement('a');
-        link.href = type !== "standards" ? standards : item.file;
+        link.href = type !== "standards" ? standards : item.document;
         link.download = type !== "standards"
             ? `${name}_${details}_quality_standards`
             : `${item.test_id}.pdf`;
@@ -50,7 +50,7 @@ const ResultsItem = ({item, laboratory}) => {
                     OTVORIŤ</p>
             </div>}
             <div>
-                <p>{item.file}</p>
+                <p>{item.document}</p>
                 <p onClick={() => handleDownload("standards")}>
                     OTVORIŤ</p>
             </div>
