@@ -14,7 +14,6 @@ const PalletColor = () => {
     const [color, setColor] = useState(getRandomColor());
     const [prevColor, setPrevColor] = useState(color);
     const textRef = useRef(null);
-
     const colorInputHandler = (e) => {
         setColor(e.target.value);
     };

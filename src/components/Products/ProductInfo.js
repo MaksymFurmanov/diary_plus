@@ -7,11 +7,16 @@ import PalletColor from "../BasicComponents/PalletColor";
 import ProductionPlan from "./ProductionPlan";
 import Input from "../BasicComponents/Input.tsx";
 import {useProducts} from "../../providers/ProductsProvider";
+import {storage} from "../../firebase-config";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 
 const ProductInfo = ({existing}) => {
     let {productId} = useParams();
     productId = parseInt(productId);
     const products = useProducts();
+    const [imageBox, setImageBox] = useState({
+        display: addImage, file: null
+    });
 
     const [product, setProduct] = useState({
         product_id: null,
@@ -19,10 +24,11 @@ const ProductInfo = ({existing}) => {
         type: "",
         per_pallet: 20,
         pallet_color: "",
-        img: addImage,
+        img: "",
         quality_standards: "",
         changed: false
     });
+
     useEffect(() => {
         if (existing) {
             const existingProduct = products.find((product) =>
@@ -37,11 +43,7 @@ const ProductInfo = ({existing}) => {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setProduct({
-                    ...product,
-                    img: reader.result,
-                    changed: true
-                });
+                setImageBox({display: reader.result, file: file});
             };
             reader.readAsDataURL(file);
         }
@@ -58,14 +60,27 @@ const ProductInfo = ({existing}) => {
 
     }
 
-    const saveHandler = () => {
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        const imageRef = ref(storage, `/products/img/${product.name}-${product.type}`);
 
+        try {
+            uploadBytes(imageRef, imageBox.file).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setProduct({...product, img: url});
+                });
+            });
+        } catch (e) {
+            console.error(e.message);
+        }
+
+        //api request to save a product
     }
 
     return <>
         <PageTitle name={existing ? "Produkt" : "Nový produkt"}
                    prev={unsavedChangesHandler()}/>
-        <form className={"ProductInfo evenly"}>
+        <form className={"ProductInfo evenly"} onSubmit={e => submitHandler(e)}>
             <div>
                 <div className={"add-product-image"}>
                     <input type={"file"}
@@ -77,7 +92,7 @@ const ProductInfo = ({existing}) => {
                            onChange={imageInputHandler}
                     />
                     <label htmlFor={"img"}>
-                        <img src={product.img}
+                        <img src={imageBox.display}
                              alt={""}/>
                     </label>
                 </div>
@@ -125,7 +140,7 @@ const ProductInfo = ({existing}) => {
                         ? <>
                             <Button onClick={deleteHandler}
                                     type={"delete"}>VYMAZAŤ</Button>
-                            <Button onClick={saveHandler}
+                            <Button onClick={submitHandler}
                                     type={"edit"}>ÚPRAVIŤ</Button>
                         </>
                         : <Button type={"submit"}>PRIDAŤ</Button>

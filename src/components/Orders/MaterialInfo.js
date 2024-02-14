@@ -5,14 +5,15 @@ import Button from "../BasicComponents/Button.tsx";
 import Input from "../BasicComponents/Input.tsx";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import PalletColor from "../BasicComponents/PalletColor";
+import {useServer} from "../../providers/ServerProvider";
 
 const MaterialInfo = ({existing}) => {
     let {materialId} = useParams();
     materialId = parseInt(materialId);
     const materials = useMaterials();
+    const api = useServer();
 
     const [material, setMaterial] = useState({
-        material_id: null,
         name: "",
         supplier: "",
         volume: 0,
@@ -35,6 +36,27 @@ const MaterialInfo = ({existing}) => {
         }
     }, [existing, existingMaterial]);
 
+    const loadMaterial = async () => {
+        console.log(material);
+        try {
+            const response = await fetch(`${api}/materials/new-material`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(material)
+                });
+
+            console.log(response);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        loadMaterial();
+    }
+
     const materialList = materials.map((material, index) => (
         <option key={index} value={material.name}/>));
 
@@ -44,7 +66,7 @@ const MaterialInfo = ({existing}) => {
     return <>
         <PageTitle name={existing ? "Objednávka surovín" : "Nová objednávka surovín"}
                    prev={"/orders/raw_material"}/>
-        <div className={"MaterialInfo"}>
+        <form className={"MaterialInfo"} onSubmit={e => submitHandler(e)}>
             <div className={"h-stretch-center"}>
                 <div className={"input-field"}>
                     <Input
@@ -100,7 +122,7 @@ const MaterialInfo = ({existing}) => {
                     : <Button>PRIDAŤ</Button>
                 }
             </div>
-        </div>
+        </form>
     </>
 }
 
