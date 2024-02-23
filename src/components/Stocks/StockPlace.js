@@ -1,20 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import {RxCross2} from "react-icons/rx";
 import Tooltip from '@mui/material/Tooltip';
 
-const StockPlace = React.memo(({palletColor, date}) => {
-    const [selected, setSelected] =
-        useState(false);
-
-    const selectHandler = () => {
-        setSelected(!selected);
-    };
-
+const StockPlace = React.memo(({palletColor, date, selected, onClick}) => {
     return <Tooltip disableFocusListener disableTouchListener title={date}>
         <div className={"StockPlace"}
              style={{backgroundColor: palletColor}}
-             onClick={selectHandler}>
-            {selected && <RxCross2/>}
+             onClick={onClick}>
+            {selected !== undefined && <RxCross2/>}
         </div>
     </Tooltip>
 })

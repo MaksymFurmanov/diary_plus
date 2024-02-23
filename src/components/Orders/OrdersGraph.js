@@ -16,7 +16,7 @@ const OrdersGraph = ({items, type}) => {
             pieArcLabelClasses.push(label);
             size += order.volume;
         });
-    } else if (type === "raw_material") {
+    } else if (type === "raw_materials") {
         items.forEach((material) => {
             const label = material.name;
 
@@ -44,7 +44,7 @@ const OrdersGraph = ({items, type}) => {
             slotProps={{
                 legend: {
                     direction: 'column',
-                    position: { vertical: 'bottom', horizontal: 'right' },
+                    position: { vertical: 'bottom', horizontal: 'center' },
                     padding: 0,
                 },
             }}

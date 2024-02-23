@@ -1,24 +1,27 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import PageTitle from "../BasicComponents/PageTitle";
 import Input from "../BasicComponents/Input.tsx";
 import Button from "../BasicComponents/Button.tsx";
-import {useOrders} from "../../providers/OrdersProvider";
+import {useOrders, useSetOrders} from "../../providers/OrdersProvider";
 import {useProducts} from "../../providers/ProductsProvider";
+import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const OrderInfo = ({existing}) => {
     let {orderId} = useParams();
     orderId = parseInt(orderId);
+    const navigate = useNavigate();
     const orders = useOrders();
+    const setOrders = useSetOrders();
     const products = useProducts();
+    const [loadDataItem, loading] = useLoadDataItem();
 
     const [order, setOrder] = useState({
         order_id: null,
         product_name: "",
         product_id: "",
         customer: "",
-        volume: 0,
-        pallet_color: "",
+        volume: 100,
         deadline: "",
         changed: false
     });
@@ -59,10 +62,28 @@ const OrderInfo = ({existing}) => {
        <option key={index} value={order.customer}/>
     ));
 
-    return <>
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        loadDataItem('orders', order).then((newOrder) => {
+            const orderIndex = orders.findIndex((orderItem) =>
+                orderItem.order_id === order.order_id);
+            if (orderIndex !== -1) {
+                const newOrders = [...orders];
+                newOrders[orderIndex] =
+                    {...orders[orderIndex], ...newOrder};
+                setOrders(newOrders);
+            } else {
+                setOrders(prevState => [...prevState, newOrder]);
+            }
+            navigate("/orders/products_to_product");
+        });
+    }
+
+    return loading ? <p>Loading...</p> : <>
         <PageTitle name={existing ? "Objednávka" : "Nová objednávka"}
                    prev={"/orders/products_to_product"}/>
-        <div className={"OrderInfo"}>
+        <form className={"OrderInfo"} onSubmit={e => submitHandler(e)}>
             <div className={"input-field"}>
                 <Input
                     type={"select"}
@@ -95,6 +116,7 @@ const OrderInfo = ({existing}) => {
                 </datalist>
                 <Input
                     type={"number"}
+                    min={1}
                     name={"volume"}
                     value={order.volume}
                     setter={setOrder}
@@ -117,7 +139,7 @@ const OrderInfo = ({existing}) => {
                     : <Button>PRIDAŤ</Button>
                 }
             </div>
-        </div>
+        </form>
     </>;
 };
 

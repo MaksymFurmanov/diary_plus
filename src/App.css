@@ -276,6 +276,7 @@ input, select {
 
 .product-card img {
     width: 7em;
+    height: 9em;
 }
 
 .product-card button {

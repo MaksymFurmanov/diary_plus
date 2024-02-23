@@ -12,17 +12,17 @@ const OrdersPage = () => {
 
     const items = {
         products_to_product: useOrders(),
-        raw_material: useMaterials()
+        raw_materials: useMaterials()
     };
 
     const title = {
         products_to_product: "Objednávky na výrobu",
-        raw_material: "Objednané suroviny"
+        raw_materials: "Objednané suroviny"
     }
 
     const new_order_page = {
         products_to_product: "/orders/products_to_product/new_order",
-        raw_material: "/orders/raw_materials/new_order_material"
+        raw_materials: "/orders/raw_materials/new_order_material"
     }
 
     return <>

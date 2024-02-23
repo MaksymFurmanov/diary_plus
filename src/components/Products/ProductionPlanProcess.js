@@ -1,6 +1,6 @@
 import {GoArrowRight} from "react-icons/go";
 
-const ProductionPlanItem = ({process, index, last, handleItemClick}) => {
+const ProductionPlanProcess = ({process, index, last, handleItemClick}) => {
     return <>
         <div className={"ProductionPlanItem"}
              onClick={(e) =>
@@ -11,4 +11,4 @@ const ProductionPlanItem = ({process, index, last, handleItemClick}) => {
     </>
 }
 
-export default ProductionPlanItem
+export default ProductionPlanProcess

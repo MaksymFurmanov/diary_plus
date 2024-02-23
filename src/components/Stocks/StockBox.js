@@ -1,47 +1,88 @@
 import StockPlace from "./StockPlace";
 import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
+import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
+import {useProducts} from "../../providers/ProductsProvider";
 
 const StockBox = ({box, type}) => {
-    const materials = useMaterials();
+    const products = useProducts();
     const size = box.length;
-    const orders = useOrders();
 
-    let className = "";
-    if (size === 6) {
-        className = "vertical-stock-box"
-    } else if (size === 8) {
-        className = "horizontal-stock-box"
+    const items = {
+        entry: useMaterials(),
+        output: useOrders()
+    }
+
+    const place_id = {
+        entry: 'entery_stock_place_id',
+        output: 'output_stock_place_id'
+    }
+
+    const item_id = {
+        entry: 'material_id',
+        output: 'order_id'
+    }
+
+    const required_date = {
+        entry: 'arriving_date',
+        output: 'done_date'
+    }
+
+    let className = {
+        6: "vertical-stock-box",
+        8: "horizontal-stock-box"
+    }
+
+    const placesToChange = usePlacesToChange();
+    const setPlacesToChange = useSetPlacesToChange();
+
+    const selectHandler = (place) => {
+        const placeId = place[place_id[type]];
+
+        if (placeId !== undefined) {
+            const placesToChangeIndex = placesToChange.findIndex((placesToChangeItem) =>
+                placesToChangeItem === placeId);
+
+            if (placesToChangeIndex !== -1) {
+                const newPlacesToChange = [...placesToChange];
+                newPlacesToChange.splice(placesToChangeIndex, 1);
+                setPlacesToChange(newPlacesToChange);
+                return;
+            }
+        }
+        setPlacesToChange(prevState => [...prevState, placeId]);
     }
 
     const places = box.map((place, index) => {
         let palletColor = "#F8F8F8";
         let date;
+        const itemId = place[item_id[type]];
 
-        if (type === "entry") {
-            if (place.material_id !== null) {
-                const foundMaterial = materials.find((material) =>
-                    place.material_id === material.material_id);
-                date = foundMaterial.arriving_date;
-                palletColor = foundMaterial.pallet_color;
+        if (itemId !== null) {
+            let foundItem = items[type].find((item) =>
+                itemId === item[item_id[type]]);
+
+            if(type === "output") {
+                foundItem = products.find((product) =>
+                    product.product_id === foundItem.product_id);
             }
-        } else if (type === "output") {
-            if (place.order_id !== null) {
-                const foundOrder = orders.find((order) =>
-                    place.order_id === order.order_id);
-                date = foundOrder.done_date;
-                palletColor = foundOrder.pallet_color;
-            }
+
+            date = foundItem[required_date[type]];
+            palletColor = foundItem.pallet_color;
         }
 
         return (
-            <StockPlace key={index} palletColor={palletColor}
-                        date={date}/>
+            <StockPlace key={index}
+                        palletColor={palletColor}
+                        date={date}
+                        onClick={() => selectHandler(place)}
+                        selected={placesToChange.find((id) =>
+                            id === place[place_id[type]])}
+            />
         );
     });
 
-
-    return <div className={`StockBox ${className}`}>
+    return <div className={`StockBox ${className[size]}`}>
         {places}
     </div>
 }

@@ -13,6 +13,7 @@ import AboutSystem from "./components/MainPages/AboutSystem";
 import EmployeeInfo from "./components/Administration/EmployeeInfo";
 import OrderInfo from "./components/Orders/OrderInfo";
 import MaterialInfo from "./components/Orders/MaterialInfo";
+import PlacesToChangeProvider from "./providers/PlacesToChangeProvider";
 
 const routes = [
     {
@@ -67,7 +68,9 @@ const routes = [
     },
     {
         path: "/stock/:type",
-        element: <StockPage/>,
+        element: <PlacesToChangeProvider>
+            <StockPage/>
+        </PlacesToChangeProvider>,
     },
     {
         path: "/testings/:laboratory",

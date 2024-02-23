@@ -5,7 +5,7 @@ const NavItemsList = [
     },
     {
         name: "Objednané suroviny",
-        navigation: "/orders/raw_material"
+        navigation: "/orders/raw_materials"
     },
     {
         name: "Plán výroby",

@@ -1,17 +1,15 @@
 import {useEffect, useState} from "react";
-import ProductionPlanItem from "./ProductionPlanItem";
+import ProductionPlanProcess from "./ProductionPlanProcess";
 import {FaCirclePlus} from "react-icons/fa6";
 import ProductionProcessDetails from "./ProductionProcessDetails";
 import AddProcess from "./AddProcess";
 import {GoArrowRight} from "react-icons/go";
 import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 
-const ProductionPlan = ({productId}) => {
+const ProductionPlan = ({processes, setProcesses, productId}) => {
     const production_processes = useProductionProcesses();
 
-    const [processes, setProcesses] = useState([]);
-    const [addProcessToggle, setAddProcessToggle] =
-        useState(false);
+    const [addProcessToggle, setAddProcessToggle] = useState(false);
     const [detailsBox, setDetailsBox] = useState({
         process_queue: -1,
         toggle: false,
@@ -24,7 +22,7 @@ const ProductionPlan = ({productId}) => {
                 return process.product_id === productId;
             });
         setProcesses(filteredProcesses);
-    }, [productId, production_processes]);
+    }, [productId, production_processes, setProcesses]);
 
     const inputHandler = (e) => {
         const {name, value} = e.target;
@@ -62,7 +60,7 @@ const ProductionPlan = ({productId}) => {
 
     const productionPlanItems = processes.map((process, index) => {
         return (
-            <ProductionPlanItem
+            <ProductionPlanProcess
                 key={index}
                 handleItemClick={handleItemClick}
                 process={process}
@@ -85,11 +83,11 @@ const ProductionPlan = ({productId}) => {
                     coordinates={[detailsBox.position.x,
                         detailsBox.position.y]}
                     closeHandler={closeDetails}
-                />
-            )}
+                />)}
             {addProcessToggle && <>
-                <div><GoArrowRight/></div>
-                <AddProcess queue={processes.length + 1}/>
+                {productionPlanItems[0] && <div><GoArrowRight/></div>}
+                <AddProcess queue={processes.length}
+                            setProcesses={setProcesses}/>
             </>}
             <button onClick={addHandler}>
                 <FaCirclePlus/>

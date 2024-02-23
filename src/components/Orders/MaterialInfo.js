@@ -1,24 +1,26 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import PageTitle from "../BasicComponents/PageTitle";
 import Button from "../BasicComponents/Button.tsx";
 import Input from "../BasicComponents/Input.tsx";
-import {useMaterials} from "../../providers/MaterialsProvider";
+import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 import PalletColor from "../BasicComponents/PalletColor";
-import {useServer} from "../../providers/ServerProvider";
+import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const MaterialInfo = ({existing}) => {
     let {materialId} = useParams();
     materialId = parseInt(materialId);
     const materials = useMaterials();
-    const api = useServer();
+    const setMaterials = useSetMaterials();
+    const navigate = useNavigate();
+    const [loadDataItem, loading] = useLoadDataItem();
 
     const [material, setMaterial] = useState({
+        material_id: null,
         name: "",
         supplier: "",
-        volume: 0,
+        volume: 10,
         per_pallet: 10,
-        arriving_date: "",
         pallet_color: "",
         changed: false
     });
@@ -29,43 +31,66 @@ const MaterialInfo = ({existing}) => {
 
     useEffect(() => {
         if (existing && existingMaterial) {
-            setMaterial((prevState) => ({
+            setMaterial(prevState => ({
                 ...prevState,
                 ...existingMaterial
             }));
         }
     }, [existing, existingMaterial]);
 
-    const loadMaterial = async () => {
-        console.log(material);
-        try {
-            const response = await fetch(`${api}/materials/new-material`,
-                {
-                    method: 'POST',
-                    body: JSON.stringify(material)
-                });
+    let materialList, supplierList, materialSet = new Set(), supplierSet = new Set();
 
-            console.log(response);
-        } catch (e) {
-            console.log(e.message);
-        }
-    }
+    materials.forEach((material) => {
+        materialSet.add(material.name);
+        supplierSet.add(material.supplier);
+    });
+
+    materialList = Array.from(materialSet).map((name, index) => (
+        <option key={index} value={name} />
+    ));
+
+    supplierList = Array.from(supplierSet).map((supplier, index) => (
+        <option key={index} value={supplier} />
+    ));
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        loadMaterial();
+        let updatedMaterial;
+        if (material.material_id !== null) {
+            updatedMaterial = {...material}
+        } else {
+            const currentDate = new Date();
+            const date = currentDate.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).split('/').join('.');
+            updatedMaterial = {
+                ...material,
+                date_of_order: date
+            }
+        }
+
+        loadDataItem('materials', updatedMaterial).then((newMaterial) => {
+            const materialIndex = materials.findIndex((materialItem) =>
+                materialItem.material_id === material.material_id);
+
+            if (materialIndex !== -1) {
+                const newMaterials = [...materials];
+                newMaterials[materialIndex] =
+                    {...materials[materialIndex], ...newMaterial};
+                setMaterial(newMaterials);
+            } else {
+                setMaterials(prevState => [...prevState, newMaterial]);
+            }
+            navigate("/orders/raw_materials");
+        });
     }
 
-    const materialList = materials.map((material, index) => (
-        <option key={index} value={material.name}/>));
-
-    const supplierList = materials.map((material, index) => (
-        <option key={index} value={material.supplier}/>));
-
-    return <>
+    return loading ? <p>Loading...</p> : <>
         <PageTitle name={existing ? "Objednávka surovín" : "Nová objednávka surovín"}
-                   prev={"/orders/raw_material"}/>
+                   prev={"/orders/raw_materials"}/>
         <form className={"MaterialInfo"} onSubmit={e => submitHandler(e)}>
             <div className={"h-stretch-center"}>
                 <div className={"input-field"}>
@@ -92,6 +117,7 @@ const MaterialInfo = ({existing}) => {
                     <div className={"h-center"} style={{justifyContent: "space-between"}}>
                         <Input type={"number"}
                                size={0}
+                               min={1}
                                name={"volume"}
                                value={material.volume}
                                setter={setMaterial}
@@ -99,25 +125,22 @@ const MaterialInfo = ({existing}) => {
                         >Počet na paletu:</Input>
                         <Input type={"number"}
                                size={0}
+                               min={1}
                                name={"per_pallet"}
                                value={material.per_pallet}
                                setter={setMaterial}
                                state={material}
                         >Počet paliet:</Input>
                     </div>
-                    <Input
-                        name={"arriving_date"}
-                        value={material.arriving_date}
-                        setter={setMaterial}
-                        state={material}
-                    >Prišlo:</Input>
                 </div>
-                <PalletColor/>
+                <PalletColor state={material}
+                             setter={setMaterial}
+                             nameInput={"pallet_color"}/>
             </div>
             <div className={"bottom-buttons"}>
                 {existing
                     ? <><Button>VYMAZAŤ</Button>
-                        <Button>ÚPRAVIŤ</Button>
+                        <Button type={"submit"}>ÚPRAVIŤ</Button>
                     </>
                     : <Button>PRIDAŤ</Button>
                 }

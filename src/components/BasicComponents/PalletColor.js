@@ -1,5 +1,5 @@
-import { MdInvertColors } from "react-icons/md";
-import { useRef, useState } from "react";
+import {MdInvertColors} from "react-icons/md";
+import {useEffect, useRef, useState} from "react";
 
 const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -10,26 +10,30 @@ const getRandomColor = () => {
     return color;
 };
 
-const PalletColor = () => {
-    const [color, setColor] = useState(getRandomColor());
-    const [prevColor, setPrevColor] = useState(color);
+const PalletColor = ({state, setter, nameInput}) => {
+    const [prevColor, setPrevColor] = useState(state[nameInput]);
     const textRef = useRef(null);
-    const colorInputHandler = (e) => {
-        setColor(e.target.value);
-    };
 
+    useEffect(() => {
+        if (state[nameInput] === "") {
+            const color = getRandomColor();
+            setter(prevState =>
+                ({...prevState, [nameInput]: color}));
+            setPrevColor(color);
+        }
+    }, [nameInput, setter, state]);
+    const inputHandler = (e) => {
+        setter(prevState =>
+            ({...prevState, [nameInput]: e.target.value}));
+    };
     const textOnFocusHandler = () => {
-        setPrevColor(color);
-    };
-
-    const textInputHandler = (e) => {
-        setColor(e.target.value);
+        setPrevColor(state[nameInput]);
     };
 
     const textOnBlurHandler = () => {
         const hexColor = /^#([0-9A-F]{3}){1,2}$/i;
-        if (!hexColor.test(color)) {
-            setColor(prevColor);
+        if (!hexColor.test(state[nameInput])) {
+            setter(prevState => ({...prevState, [nameInput]: prevColor}));
         }
     };
 
@@ -38,21 +42,21 @@ const PalletColor = () => {
             <h3>Farba palety:</h3>
             <input
                 type="color"
-                value={color}
-                onChange={(e) => colorInputHandler(e)}
+                name={nameInput}
+                id={nameInput}
+                value={state[nameInput]}
+                onChange={e => inputHandler(e)}
             />
             <div className={"evenly"}>
-                <MdInvertColors />
+                <MdInvertColors/>
                 <input
                     type="text"
-                    name={"pallet_color"}
-                    id={"pallet_color"}
                     maxLength={7}
                     onFocus={textOnFocusHandler}
-                    onChange={(e) => textInputHandler(e)}
+                    onChange={e => inputHandler(e)}
                     onBlur={textOnBlurHandler}
                     ref={textRef}
-                    value={color}
+                    value={state[nameInput]}
                 />
             </div>
         </div>

@@ -18,16 +18,30 @@ const OrdersTable = ({items, type}) => {
         tableItems = items.map((order, index) => {
             const product = products.find((product) =>
                 order.product_id === product.product_id);
-            const productionProcess = production_processes
+
+            let productionProcess, status;
+
+            productionProcess = production_processes
                 .find((production_process) =>
-                    order.production_process_id
-                    === production_process.production_process_id)
+                    production_process.production_process_id
+                    === order.production_process_id);
+
+            if (productionProcess === undefined) {
+                productionProcess = production_processes
+                    .find((production_process) =>
+                        production_process.production_process_id === 0);
+
+                const processName = productionProcess.name;
+                status = `Čaká sa ${processName.charAt(0).toLowerCase()+processName.slice(1)}`
+            } else {
+                status = productionProcess.done_name
+            }
 
             return <tr key={index}>
                 <td>{product.name}</td>
                 <td>{product.type}</td>
                 <td>{order.customer}</td>
-                <td>{productionProcess.done_name}</td>
+                <td>{status}</td>
                 <td>{order.volume}</td>
                 <td>{order.deadline}</td>
                 <td>
@@ -43,7 +57,7 @@ const OrdersTable = ({items, type}) => {
                 </td>
             </tr>
         });
-    } else if (type === 'raw_material') {
+    } else if (type === 'raw_materials') {
         colNames = ["Jednotka suroviny", "Zdroj", "Počet na paletu",
             "Počet paliet", "Datum objednania", "Prišlo"];
 

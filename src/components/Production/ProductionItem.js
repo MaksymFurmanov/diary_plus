@@ -5,7 +5,7 @@ import arrowImg from "../../fig/img/arrow_wave.svg";
 import {useProducts} from "../../providers/ProductsProvider";
 import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 
-const ProductionItem = ({order}) => {
+const ProductionItem = ({order, setOrder}) => {
     const [showToggle, setShowToggle] = useState(true);
     const products = useProducts();
     const production_processes = useProductionProcesses();
@@ -18,21 +18,29 @@ const ProductionItem = ({order}) => {
             production_process.production_process_id
             === order.production_process_id);
 
-    const lastProcess = production_processes.length - 1;
+    const lastProcess = production_processes.length;
 
-    const processes = production_processes.map((production_process,
-                                                index) => {
-        return <Fragment key={index}>
-                <ProductionProcess key={`process-${index}`}
-                                   production_process={production_process}
-                                   actualProcess={actualProcess}/>
-                {production_process.queue !== lastProcess
-                    && <img key={`arrow-${index}`}
-                            src={arrowImg}
-                            alt=""/>}
-            </Fragment>
-        }
-    );
+    const processes = production_processes.map((production_process, index) => (
+        <Fragment key={index}>
+            <ProductionProcess
+                key={`process-${index}`}
+                order={order}
+                setOrder={setOrder}
+                production_process={production_process}
+                queue={actualProcess !== undefined
+                    ? actualProcess.queue
+                    : -1}
+                lastProcess={lastProcess}
+            />
+            {production_process.queue !== lastProcess - 1 &&
+                <img
+                    key={`arrow-${index}`}
+                    src={arrowImg}
+                    alt=""
+                />
+            }
+        </Fragment>
+    ));
 
     return <div className={"ProductionItem"}>
         <div className={"order-info"}>

@@ -4,7 +4,7 @@ import {useServer} from "../providers/ServerProvider";
 
 const useReadData = (type) => {
     const api = useServer();
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const useReadData = (type) => {
                 const response = await fetch(`${api}/${type}/get-${type}`);
                 if (response.ok) {
                     const fetchedData = await response.json();
-                    console.log(fetchedData);
+                    /*console.log(type, fetchedData);*/
                     setData(fetchedData);
                 } else {
                     console.log(`No ${type} found`);
@@ -31,5 +31,4 @@ const useReadData = (type) => {
 
     return useMemo(() => ([data, setData, loading]), [data, loading]);
 };
-
 export default useReadData;

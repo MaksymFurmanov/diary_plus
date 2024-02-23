@@ -10,7 +10,8 @@ const EmployeeList = ({department}) => {
     const listCards = employees ? employees.map((employee, index) => {
         if (employee.department_id === department.department_id)
             return <EmployeeCard key={index}
-                                 employee={employee}/>
+                                 employee={employee}
+                                 isManager={department.manager_id === employee.employee_id} />
         else return undefined;
     }) : [];
 

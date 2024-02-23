@@ -61,6 +61,14 @@ const ProductionProcessDetails = ({
                     top: positionY + "px"
                 }}
                 ref={containerRef}>
+{/*        <div>
+            <label>Názov:</label>
+            <input name={"name"}
+                   id={"name"}
+                   value={process.name}
+                   onChange={inputHandler}
+            />
+        </div>*/}
         <div>
             <label htmlFor={"department_id"}>Oddelenie:</label>
             <select name={"department_id"}

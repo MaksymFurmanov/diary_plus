@@ -6,6 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectEl
     size?: number,
     position?: string,
     options?: JSX.Element[],
+    fileName?: string
 }
 
 const Input: FC<InputProps> = ({
@@ -17,6 +18,7 @@ const Input: FC<InputProps> = ({
                                    size,
                                    position,
                                    options,
+                                   fileName,
                                    ...rest
                                }) => {
 
@@ -25,9 +27,8 @@ const Input: FC<InputProps> = ({
         case "number":
             inputHandler = (e) => {
                 const {name, value} = e.target;
-                const numericRegex = /^[0-9]*$/;
-                if (numericRegex.test(value)) {
-                    setter({...state, [name]: value, changed: true});
+                if (!isNaN(value)) {
+                    setter({...state, [name]: parseInt(value), changed: true});
                 }
             };
             break;
@@ -35,6 +36,12 @@ const Input: FC<InputProps> = ({
             inputHandler = (e) => {
                 const {name, checked} = e.target;
                 setter({...state, [name]: checked, changed: true});
+            }
+            break;
+        case "file":
+            inputHandler = (e) => {
+                const {name, value, files} = e.target;
+                setter({...state, [name]: files[0], [fileName]: value, changed: true});
             }
             break;
         default:

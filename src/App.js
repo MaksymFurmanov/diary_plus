@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import routes from "./routes";
 import DepartmentsProvider from "./providers/DepartmentsProvider";
 import EmployeesProvider from "./providers/EmployeesProvider";
-import EnteryStockProvider from "./providers/EnteryStockProvider";
+import EntryStockProvider from "./providers/EntryStockProvider";
 import MaterialsProvider from "./providers/MaterialsProvider";
 import OrdersProvider from "./providers/OrdersProvider";
 import OutputStockProvider from "./providers/OutputStockProvider";
@@ -14,6 +14,7 @@ import TestProductsProvider from "./providers/TestProductsProvider";
 import ServerProvider from "./providers/ServerProvider";
 import UserProvider from "./providers/UserProvider";
 
+
 const providers = [
     DepartmentsProvider,
     EmployeesProvider,
@@ -21,7 +22,7 @@ const providers = [
     ProductionProcessesProvider,
     OrdersProvider,
     MaterialsProvider,
-    EnteryStockProvider,
+    EntryStockProvider,
     OutputStockProvider,
     TestMaterialsProvider,
     TestProductsProvider,
