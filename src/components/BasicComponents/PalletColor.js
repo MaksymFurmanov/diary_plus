@@ -22,10 +22,12 @@ const PalletColor = ({state, setter, nameInput}) => {
             setPrevColor(color);
         }
     }, [nameInput, setter, state]);
+
     const inputHandler = (e) => {
         setter(prevState =>
             ({...prevState, [nameInput]: e.target.value}));
     };
+
     const textOnFocusHandler = () => {
         setPrevColor(state[nameInput]);
     };

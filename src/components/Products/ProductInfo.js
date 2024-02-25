@@ -11,6 +11,7 @@ import {storage} from "../../firebase-config";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import useLoadData from "../../hooks/useLoadData";
+import getFileName from "../../utils/getFileName";
 
 const ProductInfo = ({existing}) => {
     let {productId} = useParams();
@@ -34,7 +35,7 @@ const ProductInfo = ({existing}) => {
         imageFile: null,
         quality_standards: "",
         standardsDisplay: "",
-        standardsFile: "",
+        standardsFile: null,
         changed: false
     });
 
@@ -42,13 +43,20 @@ const ProductInfo = ({existing}) => {
         if (existing) {
             const existingProduct = products.find((product) =>
                 product.product_id === productId);
-            if (existingProduct) setProduct({
-                ...existingProduct,
-                imageDisplay: existingProduct.img,
-                standardsDisplay: existingProduct.quality_standards.name
-                    ? existingProduct.quality_standards.name
-                    : ""
-            });
+            if (existingProduct) {
+                setProduct({
+                    ...existingProduct,
+                    imageDisplay: existingProduct.img || addImage
+                });
+                if (existingProduct.quality_standards) {
+                    const docRef = ref(storage, existingProduct.quality_standards);
+                    getFileName(docRef).then((name) => {
+                        console.log(name)
+                        setProduct(prevState =>
+                            ({...prevState, standardsDisplay: name}));
+                    });
+                }
+            }
         }
     }, [existing, productId, products]);
 
@@ -67,17 +75,27 @@ const ProductInfo = ({existing}) => {
             reader.readAsDataURL(file);
         }
     };
+    const fileInputHandler = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setProduct(prevState => ({
+                ...prevState,
+                standardsFile: file,
+                standardsDisplay: file.name
+            }));
+        }
+    };
 
     const unsavedChangesHandler = () => {
         if (product.changed) {
             return "/products"
         }
         return "/products"
-    }
+    };
 
     const deleteHandler = () => {
 
-    }
+    };
 
     const loadToStorage = async () => {
         const imageRef = ref(storage,
@@ -92,8 +110,15 @@ const ProductInfo = ({existing}) => {
                     .then((snapshot) => getDownloadURL(snapshot.ref));
             }
 
-            if (product.standardsFile === "") {
-                standardsURL = await uploadBytes(standardsRef, product.standardsFile)
+            if (product.standardsFile) {
+                const metadata = {
+                    contentType: product.standardsFile.type,
+                    customMetadata: {
+                        name: product.standardsFile.name
+                    }
+                }
+                standardsURL = await uploadBytes(standardsRef,
+                    product.standardsFile, metadata)
                     .then((snapshot) => getDownloadURL(snapshot.ref));
             }
 
@@ -104,7 +129,7 @@ const ProductInfo = ({existing}) => {
         } catch (error) {
             console.error("Error uploading files:", error);
         }
-    }
+    };
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -148,7 +173,7 @@ const ProductInfo = ({existing}) => {
         } catch (e) {
             console.error(e.message);
         }
-    }
+    };
 
     return loading ? <p>Loading...</p> : <>
         <PageTitle name={existing ? "Produkt" : "Nový produkt"}
@@ -159,7 +184,6 @@ const ProductInfo = ({existing}) => {
                     <input type={"file"}
                            accept={"image/*"}
                            name={"img"}
-                           value={undefined}
                            id={"img"}
                            style={{display: "none"}}
                            onChange={imageInputHandler}
@@ -187,14 +211,21 @@ const ProductInfo = ({existing}) => {
                            state={product}>
                         Typ:
                     </Input>
-                    <Input type={"file"}
-                           name={"standardsFile"}
-                           value={product.standardsDisplay}
-                           fileName={"standardsDisplay"}
-                           setter={setProduct}
-                           state={product}>
-                        Štandardy kvality:
-                    </Input>
+                    <div className={"standards-input-container"}>
+                        <label>
+                            Štandardy kvality:
+                        </label>
+                        <input className={"hidden-input"}
+                               type={"file"}
+                               name={"standardsFile"}
+                               id={"standardsFile"}
+                               onChange={fileInputHandler}
+                        />
+                        <label htmlFor={"standardsFile"}
+                        className={"standards-input"}>
+                            {product.standardsDisplay || "Add file"}
+                        </label>
+                    </div>
                     <Input type={"number"}
                            min={1}
                            size={2}

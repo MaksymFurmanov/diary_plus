@@ -1,14 +1,11 @@
 import ResultsItem from "./ResultsItem";
-import {useTestMaterials} from "../../providers/TestMaterialsProvider";
-import {useTestProducts} from "../../providers/TestProductsProvider";
+import {useTestsMaterials} from "../../providers/TestsMaterialsProvider";
+import {useTestsProducts} from "../../providers/TestsProductsProvider";
 
 const ResultsTable = ({laboratory}) => {
-    const test_materials = useTestMaterials();
-    const test_products = useTestProducts();
-
     const data = {
-        laboratory_1: test_materials,
-        laboratory_2: test_products
+        laboratory_1: useTestsMaterials(),
+        laboratory_2: useTestsProducts()
     }
 
     const title = {

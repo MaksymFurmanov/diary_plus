@@ -9,8 +9,8 @@ import OrdersProvider from "./providers/OrdersProvider";
 import OutputStockProvider from "./providers/OutputStockProvider";
 import ProductionProcessesProvider from "./providers/ProductionProcessesProvider";
 import ProductsProvider from "./providers/ProductsProvider";
-import TestMaterialsProvider from "./providers/TestMaterialsProvider";
-import TestProductsProvider from "./providers/TestProductsProvider";
+import TestsMaterialsProvider from "./providers/TestsMaterialsProvider";
+import TestsProductsProvider from "./providers/TestsProductsProvider";
 import ServerProvider from "./providers/ServerProvider";
 import UserProvider from "./providers/UserProvider";
 
@@ -24,8 +24,8 @@ const providers = [
     MaterialsProvider,
     EntryStockProvider,
     OutputStockProvider,
-    TestMaterialsProvider,
-    TestProductsProvider,
+    TestsMaterialsProvider,
+    TestsProductsProvider,
 ];
 
 function App() {

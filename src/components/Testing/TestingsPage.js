@@ -1,17 +1,15 @@
 import BackButton from "../BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import TestingItem from "./TestingItem";
-import {useTestMaterials} from "../../providers/TestMaterialsProvider";
-import {useTestProducts} from "../../providers/TestProductsProvider";
+import {useTestsMaterials} from "../../providers/TestsMaterialsProvider";
+import {useTestsProducts} from "../../providers/TestsProductsProvider";
 
 const TestingsPage = () => {
-    const test_materials = useTestMaterials();
-    const test_products = useTestProducts();
     const {laboratory} = useParams();
 
-    const data = {
-        laboratory_1: test_materials,
-        laboratory_2: test_products
+    const tests = {
+        laboratory_1: useTestsMaterials(),
+        laboratory_2: useTestsProducts()
     }
 
     const title = {
@@ -19,9 +17,9 @@ const TestingsPage = () => {
         laboratory_2: "Laboratórium 2, výrobky"
     }
 
-    const testingItems = data[laboratory].map((item, index) => {
+    const testingItems = tests[laboratory].map((item, index) => {
         return <TestingItem key={index}
-                            item={item}
+                            test={item}
                             laboratory={laboratory}/>
     })
 

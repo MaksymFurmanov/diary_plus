@@ -5,6 +5,7 @@ import {BsPlusCircleFill} from "react-icons/bs";
 import {IoIosArrowBack} from "react-icons/io";
 import {IoIosArrowForward} from "react-icons/io";
 import {useProducts} from "../../providers/ProductsProvider";
+import placeholder from "../../fig/img/product_placeholder.webp"
 
 const ProductsPage = () => {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ const ProductsPage = () => {
 
     const productCards = products.map((product, index) => {
         return <div key={index} className={"product-card"}>
-            <img src={product.img} alt={""}/>
+            <img src={product.img || placeholder} alt={""}/>
             <p>Product: {product.name}</p>
             <p>Typ: {product.type}</p>
             <Button onClick={() =>

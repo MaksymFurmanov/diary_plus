@@ -326,6 +326,23 @@ input, select {
     justify-content: space-between;
 }
 
+.standards-input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.standards-input {
+    background-color: black;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: #F8F8F8;
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 0;
+    cursor: pointer;
+}
+
 .ProductionPlan {
     display: flex;
     align-items: center;
@@ -606,7 +623,8 @@ input, select {
 }
 
 .TestingItem {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(7, 0.3fr);
     align-items: center;
     justify-content: space-between;
     background-color: black;
@@ -617,6 +635,7 @@ input, select {
 }
 
 .testing-items p,
+.testing-items label,
 .testing-items select {
     margin: 0;
     padding: 1.5em 1em;
@@ -641,6 +660,23 @@ input, select {
 .testing-items svg {
     width: 2em;
     color: #F8F8F8;
+}
+
+.test-results {
+    background-color: #F8F8F8;
+    color: black;
+    padding: 0;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.test-results label {
+    display: inline-block;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
 }
 
 .QualityControlPage {

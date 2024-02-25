@@ -5,8 +5,6 @@ import {useNavigate} from "react-router-dom";
 const EmployeeCard = ({employee, isManager}) => {
     const navigate = useNavigate();
 
-    console.log(isManager)
-
     return <div className={"EmployeeCard"}
                 style={{borderColor: isManager ? "red" : "default"}}>
         <div><IoPerson/></div>

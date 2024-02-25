@@ -8,7 +8,9 @@ import {useProductionProcesses} from "../../providers/ProductionProcessesProvide
 const ProductionItem = ({order, setOrder}) => {
     const [showToggle, setShowToggle] = useState(true);
     const products = useProducts();
-    const production_processes = useProductionProcesses();
+    let production_processes = useProductionProcesses();
+    production_processes = production_processes.filter((production_process) =>
+        production_process.product_id === order.product_id);
 
     const product = products.find((product) =>
         product.product_id === order.product_id);

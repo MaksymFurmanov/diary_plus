@@ -5,8 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectEl
     state: object,
     size?: number,
     position?: string,
-    options?: JSX.Element[],
-    fileName?: string
+    options?: JSX.Element[]
 }
 
 const Input: FC<InputProps> = ({
@@ -18,7 +17,6 @@ const Input: FC<InputProps> = ({
                                    size,
                                    position,
                                    options,
-                                   fileName,
                                    ...rest
                                }) => {
 
@@ -36,12 +34,6 @@ const Input: FC<InputProps> = ({
             inputHandler = (e) => {
                 const {name, checked} = e.target;
                 setter({...state, [name]: checked, changed: true});
-            }
-            break;
-        case "file":
-            inputHandler = (e) => {
-                const {name, value, files} = e.target;
-                setter({...state, [name]: files[0], [fileName]: value, changed: true});
             }
             break;
         default:

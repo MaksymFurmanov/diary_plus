@@ -4,11 +4,32 @@ import {BiSolidTrashAlt} from "react-icons/bi";
 import {useNavigate} from "react-router-dom";
 import {useProducts} from "../../providers/ProductsProvider";
 import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
+import useLoadDataItem from "../../hooks/useLoadDataItem";
+import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 
 const OrdersTable = ({items, type}) => {
     const navigate = useNavigate();
     const products = useProducts();
     const production_processes = useProductionProcesses();
+    const materials = useMaterials();
+    const setMaterials = useSetMaterials();
+    const [loadDataItem] = useLoadDataItem();
+
+    const arrivedHandler = (material) => {
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const year = currentDate.getFullYear();
+
+        const newMaterial = {...material, arriving_date: `${day}.${month}.${year}`}
+        loadDataItem("materials", newMaterial).then(() => {
+            let newMaterials = [...materials]
+            const index = materials.find((material) =>
+                material.material_id === newMaterial.material_id);
+            newMaterials[index] = newMaterial;
+            setMaterials(newMaterials);
+        });
+    }
 
     let tableItems, colNames;
     if (type === 'products_to_product') {
@@ -23,7 +44,7 @@ const OrdersTable = ({items, type}) => {
 
             productionProcess = production_processes
                 .find((production_process) =>
-                    production_process.production_process_id
+                        production_process.production_process_id
                     === order.production_process_id);
 
             if (productionProcess === undefined) {
@@ -70,7 +91,8 @@ const OrdersTable = ({items, type}) => {
                 <td>{material.date_of_order}</td>
                 <td>{material.arriving_date
                     ? material.arriving_date
-                    : <Button>PRIŠLO</Button>}
+                    : <Button onClick={() => arrivedHandler(material)}>
+                        PRIŠLO</Button>}
                 </td>
                 <td>
                     <div>
@@ -87,7 +109,7 @@ const OrdersTable = ({items, type}) => {
 
     const tableHeaders = colNames.map((name, index) => (
         <th key={index}>{name}</th>
-    ))
+    ));
 
     return <div className={"table-container"}>
         <table>
