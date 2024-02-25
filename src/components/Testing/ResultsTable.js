@@ -1,9 +1,10 @@
 import ResultsItem from "./ResultsItem";
 import {useTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import {useTestsProducts} from "../../providers/TestsProductsProvider";
+import {Fragment} from "react";
 
 const ResultsTable = ({laboratory}) => {
-    const data = {
+    const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()
     }
@@ -13,10 +14,12 @@ const ResultsTable = ({laboratory}) => {
         laboratory_2: "Laboratórium 2, výrobky"
     }
 
-    const resultItems = data[laboratory].map((item, index) => {
-        return <ResultsItem key={index}
-                            laboratory={laboratory}
-                            item={item}/>
+    const resultItems = tests[laboratory].map((test, index) => {
+        return test.document
+            ? <ResultsItem key={index}
+                           laboratory={laboratory}
+                           test={test}/>
+            : <Fragment key={index}/>
     })
 
     return <div className={"ResultsTable"}>

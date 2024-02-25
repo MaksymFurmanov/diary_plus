@@ -1,16 +1,20 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import PageTitle from "../BasicComponents/PageTitle";
 import Input from "../BasicComponents/Input.tsx";
 import Button from "../BasicComponents/Button.tsx";
 import {useEffect, useState} from "react";
 import {useDepartments} from "../../providers/DepartmentsProvider";
-import {useEmployees} from "../../providers/EmployeesProvider";
+import {useEmployees, useSetEmployees} from "../../providers/EmployeesProvider";
+import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const EmployeeInfo = ({existing}) => {
+    const navigate = useNavigate();
     let {employeeId} = useParams();
     employeeId = parseInt(employeeId);
     const departments = useDepartments();
     const employees = useEmployees();
+    const setEmployees = useSetEmployees();
+    const [loadDataItem, loading] = useLoadDataItem();
 
     const [employee, setEmployee] = useState({
         employee_id: null,
@@ -29,8 +33,7 @@ const EmployeeInfo = ({existing}) => {
             const existingEmployee = employees.find((employee) =>
                 employee.employee_id === employeeId);
 
-            if (existingEmployee) setEmployee((prevState) =>
-                ({
+            if (existingEmployee) setEmployee((prevState) => ({
                     ...prevState,
                     ...existingEmployee,
                     manager: departments.find((department) =>
@@ -60,10 +63,29 @@ const EmployeeInfo = ({existing}) => {
         } else return null;
     });
 
-    return <>
+    const submitHandler = (e) => {
+        e.preventDefault();
+        loadDataItem("employees", employee).then(newEmployee => {
+            const employeeIndex = employees.findIndex((employeeItem) =>
+                employeeItem.material_id === employee.material_id);
+
+            if (employeeIndex !== -1) {
+                const newEmployees = [...employees];
+                newEmployees[employeeIndex] =
+                    {...newEmployees[employeeIndex], ...newEmployee};
+                setEmployees(newEmployees);
+            } else {
+                setEmployees(prevState => [...prevState, newEmployee]);
+            }
+            navigate("/orders/admin");
+        });
+    }
+
+    return loading ? "Loading..." : <>
         <PageTitle name={existing ? "Pracovník" : "Nový pracovník"}
                    prev={"/admin"}/>
-        <div className={"EmployeeInfo"}>
+        <form className={"EmployeeInfo"}
+              onSubmit={submitHandler}>
             <Input name={"name"}
                    value={employee.name}
                    position={"close"}
@@ -131,13 +153,16 @@ const EmployeeInfo = ({existing}) => {
                 <div className={"bottom-buttons"}>
                     {existing
                         ? <><Button>VYMAZAŤ</Button>
-                            <Button>ÚPRAVIŤ</Button>
-                        </>
-                        : <Button>PRIDAŤ</Button>
+                            <Button type={"submit"}>
+                                ÚPRAVIŤ
+                            </Button></>
+                        : <Button type={"submit"}>
+                            PRIDAŤ
+                        </Button>
                     }
                 </div>
             </div>
-        </div>
+        </form>
     </>
 }
 
