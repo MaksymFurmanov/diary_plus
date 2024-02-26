@@ -51,7 +51,6 @@ const ProductInfo = ({existing}) => {
                 if (existingProduct.quality_standards) {
                     const docRef = ref(storage, existingProduct.quality_standards);
                     getFileName(docRef).then((name) => {
-                        console.log(name)
                         setProduct(prevState =>
                             ({...prevState, standardsDisplay: name}));
                     });

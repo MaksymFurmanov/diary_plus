@@ -1,14 +1,9 @@
 import React from 'react';
 import {FaCheck} from 'react-icons/fa';
-import {useServer} from "../../providers/ServerProvider";
-import {useOrders, useSetOrders} from "../../providers/OrdersProvider";
 import {useUser} from "../../providers/UserProvider";
 
-const ProductionProcess = ({order, production_process, queue, lastProcess}) => {
+const ProductionProcess = ({production_process, queue, doneHandler}) => {
     const user = useUser();
-    const api = useServer();
-    const orders = useOrders();
-    const setOrders = useSetOrders();
 
     const changeAccess = (
         user.department_id === production_process.department_id ||
@@ -17,37 +12,8 @@ const ProductionProcess = ({order, production_process, queue, lastProcess}) => {
 
     const isDone = production_process.queue <= queue;
 
-    const loadDone = () => {
-        try {
-            return fetch(
-                `${api}/orders/done`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(order.order_id)
-                });
-        } catch (e) {
-            console.log(e.message);
-        }
-    }
-
-    const doneHandler = () => {
-        loadDone().then(() => {
-            const newOrders = [...orders];
-            const index = orders.findIndex((orderItem) =>
-                orderItem.order_id === order.order_id);
-            newOrders[index] = {...newOrders[index], queue: order.queue + 1};
-            setOrders(prevState => [...prevState, newOrders]);
-            if (order.queue === lastProcess + 1) {
-                loadDone();
-            }
-        });
-    }
-
     return (
-        <div className={"v-center"}>
+        <div className={"ProductionProcess v-center"}>
             <div
                 style={{
                     cursor: changeAccess ? 'pointer' : 'default',

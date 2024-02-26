@@ -3,9 +3,10 @@ import PageTitle from "../BasicComponents/PageTitle";
 import Input from "../BasicComponents/Input.tsx";
 import Button from "../BasicComponents/Button.tsx";
 import {useEffect, useState} from "react";
-import {useDepartments} from "../../providers/DepartmentsProvider";
+import {useDepartments, useSetDepartments} from "../../providers/DepartmentsProvider";
 import {useEmployees, useSetEmployees} from "../../providers/EmployeesProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
+import {useServer} from "../../providers/ServerProvider";
 
 const EmployeeInfo = ({existing}) => {
     const navigate = useNavigate();
@@ -15,9 +16,10 @@ const EmployeeInfo = ({existing}) => {
     const employees = useEmployees();
     const setEmployees = useSetEmployees();
     const [loadDataItem, loading] = useLoadDataItem();
+    const api = useServer();
+    const setDepartments = useSetDepartments();
 
     const [employee, setEmployee] = useState({
-        employee_id: null,
         department_id: "",
         name: "",
         position: "",
@@ -52,32 +54,63 @@ const EmployeeInfo = ({existing}) => {
     });
 
     const uniquePositionsSet = new Set();
-    const positionOptions = employees.map((employee, index) => {
+    const positionList = employees.map((employee, index) => {
         if (!uniquePositionsSet.has(employee.position)) {
             uniquePositionsSet.add(employee.position);
             return (
-                <option key={index} value={employee.position}>
-                    {employee.position}
-                </option>
+                <option key={index} value={employee.position}/>
             );
         } else return null;
     });
 
+    const setManager = async (newEmployee) => {
+        try {
+            return await fetch(`${api}/departments/set-manager`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newEmployee)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    const changeEmployeesState = (newEmployee) => {
+        const employeeIndex = employees.findIndex((employeeItem) =>
+            employeeItem.employee_id === newEmployee.employee_id);
+
+        if (employeeIndex !== -1) {
+            const newEmployees = [...employees];
+            newEmployees[employeeIndex] =
+                {...newEmployees[employeeIndex], ...newEmployee};
+            setEmployees(newEmployees);
+        } else {
+            setEmployees(prevState => [...prevState, newEmployee]);
+        }
+        navigate("/admin");
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
         loadDataItem("employees", employee).then(newEmployee => {
-            const employeeIndex = employees.findIndex((employeeItem) =>
-                employeeItem.material_id === employee.material_id);
-
-            if (employeeIndex !== -1) {
-                const newEmployees = [...employees];
-                newEmployees[employeeIndex] =
-                    {...newEmployees[employeeIndex], ...newEmployee};
-                setEmployees(newEmployees);
+            if (employee.manager === true) {
+                setManager(newEmployee).then(() => {
+                    changeEmployeesState(newEmployee);
+                    const newDepartments = [...departments];
+                    const index = newDepartments.findIndex(department =>
+                        department.department_id === newEmployee.department_id);
+                    newDepartments[index] = {
+                        ...newDepartments[index],
+                        manager_id: newEmployee.employee_id
+                    };
+                    setDepartments(newDepartments);
+                });
             } else {
-                setEmployees(prevState => [...prevState, newEmployee]);
+                changeEmployeesState(newEmployee);
             }
-            navigate("/orders/admin");
+
         });
     }
 
@@ -114,14 +147,16 @@ const EmployeeInfo = ({existing}) => {
             </Input>
             <div className={"h-center"} style={{gap: "2em"}}>
                 <Input name={"position"}
-                       type={"select"}
                        value={employee.position}
                        position={"close"}
                        setter={setEmployee}
                        state={employee}
-                       options={positionOptions}>
+                       list={"positionList"}>
                     Pracovná pozícia:
                 </Input>
+                <datalist id="positionList">
+                    {positionList}
+                </datalist>
                 <Input name={"manager"}
                        type={"checkbox"}
                        size={0}

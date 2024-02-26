@@ -426,8 +426,6 @@ input, select {
     display: flex;
     flex-direction: column;
     width: 50em;
-    float: right;
-    margin-right: 1em;
 }
 
 .order-info {
@@ -454,15 +452,15 @@ input, select {
 
 .production-info {
     display: flex;
-    overflow: scroll;
+    width: fit-content;
 }
 
-.production-info img {
+.production-info .arrow {
     width: 5em;
-    height: 5em;
+    height: 6em;
 }
 
-.production-info svg {
+.ProductionProcess svg {
     width: 1.5em;
 }
 
@@ -618,7 +616,7 @@ input, select {
 }
 
 .testing-items {
-    overflow: scroll;
+    overflow-y: scroll;
     max-height: 21em;
 }
 
@@ -704,7 +702,7 @@ input, select {
     margin: 1em;
     padding-right: 1em;
     height: 18em;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .ResultsItem {
@@ -755,7 +753,7 @@ input, select {
 
 .AdminPage {
     height: 24em;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .EmployeeList {
@@ -785,7 +783,7 @@ input, select {
 .employee-cards {
     display: flex;
     gap: 2em;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 .EmployeeCard {
@@ -831,7 +829,6 @@ input, select {
     justify-content: end;
 }
 
-/*apply to others*/
 .bottom-buttons button:last-child {
     margin-left: 2em;
 }

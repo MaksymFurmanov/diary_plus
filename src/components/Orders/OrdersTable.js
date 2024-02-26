@@ -6,14 +6,38 @@ import {useProducts} from "../../providers/ProductsProvider";
 import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
+import {useSetTestsMaterials} from "../../providers/TestsMaterialsProvider";
+import useDeleteData from "../../hooks/useDeleteData";
+import {useSetOrders} from "../../providers/OrdersProvider";
 
 const OrdersTable = ({items, type}) => {
     const navigate = useNavigate();
     const products = useProducts();
     const production_processes = useProductionProcesses();
     const materials = useMaterials();
-    const setMaterials = useSetMaterials();
     const [loadDataItem] = useLoadDataItem();
+    const [deleteData] = useDeleteData();
+    const setTestsMaterials = useSetTestsMaterials();
+
+    const item_id = {
+        products_to_product: "order_id",
+        raw_materials: "material_id"
+    }
+
+    const route = {
+        products_to_product: "orders",
+        raw_materials: "materials"
+    }
+
+    const setOrders = useSetOrders();
+    const setMaterials = useSetMaterials();
+    const setItems = (newItems) => {
+        if(type === "products_to_product") {
+            setOrders(newItems);
+        } else {
+            setMaterials(newItems);
+        }
+    }
 
     const arrivedHandler = (material) => {
         const currentDate = new Date();
@@ -23,11 +47,22 @@ const OrdersTable = ({items, type}) => {
 
         const newMaterial = {...material, arriving_date: `${day}.${month}.${year}`}
         loadDataItem("materials", newMaterial).then(() => {
-            let newMaterials = [...materials]
+            let newMaterials = [...materials];
             const index = materials.find((material) =>
                 material.material_id === newMaterial.material_id);
             newMaterials[index] = newMaterial;
             setMaterials(newMaterials);
+            const test = {material_id: material.material_id}
+            loadDataItem("tests-materials", test).then(newTest => {
+                setTestsMaterials(prevState => [...prevState, newTest]);
+            });
+        });
+    }
+
+    const deleteHandler = (itemId) => {
+        deleteData(route[type], itemId).then(() => {
+            setItems(items.filter(item =>
+                item[item_id[type]] !== itemId));
         });
     }
 
@@ -71,7 +106,8 @@ const OrdersTable = ({items, type}) => {
                             navigate(`/orders/products_to_product/${order.order_id}`)}>
                             <FaPen/>
                         </button>
-                        <button>
+                        <button onClick={() =>
+                            deleteHandler(order.material_id)}>
                             <BiSolidTrashAlt/>
                         </button>
                     </div>
@@ -100,7 +136,10 @@ const OrdersTable = ({items, type}) => {
                             navigate(`/orders/raw_materials/${material.material_id}`)}>
                             <FaPen/>
                         </button>
-                        <button><BiSolidTrashAlt/></button>
+                        <button onClick={() =>
+                            deleteHandler(material.material_id)}>
+                            <BiSolidTrashAlt/>
+                        </button>
                     </div>
                 </td>
             </tr>
