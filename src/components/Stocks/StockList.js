@@ -1,7 +1,6 @@
 import {RxCross2} from "react-icons/rx";
 import React from "react";
 import {useOrders} from "../../providers/OrdersProvider";
-import {useProducts} from "../../providers/ProductsProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import useLoadData from "../../hooks/useLoadData";
@@ -9,18 +8,20 @@ import {useEntryStock, useSetEntryStock} from "../../providers/EntryStockProvide
 import {useOutputStock, useSetOutputStock} from "../../providers/OutputStockProvider";
 
 const StockList = ({type}) => {
-    const products = useProducts();
-
-    const [loadData, setLoadData] = useLoadData();
     const placesToChange = usePlacesToChange();
     const setPlacesToChange = useSetPlacesToChange();
-
+    const items = {
+        entry: useMaterials(),
+        output: useOrders()
+    }
     const places = {
         entry: useEntryStock(),
         output: useOutputStock()
     }
     const setEntryStock = useSetEntryStock();
     const setOutputStock = useSetOutputStock();
+
+    const [loadData, setLoadData] = useLoadData();
 
     const setStock = (newPlaces) => {
         if (type === "entry") {
@@ -30,13 +31,8 @@ const StockList = ({type}) => {
         }
     }
 
-    const items = {
-        entry: useMaterials(),
-        output: useOrders()
-    }
-
     const place_id = {
-        entry: 'entery_stock_place_id',
+        entry: 'entry_stock_place_id',
         output: 'output_stock_place_id'
     }
 
@@ -64,15 +60,12 @@ const StockList = ({type}) => {
                 }
             }
         } else if (type === "output") {
-            const foundProduct = products.find((product) =>
-                product.product_id === item.product_id);
-
             return {
                 order_id: item.order_id,
-                pallet_color: foundProduct.pallet_color,
-                per_pallet: foundProduct.per_pallet,
-                itemName: `Produkt: ${foundProduct.name}`,
-                itemDetails: `Typ: ${foundProduct.type}`
+                pallet_color: item.product.pallet_color,
+                per_pallet: item.product.per_pallet,
+                itemName: `Produkt: ${item.product.name}`,
+                itemDetails: `Typ: ${item.product.type}`
             }
         }
         return null

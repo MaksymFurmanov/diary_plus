@@ -1,34 +1,35 @@
-import {useServer} from "../providers/ServerProvider";
 import {useState} from "react";
+import {useServer} from "../providers/ServerProvider";
 
-const useLoadData = () => {
+const useDeleteData = () => {
     const api = useServer();
     const [loading, setLoading] = useState(false);
 
-    const loadData = async (type, objects) => {
+    const deleteData = async (type, id) => {
         setLoading(true);
+
         try {
             const response = await fetch(
-                `${api}/${type}/load-${type}`, {
-                    method: 'POST',
+                `${api}/${type}/delete`, {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(objects)
+                    body: JSON.stringify(id)
                 });
             if (response.ok) {
-                console.log("LOADED");
+                console.log("DELETED");
             } else {
                 console.error("ERROR");
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         } finally {
             setLoading(false);
         }
     };
 
-    return [loadData,loading]
+    return [deleteData, loading]
 }
 
-export default useLoadData;
+export default useDeleteData;

@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import {useServer} from "../providers/ServerProvider";
 
@@ -14,7 +13,7 @@ const useReadData = (type) => {
                 const response = await fetch(`${api}/${type}/get-${type}`);
                 if (response.ok) {
                     const fetchedData = await response.json();
-                    /*console.log(type, fetchedData);*/
+                    console.log(type, fetchedData);
                     setData(fetchedData);
                 } else {
                     console.log(`No ${type} found`);

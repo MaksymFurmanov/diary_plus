@@ -14,7 +14,9 @@ const ProductionPage = () => {
 
     return <>
         <PageTitle name={"Plán výroby"}/>
-        {productionItems}
+        <div className={"ProductionPage v-center"}>
+            {productionItems}
+        </div>
     </>
 }
 

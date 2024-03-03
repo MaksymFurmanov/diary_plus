@@ -8,12 +8,14 @@ import {useProducts} from "../../providers/ProductsProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const OrderInfo = ({existing}) => {
-    let {orderId} = useParams();
-    orderId = parseInt(orderId);
-    const navigate = useNavigate();
     const orders = useOrders();
     const setOrders = useSetOrders();
     const products = useProducts();
+
+    let {orderId} = useParams();
+    orderId = parseInt(orderId);
+    const navigate = useNavigate();
+
     const [loadDataItem, loading] = useLoadDataItem();
 
     const [order, setOrder] = useState({
@@ -27,18 +29,15 @@ const OrderInfo = ({existing}) => {
     });
 
     const existingOrder = orders.find(order => order.order_id === orderId);
-    const existingProduct = existingOrder
-        ? products.find(product => existingOrder.product_id === product.product_id)
-        : null;
     useEffect(() => {
-        if (existing && existingOrder && existingProduct) {
+        if (existing && existingOrder) {
             setOrder(prevState => ({
                 ...prevState,
                 ...existingOrder,
-                product_name: existingProduct.name
+                product_name: existingOrder.product.name
             }));
         }
-    }, [existing, existingOrder, existingProduct, orderId]);
+    }, [existing, existingOrder, orderId]);
 
     const uniqueProductsSet = new Set();
     const productNameOptions = products.map((product, index) => {
@@ -65,9 +64,10 @@ const OrderInfo = ({existing}) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        loadDataItem('orders', order).then((newOrder) => {
-            const orderIndex = orders.findIndex((orderItem) =>
+        loadDataItem('orders', order).then(newOrder => {
+            const orderIndex = orders.findIndex(orderItem =>
                 orderItem.order_id === order.order_id);
+            console.log(newOrder)
             if (orderIndex !== -1) {
                 const newOrders = [...orders];
                 newOrders[orderIndex] =

@@ -5,12 +5,12 @@ import {useTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import {useTestsProducts} from "../../providers/TestsProductsProvider";
 
 const TestingsPage = () => {
-    const {laboratory} = useParams();
-
     const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()
     }
+
+    const {laboratory} = useParams();
 
     const title = {
         laboratory_1: "Laboratórium 1, suroviny",

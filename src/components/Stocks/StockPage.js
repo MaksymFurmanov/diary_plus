@@ -1,29 +1,53 @@
 import PageTitle from "../BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import StockBox from "./StockBox";
-import {useOutputStock} from "../../providers/OutputStockProvider";
-import {useEntryStock} from "../../providers/EntryStockProvider";
+import {useOutputStock, useSetOutputStock} from "../../providers/OutputStockProvider";
+import {useEntryStock, useSetEntryStock} from "../../providers/EntryStockProvider";
 import StockList from "./StockList";
 import Button from "../BasicComponents/Button.tsx";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import useLoadData from "../../hooks/useLoadData";
 
 const StockPage = () => {
-    const {type} = useParams();
-    const [loadData] = useLoadData();
-
-    //for DELETE
-    const placesToChange = usePlacesToChange();
-    const setPlacesToChange = useSetPlacesToChange();
-
     const places = {
         entry: useEntryStock(),
         output: useOutputStock()
+    }
+    const setEntryStock = useSetEntryStock();
+    const setOutputStock = useSetOutputStock();
+    const placesToChange = usePlacesToChange();
+    const setPlacesToChange = useSetPlacesToChange();
+
+    const {type} = useParams();
+
+    const [loadData] = useLoadData();
+
+    const setStock = (newItems) => {
+        if(type === "entry") {
+            setEntryStock(newItems);
+        } else if(type === "output") {
+            setOutputStock(newItems);
+        }
     }
 
     const title = {
         entry: "Vstupný sklad",
         output: "Výstupný sklad"
+    }
+
+    const place_id = {
+        entry: "entry_stock_place_id",
+        output: "output_stock_place_id"
+    }
+
+    const item_id = {
+        entry: 'material_id',
+        output: 'order_id'
+    }
+
+    const route = {
+        entry: "entry-stock-places",
+        output: "output-stock-places"
     }
 
     let boxSplit = [];
@@ -62,11 +86,33 @@ const StockPage = () => {
         setPlacesToChange([]);
     }
 
+    const deleteHandler = () => {
+        const deletedPlaces = placesToChange.map((placeToChange) => {
+            const newPlace = places[type].find((place) =>
+                place[place_id[type]] === placeToChange);
+            newPlace[item_id[type]] = null;
+            return newPlace;
+        });
+        loadData(route[type], deletedPlaces).then(() => {
+            const newPlaces = places[type].map((place) => {
+                if (placesToChange.find((placeToChange) =>
+                    placeToChange === place[place_id[type]])) {
+                    const newPlace = {...place}
+                    newPlace[item_id[type]] = null;
+                    return newPlace
+                }
+                return place
+            });
+            setStock(newPlaces);
+            unselectHandler();
+        });
+    }
+
     return <>
         <div className={"h-stretch-center"}>
             <PageTitle name={title[type]}/>
             <div>
-                <Button>Vymazať</Button>
+                <Button onClick={deleteHandler}>Vymazať</Button>
                 <Button onClick={unselectHandler}>Odznačiť všetko</Button>
             </div>
         </div>

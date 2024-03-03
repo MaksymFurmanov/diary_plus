@@ -5,8 +5,9 @@ import {useNavigate} from "react-router-dom";
 import {useDepartments} from "../../providers/DepartmentsProvider";
 
 const AdminPage = () => {
-    const navigate = useNavigate();
     const departments = useDepartments();
+
+    const navigate = useNavigate();
 
     const employeeLists = departments.map((department, index) => {
         return <EmployeeList key={index}

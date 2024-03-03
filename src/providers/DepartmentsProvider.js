@@ -8,7 +8,6 @@ const DepartmentsProvider = ({children}) => {
     const [departments, setDepartments, loading] =
         useReadData("departments");
 
-
     return <SetDepartmentsContext.Provider value={setDepartments}>
         <DepartmentsContext.Provider value={departments}>
             {loading ? <p>Loading...</p>: children}

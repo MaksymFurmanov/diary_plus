@@ -5,8 +5,9 @@ import navItemsList from "./NavItemsList";
 import {useUser} from "../../providers/UserProvider";
 
 const SystemNavigation = () => {
-    const navigate = useNavigate();
     const user = useUser();
+
+    const navigate = useNavigate();
 
     const navItems = navItemsList.map((item,
                                        index) => {

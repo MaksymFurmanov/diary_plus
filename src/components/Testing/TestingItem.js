@@ -1,8 +1,5 @@
 import {FaArrowRight} from "react-icons/fa6";
 import {useEffect, useState} from "react";
-import {useMaterials} from "../../providers/MaterialsProvider";
-import {useOrders} from "../../providers/OrdersProvider";
-import {useProducts} from "../../providers/ProductsProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import {useSetTestsMaterials, useTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import {useSetTestsProducts, useTestsProducts} from "../../providers/TestsProductsProvider";
@@ -11,28 +8,35 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import getFileName from "../../utils/getFileName";
 
 const TestingItem = ({test, laboratory}) => {
-    const materials = useMaterials();
-    const orders = useOrders();
-    const products = useProducts();
-
-    const [loadDataItem] = useLoadDataItem();
-    const [status, setStatus] = useState(test.status || 0);
-    const [document, setDocument] = useState({
-        file: null,
-        name: null
-    });
-
-    const route = {
-        laboratory_1: "tests-materials",
-        laboratory_2: "tests-products"
-    }
-
     const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()
     }
     const setTestsMaterials = useSetTestsMaterials();
     const setTestsProducts = useSetTestsProducts();
+
+    const [loadDataItem] = useLoadDataItem();
+
+    const [status, setStatus] = useState(test.status || 0);
+    const [document, setDocument] = useState({
+        file: null,
+        name: null
+    });
+
+    useEffect(() => {
+        if(test.document) {
+            const docRef = ref(storage, test.document);
+            getFileName(docRef).then((name) => {
+                setDocument(prevState =>
+                    ({...prevState, name: name}));
+            });
+        }
+    }, [test.document]);
+
+    const route = {
+        laboratory_1: "tests-materials",
+        laboratory_2: "tests-products"
+    }
 
     const setTests = (tests) => {
         if (laboratory === "laboratory_1") {
@@ -58,32 +62,14 @@ const TestingItem = ({test, laboratory}) => {
 
     let date, name, details;
     if (laboratory === "laboratory_1") {
-        const foundMaterial = materials.find((material) =>
-            material.material_id === test.material_id);
-
-        date = foundMaterial.arriving_date;
-        name = foundMaterial.name;
-        details = foundMaterial.supplier;
+        date = test.material.arriving_date;
+        name = test.material.name;
+        details = test.material.supplier;
     } else {
-        const foundOrder = orders.find((order) =>
-            order.order_id === test.order_id);
-        const foundProduct = products.find((product) =>
-            product.product_id === foundOrder.product_id);
-
-        date = foundOrder.deadline;
-        name = foundProduct.name;
-        details = foundProduct.type;
+        date = test.order.deadline;
+        name = test.order.product.name;
+        details = test.order.product.type;
     }
-    
-    useEffect(() => {
-        if(test.document) {
-            const docRef = ref(storage, test.document);
-            getFileName(docRef).then((name) => {
-                setDocument(prevState =>
-                ({...prevState, name: name}));
-            });
-        }
-    }, [test.document]);
 
     const fileInput = (e) => {
         const file = e.target.files[0];

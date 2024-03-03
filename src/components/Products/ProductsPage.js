@@ -8,8 +8,9 @@ import {useProducts} from "../../providers/ProductsProvider";
 import placeholder from "../../fig/img/product_placeholder.webp"
 
 const ProductsPage = () => {
-    const navigate = useNavigate();
     const products = useProducts();
+
+    const navigate = useNavigate();
 
     const productCards = products.map((product, index) => {
         return <div key={index} className={"product-card"}>

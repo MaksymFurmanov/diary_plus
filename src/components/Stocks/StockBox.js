@@ -2,19 +2,19 @@ import StockPlace from "./StockPlace";
 import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
-import {useProducts} from "../../providers/ProductsProvider";
 
 const StockBox = ({box, type}) => {
-    const products = useProducts();
-    const size = box.length;
-
     const items = {
         entry: useMaterials(),
         output: useOrders()
     }
+    const placesToChange = usePlacesToChange();
+    const setPlacesToChange = useSetPlacesToChange();
+
+    const size = box.length;
 
     const place_id = {
-        entry: 'entery_stock_place_id',
+        entry: 'entry_stock_place_id',
         output: 'output_stock_place_id'
     }
 
@@ -32,9 +32,6 @@ const StockBox = ({box, type}) => {
         6: "vertical-stock-box",
         8: "horizontal-stock-box"
     }
-
-    const placesToChange = usePlacesToChange();
-    const setPlacesToChange = useSetPlacesToChange();
 
     const selectHandler = (place) => {
         const placeId = place[place_id[type]];
@@ -63,8 +60,7 @@ const StockBox = ({box, type}) => {
                 itemId === item[item_id[type]]);
 
             if(type === "output") {
-                foundItem = products.find((product) =>
-                    product.product_id === foundItem.product_id);
+                foundItem = foundItem.product;
             }
 
             date = foundItem[required_date[type]];

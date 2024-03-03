@@ -7,13 +7,13 @@ import OrdersGraph from "./OrdersGraph";
 import {BsPlusCircleFill} from "react-icons/bs";
 
 const OrdersPage = () => {
-    const {type} = useParams();
-    const navigate = useNavigate();
-
     const items = {
         products_to_product: useOrders(),
         raw_materials: useMaterials()
     };
+
+    const {type} = useParams();
+    const navigate = useNavigate();
 
     const title = {
         products_to_product: "Objednávky na výrobu",

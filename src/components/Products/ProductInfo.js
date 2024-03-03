@@ -12,17 +12,21 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import useLoadData from "../../hooks/useLoadData";
 import getFileName from "../../utils/getFileName";
+import useDeleteData from "../../hooks/useDeleteData";
 
 const ProductInfo = ({existing}) => {
-    let {productId} = useParams();
-    productId = parseInt(productId);
     const products = useProducts();
-    const navigate = useNavigate();
-    const [loadDataItem, loading] = useLoadDataItem();
-    const [loadData] = useLoadData();
     const setProducts = useSetProducts();
 
+    let {productId} = useParams();
+    productId = parseInt(productId);
+    const navigate = useNavigate();
+
+    const [loadDataItem, loading] = useLoadDataItem();
+    const [loadData] = useLoadData();
+
     const [processes, setProcesses] = useState([]);
+    const [deleteData] = useDeleteData();
 
     const [product, setProduct] = useState({
         product_id: null,
@@ -93,7 +97,11 @@ const ProductInfo = ({existing}) => {
     };
 
     const deleteHandler = () => {
-
+        deleteData("products", productId).then(() => {
+            setProducts(products.filter(product =>
+                product.product_id !== productId));
+            navigate("/products")
+        });
     };
 
     const loadToStorage = async () => {

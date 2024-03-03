@@ -29,14 +29,6 @@ const ProductionProcessDetails = ({
     const positionX = x - detailsWidth / 2;
     const positionY = y - detailsHeight;
 
-    const departmentsOptions =
-        departments.map((department, index) => {
-            return <option value={department.department_id} key={index}>
-                {department.name}
-            </option>
-        })
-
-
     //close details box whenever a user click outside the box
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -55,20 +47,27 @@ const ProductionProcessDetails = ({
         };
     }, [closeHandler]);
 
+    const departmentsOptions =
+        departments.map((department, index) => {
+            return <option value={department.department_id} key={index}>
+                {department.name}
+            </option>
+        });
+
     return <div className={"ProductionProcessDetails white-outline"}
                 style={{
                     left: positionX + "px",
                     top: positionY + "px"
                 }}
                 ref={containerRef}>
-{/*        <div>
+        <div>
             <label>Názov:</label>
             <input name={"name"}
                    id={"name"}
                    value={process.name}
                    onChange={inputHandler}
             />
-        </div>*/}
+        </div>
         <div>
             <label htmlFor={"department_id"}>Oddelenie:</label>
             <select name={"department_id"}

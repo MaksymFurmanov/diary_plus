@@ -1,7 +1,4 @@
 import Button from "../BasicComponents/Button.tsx";
-import {useMaterials} from "../../providers/MaterialsProvider";
-import {useOrders} from "../../providers/OrdersProvider";
-import {useProducts} from "../../providers/ProductsProvider";
 import {useEffect, useState} from "react";
 import {ref} from "firebase/storage";
 import getFileName from "../../utils/getFileName";
@@ -11,19 +8,38 @@ import {useSetTestsProducts, useTestsProducts} from "../../providers/TestsProduc
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const ResultsItem = ({test, laboratory}) => {
-    const materials = useMaterials();
-    const orders = useOrders();
-    const products = useProducts();
     const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()
     }
+    const setTestsMaterials = useSetTestsMaterials();
+    const setTestsProducts = useSetTestsProducts();
+
+    const [loadDataItem, loading] = useLoadDataItem();
+
+    const [documentName, setDocumentName] = useState(null);
+
+    useEffect(() => {
+        const documentRef = ref(storage, test.document);
+        getFileName(documentRef).then(name => setDocumentName(name));
+    }, [test.document]);
+
     const route = {
         laboratory_1: "tests-materials",
         laboratory_2: "tests-products"
     }
-    const setTestsMaterials = useSetTestsMaterials();
-    const setTestsProducts = useSetTestsProducts();
+
+    let date, name, details, standards = undefined;
+    if (laboratory === "laboratory_1") {
+        date = test.material.arriving_date;
+        name = test.material.name;
+        details = test.material.supplier;
+    } else {
+        date = test.order.done_date;
+        name = test.order.product.name;
+        details = test.order.product.type;
+        standards = test.product?.quality_standards;
+    }
 
     const setTests = (tests) => {
         if (laboratory === "laboratory_1") {
@@ -31,36 +47,6 @@ const ResultsItem = ({test, laboratory}) => {
         } else if (laboratory === "laboratory_2") {
             setTestsProducts(tests);
         }
-    }
-    const [loadDataItem, loading] = useLoadDataItem();
-
-    const [documentName, setDocumentName] = useState(null);
-
-    useEffect(() => {
-        const documentRef = ref(storage, test.document);
-        getFileName(documentRef).then(name => {
-            setDocumentName(name);
-        });
-    }, [test.document]);
-
-    let date, name, details, standards = null, foundProduct;
-    if (laboratory === "laboratory_1") {
-        const foundMaterial = materials.find((material) =>
-            material.material_id === test.material_id);
-
-        date = foundMaterial.arriving_date;
-        name = foundMaterial.name;
-        details = foundMaterial.supplier;
-    } else {
-        const foundOrder = orders.find((order) =>
-            order.order_id === test.order_id);
-        foundProduct = products.find((product) =>
-            product.product_id === foundOrder.product_id);
-
-        date = foundOrder.done_date;
-        name = foundProduct.name;
-        details = foundProduct.type;
-        standards = foundProduct.quality_standards;
     }
 
     const handleDownload = (type) => {
@@ -96,9 +82,9 @@ const ResultsItem = ({test, laboratory}) => {
             {laboratory === "laboratory_2" && <div>
                 <p>Štandardy</p>
                 <p onClick={() =>
-                    foundProduct.quality_standards
+                    test.order.product?.quality_standards
                     && handleDownload("standards")}>
-                    {foundProduct.quality_standards
+                    {test.product?.quality_standards
                         ? "OTVORIŤ"
                         : "NIE SÚ"}
                 </p>

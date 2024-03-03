@@ -1,16 +1,10 @@
 import {PieChart} from "@mui/x-charts";
-import {useProducts} from "../../providers/ProductsProvider";
 
 const OrdersGraph = ({items, type}) => {
-    const products = useProducts();
-
     let data = [], pieArcLabelClasses = [], size = 0;
-
     if (type === "products_to_product") {
         items.forEach((order) => {
-            const product = products.find((product) =>
-                order.product_id === product.product_id)
-            const label = `${product.name} ${product.type}`;
+            const label = `${order.product.name} ${order.product.type}`;
 
             data.push({label: label, value: order.volume});
             pieArcLabelClasses.push(label);

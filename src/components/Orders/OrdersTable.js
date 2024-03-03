@@ -2,8 +2,6 @@ import Button from "../BasicComponents/Button.tsx";
 import {FaPen} from "react-icons/fa";
 import {BiSolidTrashAlt} from "react-icons/bi";
 import {useNavigate} from "react-router-dom";
-import {useProducts} from "../../providers/ProductsProvider";
-import {useProductionProcesses} from "../../providers/ProductionProcessesProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 import {useSetTestsMaterials} from "../../providers/TestsMaterialsProvider";
@@ -11,13 +9,15 @@ import useDeleteData from "../../hooks/useDeleteData";
 import {useSetOrders} from "../../providers/OrdersProvider";
 
 const OrdersTable = ({items, type}) => {
-    const navigate = useNavigate();
-    const products = useProducts();
-    const production_processes = useProductionProcesses();
     const materials = useMaterials();
+    const setMaterials = useSetMaterials();
+    const setTestsMaterials = useSetTestsMaterials();
+    const setOrders = useSetOrders();
+
+    const navigate = useNavigate();
+
     const [loadDataItem] = useLoadDataItem();
     const [deleteData] = useDeleteData();
-    const setTestsMaterials = useSetTestsMaterials();
 
     const item_id = {
         products_to_product: "order_id",
@@ -29,8 +29,6 @@ const OrdersTable = ({items, type}) => {
         raw_materials: "materials"
     }
 
-    const setOrders = useSetOrders();
-    const setMaterials = useSetMaterials();
     const setItems = (newItems) => {
         if(type === "products_to_product") {
             setOrders(newItems);
@@ -72,30 +70,16 @@ const OrdersTable = ({items, type}) => {
             "Počet", "Konečný termín"];
 
         tableItems = items.map((order, index) => {
-            const product = products.find((product) =>
-                order.product_id === product.product_id);
-
-            let productionProcess, status;
-
-            productionProcess = production_processes
-                .find((production_process) =>
-                        production_process.production_process_id
-                    === order.production_process_id);
-
-            if (productionProcess === undefined) {
-                productionProcess = production_processes
-                    .find((production_process) =>
-                        production_process.production_process_id === 0);
-
-                const processName = productionProcess.name;
-                status = `Čaká sa ${processName.charAt(0).toLowerCase()+processName.slice(1)}`
+            let status;
+            if (order.production_process_id === null) {
+                status = "Začiatok výroby"
             } else {
-                status = productionProcess.done_name
+                status = order.productionProcess.done_name
             }
 
             return <tr key={index}>
-                <td>{product.name}</td>
-                <td>{product.type}</td>
+                <td>{order?.product.name}</td>
+                <td>{order?.product.type}</td>
                 <td>{order.customer}</td>
                 <td>{status}</td>
                 <td>{order.volume}</td>
@@ -107,7 +91,7 @@ const OrdersTable = ({items, type}) => {
                             <FaPen/>
                         </button>
                         <button onClick={() =>
-                            deleteHandler(order.material_id)}>
+                            deleteHandler(order.order_id)}>
                             <BiSolidTrashAlt/>
                         </button>
                     </div>

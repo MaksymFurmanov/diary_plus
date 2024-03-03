@@ -8,11 +8,13 @@ import PalletColor from "../BasicComponents/PalletColor";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 
 const MaterialInfo = ({existing}) => {
-    let {materialId} = useParams();
-    materialId = parseInt(materialId);
     const materials = useMaterials();
     const setMaterials = useSetMaterials();
+
+    let {materialId} = useParams();
+    materialId = parseInt(materialId);
     const navigate = useNavigate();
+
     const [loadDataItem, loading] = useLoadDataItem();
 
     const [material, setMaterial] = useState({
@@ -28,7 +30,6 @@ const MaterialInfo = ({existing}) => {
     const existingMaterial = materials.find((material) =>
         material.material_id === materialId
     );
-
     useEffect(() => {
         if (existing && existingMaterial) {
             setMaterial(prevState => ({
@@ -39,16 +40,13 @@ const MaterialInfo = ({existing}) => {
     }, [existing, existingMaterial]);
 
     let materialList, supplierList, materialSet = new Set(), supplierSet = new Set();
-
     materials.forEach((material) => {
         materialSet.add(material.name);
         supplierSet.add(material.supplier);
     });
-
     materialList = Array.from(materialSet).map((name, index) => (
         <option key={index} value={name} />
     ));
-
     supplierList = Array.from(supplierSet).map((supplier, index) => (
         <option key={index} value={supplier} />
     ));

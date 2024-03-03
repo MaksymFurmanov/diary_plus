@@ -58,17 +58,19 @@ const ProductionPlan = ({processes, setProcesses, productId}) => {
         e.preventDefault();
     };
 
-    const productionPlanItems = processes.map((process, index) => {
-        return (
-            <ProductionPlanProcess
-                key={index}
-                handleItemClick={handleItemClick}
-                process={process}
-                index={index}
-                last={processes.length - 1}
-            />
-        );
-    });
+    const productionPlanItems = processes
+        .sort((a, b) => a.queue - b.queue)
+        .map((process, index) => {
+            return (
+                <ProductionPlanProcess
+                    key={index}
+                    handleItemClick={handleItemClick}
+                    process={process}
+                    index={index}
+                    last={processes.length - 1}
+                />
+            );
+        });
 
     return (
         <div className={"ProductionPlan"}

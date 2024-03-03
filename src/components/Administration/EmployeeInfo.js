@@ -7,17 +7,21 @@ import {useDepartments, useSetDepartments} from "../../providers/DepartmentsProv
 import {useEmployees, useSetEmployees} from "../../providers/EmployeesProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import {useServer} from "../../providers/ServerProvider";
+import useDeleteData from "../../hooks/useDeleteData";
 
 const EmployeeInfo = ({existing}) => {
+    const departments = useDepartments();
+    const setDepartments = useSetDepartments();
+    const employees = useEmployees();
+    const setEmployees = useSetEmployees();
+    const api = useServer();
+
     const navigate = useNavigate();
     let {employeeId} = useParams();
     employeeId = parseInt(employeeId);
-    const departments = useDepartments();
-    const employees = useEmployees();
-    const setEmployees = useSetEmployees();
+
     const [loadDataItem, loading] = useLoadDataItem();
-    const api = useServer();
-    const setDepartments = useSetDepartments();
+    const [deleteData] = useDeleteData();
 
     const [employee, setEmployee] = useState({
         department_id: "",
@@ -38,13 +42,13 @@ const EmployeeInfo = ({existing}) => {
             if (existingEmployee) setEmployee((prevState) => ({
                     ...prevState,
                     ...existingEmployee,
-                    manager: departments.find((department) =>
-                        department.department_id === existingEmployee.department_id)
-                        ?.manager_id === existingEmployee.employee_id,
+                    manager: existingEmployee.department_id
+                        === existingEmployee.department.manager_id
                 })
             );
         }
-    }, [existing, employeeId, employee.employee_id, employee.department_id, employees, departments]);
+    }, [existing, employeeId, employee.employee_id,
+        employee.department_id, employees, departments]);
 
     const departmentOptions = departments.map((department, index) => {
         return <option key={index}
@@ -57,11 +61,17 @@ const EmployeeInfo = ({existing}) => {
     const positionList = employees.map((employee, index) => {
         if (!uniquePositionsSet.has(employee.position)) {
             uniquePositionsSet.add(employee.position);
-            return (
-                <option key={index} value={employee.position}/>
-            );
+            return <option key={index} value={employee.position}/>;
         } else return null;
     });
+
+    const deleteHandler = () => {
+        deleteData("employees", employeeId).then(() => {
+            setEmployees(employees.filter(employee =>
+                employee.employee_id !== employeeId));
+            navigate("/admin");
+        });
+    }
 
     const setManager = async (newEmployee) => {
         try {
@@ -187,7 +197,8 @@ const EmployeeInfo = ({existing}) => {
                 </div>
                 <div className={"bottom-buttons"}>
                     {existing
-                        ? <><Button>VYMAZAŤ</Button>
+                        ? <><Button type={"button"}
+                                    onClick={deleteHandler}>VYMAZAŤ</Button>
                             <Button type={"submit"}>
                                 ÚPRAVIŤ
                             </Button></>
