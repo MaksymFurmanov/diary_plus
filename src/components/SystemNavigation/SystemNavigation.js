@@ -3,6 +3,7 @@ import {IoPerson} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import navItemsList from "./NavItemsList";
 import {useUser} from "../../providers/UserProvider";
+import {Fragment} from "react";
 
 const SystemNavigation = () => {
     const user = useUser();
@@ -11,10 +12,13 @@ const SystemNavigation = () => {
 
     const navItems = navItemsList.map((item,
                                        index) => {
-        return <Button key={index}
-                       onClick={() => navigate(item.navigation)}>
-            {item.name}
-        </Button>
+        if(item.departments.includes(user.department_id)){
+            return <Button key={index}
+                           onClick={() => navigate(item.navigation)}>
+                {item.name}
+            </Button>
+        }
+        else return <Fragment key={index}/>
     })
 
     return (
