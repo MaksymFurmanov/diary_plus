@@ -89,7 +89,8 @@ const routes = [
         path: "/products/new_product",
         element: <ProductInfo existing={false}/>,
         providers: [ProductsProvider,
-            ProductionProcessesProvider]
+            ProductionProcessesProvider,
+            DepartmentsProvider]
     },
     {
         path: "/products/edit/:productId",

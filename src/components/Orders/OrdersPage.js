@@ -5,8 +5,10 @@ import {useMaterials} from "../../providers/MaterialsProvider";
 import OrdersTable from "./OrdersTable";
 import OrdersGraph from "./OrdersGraph";
 import {BsPlusCircleFill} from "react-icons/bs";
+import {useUser} from "../../providers/UserProvider";
 
 const OrdersPage = () => {
+    const user = useUser();
     const items = {
         products_to_product: useOrders(),
         raw_materials: useMaterials()
@@ -28,10 +30,10 @@ const OrdersPage = () => {
     return <>
         <div className={"h-stretch-center"}>
             <PageTitle name={title[type]}/>
-            <button className={"plus-button"}
+            {user.manager && <button className={"plus-button"}
                     onClick={() => navigate(new_order_page[type])}>
                 <BsPlusCircleFill/>
-            </button>
+            </button>}
         </div>
         <div className={"OrdersPage"}>
             <OrdersGraph items={items[type]} type={type}/>

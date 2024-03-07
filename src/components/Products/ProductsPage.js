@@ -2,41 +2,62 @@ import PageTitle from "../BasicComponents/PageTitle";
 import Button from "../BasicComponents/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {BsPlusCircleFill} from "react-icons/bs";
-import {IoIosArrowBack} from "react-icons/io";
-import {IoIosArrowForward} from "react-icons/io";
+import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {useProducts} from "../../providers/ProductsProvider";
 import placeholder from "../../fig/img/product_placeholder.webp"
+import {useUser} from "../../providers/UserProvider";
+import {useState} from "react";
 
 const ProductsPage = () => {
+    const user = useUser();
     const products = useProducts();
 
     const navigate = useNavigate();
+    const [cardsIndex, setCardsIndex] = useState(0);
 
     const productCards = products.map((product, index) => {
         return <div key={index} className={"product-card"}>
             <img src={product.img || placeholder} alt={""}/>
             <p>Product: {product.name}</p>
             <p>Typ: {product.type}</p>
-            <Button onClick={() =>
+            {user.manager && <Button onClick={() =>
                 navigate(`edit/${product.product_id}`)}
-                    colorType={2}>
+                                     colorType={2}>
                 Viac
-            </Button>
+            </Button>}
         </div>
-    })
+    });
+
+    const swipeHandler = (direction) => {
+        if (direction === 'left' && cardsIndex > 0) {
+            setCardsIndex(cardsIndex - 1);
+        } else if (direction === 'right' && cardsIndex < products.length - 3) {
+            setCardsIndex(cardsIndex + 1);
+        }
+    }
 
     return <>
         <PageTitle name={"Produkty"}/>
         <div className={"ProductsPage"}>
             <div className={"evenly"}>
-                <div className={"h-center"}>
-                    <button className={"left-arrow"}>
+                <div className={"h-center"} style={{zIndex: 3}}>
+                    <button className={"products-arrow"}
+                            onClick={() =>
+                                swipeHandler("left")}
+                            disabled={cardsIndex === 0}>
                         <IoIosArrowBack/>
                     </button>
                 </div>
-                {productCards}
-                <div className={"h-center"}>
-                    <button className={"right-arrow"}>
+                <div className={"product-cards"}>
+                    <div style={{transform: `translateX(-${cardsIndex * 100 / 3}%)`}}>
+                        {productCards}
+                    </div>
+                </div>
+                <div className={"h-center"} style={{zIndex: 3}}>
+                    <button className={"products-arrow"}
+                            onClick={() =>
+                                swipeHandler("right")}
+                            disabled={cardsIndex >= products.length - 3}>
                         <IoIosArrowForward/>
                     </button>
                 </div>

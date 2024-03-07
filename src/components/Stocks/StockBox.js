@@ -1,12 +1,14 @@
 import StockPlace from "./StockPlace";
-import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
+import {useProducts} from "../../providers/ProductsProvider";
+import {useUser} from "../../providers/UserProvider";
 
 const StockBox = ({box, type}) => {
+    const user = useUser();
     const items = {
         entry: useMaterials(),
-        output: useOrders()
+        output: useProducts()
     }
     const placesToChange = usePlacesToChange();
     const setPlacesToChange = useSetPlacesToChange();
@@ -20,7 +22,7 @@ const StockBox = ({box, type}) => {
 
     const item_id = {
         entry: 'material_id',
-        output: 'order_id'
+        output: 'product_id'
     }
 
     const required_date = {
@@ -58,24 +60,18 @@ const StockBox = ({box, type}) => {
         if (itemId !== null) {
             let foundItem = items[type].find((item) =>
                 itemId === item[item_id[type]]);
-
-            if(type === "output") {
-                foundItem = foundItem.product;
-            }
-
             date = foundItem[required_date[type]];
             palletColor = foundItem.pallet_color;
         }
 
-        return (
-            <StockPlace key={index}
-                        palletColor={palletColor}
-                        date={date}
-                        onClick={() => selectHandler(place)}
-                        selected={placesToChange.find((id) =>
-                            id === place[place_id[type]])}
-            />
-        );
+        return <StockPlace key={index}
+                           style={{cursor: user.manager ? "pointer" : "default"}}
+                           palletColor={palletColor}
+                           date={date}
+                           onClick={() => user.manager && selectHandler(place)}
+                           selected={placesToChange.find((id) =>
+                               id === place[place_id[type]])}
+        />;
     });
 
     return <div className={`StockBox ${className[size]}`}>

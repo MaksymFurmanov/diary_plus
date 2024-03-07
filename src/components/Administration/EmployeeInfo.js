@@ -8,6 +8,7 @@ import {useEmployees, useSetEmployees} from "../../providers/EmployeesProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
 import {useServer} from "../../providers/ServerProvider";
 import useDeleteData from "../../hooks/useDeleteData";
+import Alert from "../BasicComponents/Alert";
 
 const EmployeeInfo = ({existing}) => {
     const departments = useDepartments();
@@ -33,6 +34,7 @@ const EmployeeInfo = ({existing}) => {
         manager: false,
         changed: false
     });
+    const [exitAlert, setExitAlert] = useState(false);
 
     useEffect(() => {
         if (existing) {
@@ -124,9 +126,14 @@ const EmployeeInfo = ({existing}) => {
         });
     }
 
+    const backHandler = () => {
+        if(employee.changed && existing) setExitAlert(true);
+        else navigate("/admin");
+    }
+
     return loading ? "Loading..." : <>
         <PageTitle name={existing ? "Pracovník" : "Nový pracovník"}
-                   prev={"/admin"}/>
+                   onBack={backHandler}/>
         <form className={"EmployeeInfo"}
               onSubmit={submitHandler}>
             <Input name={"name"}
@@ -209,6 +216,10 @@ const EmployeeInfo = ({existing}) => {
                 </div>
             </div>
         </form>
+        {exitAlert && <Alert
+            yesRoute={"/admin"}
+            onHide={() => setExitAlert(false)}>
+            Pokračovať bez úprav?</Alert>}
     </>
 }
 

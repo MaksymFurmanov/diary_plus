@@ -7,8 +7,10 @@ import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 import {useSetTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import useDeleteData from "../../hooks/useDeleteData";
 import {useSetOrders} from "../../providers/OrdersProvider";
+import {useUser} from "../../providers/UserProvider";
 
 const OrdersTable = ({items, type}) => {
+    const user = useUser();
     const materials = useMaterials();
     const setMaterials = useSetMaterials();
     const setTestsMaterials = useSetTestsMaterials();
@@ -30,7 +32,7 @@ const OrdersTable = ({items, type}) => {
     }
 
     const setItems = (newItems) => {
-        if(type === "products_to_product") {
+        if (type === "products_to_product") {
             setOrders(newItems);
         } else {
             setMaterials(newItems);
@@ -84,7 +86,7 @@ const OrdersTable = ({items, type}) => {
                 <td>{status}</td>
                 <td>{order.volume}</td>
                 <td>{order.deadline}</td>
-                <td>
+                {user.manager && <td>
                     <div>
                         <button onClick={() =>
                             navigate(`/orders/products_to_product/${order.order_id}`)}>
@@ -95,7 +97,7 @@ const OrdersTable = ({items, type}) => {
                             <BiSolidTrashAlt/>
                         </button>
                     </div>
-                </td>
+                </td>}
             </tr>
         });
     } else if (type === 'raw_materials') {
@@ -111,10 +113,12 @@ const OrdersTable = ({items, type}) => {
                 <td>{material.date_of_order}</td>
                 <td>{material.arriving_date
                     ? material.arriving_date
-                    : <Button onClick={() => arrivedHandler(material)}>
-                        PRIŠLO</Button>}
-                </td>
-                <td>
+                    : user.manager
+                        ? <Button onClick={() => arrivedHandler(material)}>
+                            PRIŠLO</Button>
+                        : "Neprišlo"
+                }</td>
+                {user.manager && <td>
                     <div>
                         <button onClick={() =>
                             navigate(`/orders/raw_materials/${material.material_id}`)}>
@@ -125,7 +129,7 @@ const OrdersTable = ({items, type}) => {
                             <BiSolidTrashAlt/>
                         </button>
                     </div>
-                </td>
+                </td>}
             </tr>
         })
     }

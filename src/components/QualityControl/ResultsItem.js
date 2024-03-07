@@ -6,8 +6,10 @@ import {storage} from "../../firebase-config";
 import {useSetTestsMaterials, useTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import {useSetTestsProducts, useTestsProducts} from "../../providers/TestsProductsProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
+import {useUser} from "../../providers/UserProvider";
 
 const ResultsItem = ({test, laboratory}) => {
+    const user = useUser();
     const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()
@@ -102,14 +104,15 @@ const ResultsItem = ({test, laboratory}) => {
         <div>
             {test.accepted !== null
                 ? test.accepted ? "SCHVALENÉ" : "ZAMIETNUTÉ"
-                : <>
+                : user.manager ? <>
                     <Button colorType={2}
                             onClick={() => handleResult(true)}>
                         SCHVALIŤ</Button>
                     <Button colorType={2}
                             onClick={() => handleResult(false)}>
                         ZAMIETNUŤ</Button>
-                </>}
+                </>
+            : "OVERUJE SA"}
         </div>
     </div>
 }

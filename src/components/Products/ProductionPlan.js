@@ -61,22 +61,20 @@ const ProductionPlan = ({processes, setProcesses, productId}) => {
     const productionPlanItems = processes
         .sort((a, b) => a.queue - b.queue)
         .map((process, index) => {
-            return (
-                <ProductionPlanProcess
-                    key={index}
-                    handleItemClick={handleItemClick}
-                    process={process}
-                    index={index}
-                    last={processes.length - 1}
-                />
-            );
+            return <ProductionPlanProcess
+                key={index}
+                handleItemClick={handleItemClick}
+                process={process}
+                index={index}
+                last={processes.length - 1}
+            />
         });
 
     return (
         <div className={"ProductionPlan"}
              onScroll={closeDetails}>
             {productionPlanItems}
-            {detailsBox.toggle && (
+            {detailsBox.toggle &&
                 <ProductionProcessDetails
                     process={processes.find((process) =>
                         detailsBox.process_queue === process.queue)}
@@ -85,7 +83,7 @@ const ProductionPlan = ({processes, setProcesses, productId}) => {
                     coordinates={[detailsBox.position.x,
                         detailsBox.position.y]}
                     closeHandler={closeDetails}
-                />)}
+                />}
             {addProcessToggle && <>
                 {productionPlanItems[0] && <div><GoArrowRight/></div>}
                 <AddProcess queue={processes.length}

@@ -6,6 +6,7 @@ import Input from "../BasicComponents/Input.tsx";
 import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 import PalletColor from "../BasicComponents/PalletColor";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
+import Alert from "../BasicComponents/Alert";
 
 const MaterialInfo = ({existing}) => {
     const materials = useMaterials();
@@ -26,6 +27,7 @@ const MaterialInfo = ({existing}) => {
         pallet_color: "",
         changed: false
     });
+    const [exitAlert, setExitAlert] = useState(false);
 
     const existingMaterial = materials.find((material) =>
         material.material_id === materialId
@@ -86,9 +88,14 @@ const MaterialInfo = ({existing}) => {
         });
     }
 
-    return loading ? <p>Loading...</p> : <>
+    const backHandler = () => {
+        if(material.changed && existing) setExitAlert(true);
+        else navigate("/orders/raw_materials");
+    }
+
+    return loading ? "Loading..." : <>
         <PageTitle name={existing ? "Objednávka surovín" : "Nová objednávka surovín"}
-                   prev={"/orders/raw_materials"}/>
+                   onBack={backHandler}/>
         <form className={"MaterialInfo"} onSubmit={e => submitHandler(e)}>
             <div className={"h-stretch-center"}>
                 <div className={"input-field"}>
@@ -144,6 +151,10 @@ const MaterialInfo = ({existing}) => {
                 }
             </div>
         </form>
+        {exitAlert && <Alert
+            yesRoute={"/orders/raw_materials"}
+            onHide={() => setExitAlert(false)}>
+            Pokračovať bez úprav?</Alert>}
     </>
 }
 

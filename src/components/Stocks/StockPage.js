@@ -7,8 +7,10 @@ import StockList from "./StockList";
 import Button from "../BasicComponents/Button.tsx";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import useLoadData from "../../hooks/useLoadData";
+import {useUser} from "../../providers/UserProvider";
 
 const StockPage = () => {
+    const user = useUser();
     const places = {
         entry: useEntryStock(),
         output: useOutputStock()
@@ -42,7 +44,7 @@ const StockPage = () => {
 
     const item_id = {
         entry: 'material_id',
-        output: 'order_id'
+        output: 'product_id'
     }
 
     const route = {
@@ -56,6 +58,8 @@ const StockPage = () => {
         if (!(box in boxSplit)) boxSplit[box] = [place];
         else boxSplit[box].push(place);
     })
+
+    console.log(places)
 
     const stockPlacesRow1 = boxSplit.slice(0, 4).map((box, index) => (
         <StockBox key={`row1-${index}`} type={type} box={box}
@@ -111,10 +115,10 @@ const StockPage = () => {
     return <>
         <div className={"h-stretch-center"}>
             <PageTitle name={title[type]}/>
-            <div>
+            {user.manager &&<div>
                 <Button onClick={deleteHandler}>Vymazať</Button>
                 <Button onClick={unselectHandler}>Odznačiť všetko</Button>
-            </div>
+            </div>}
         </div>
         <div className={"StockPage evenly"}>
             <StockList type={type}/>

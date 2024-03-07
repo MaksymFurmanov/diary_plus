@@ -6,6 +6,7 @@ import Button from "../BasicComponents/Button.tsx";
 import {useOrders, useSetOrders} from "../../providers/OrdersProvider";
 import {useProducts} from "../../providers/ProductsProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
+import Alert from "../BasicComponents/Alert";
 
 const OrderInfo = ({existing}) => {
     const orders = useOrders();
@@ -27,6 +28,7 @@ const OrderInfo = ({existing}) => {
         deadline: "",
         changed: false
     });
+    const [exitAlert, setExitAlert] = useState(false);
 
     const existingOrder = orders.find(order => order.order_id === orderId);
     useEffect(() => {
@@ -58,7 +60,7 @@ const OrderInfo = ({existing}) => {
         ));
 
     const customerList = orders.map((order, index) => (
-       <option key={index} value={order.customer}/>
+        <option key={index} value={order.customer}/>
     ));
 
     const submitHandler = (e) => {
@@ -67,7 +69,6 @@ const OrderInfo = ({existing}) => {
         loadDataItem('orders', order).then(newOrder => {
             const orderIndex = orders.findIndex(orderItem =>
                 orderItem.order_id === order.order_id);
-            console.log(newOrder)
             if (orderIndex !== -1) {
                 const newOrders = [...orders];
                 newOrders[orderIndex] =
@@ -80,9 +81,14 @@ const OrderInfo = ({existing}) => {
         });
     }
 
+    const backHandler = () => {
+        if(order.changed && existing) setExitAlert(true);
+        else navigate("/orders/products_to_product");
+    }
+
     return loading ? <p>Loading...</p> : <>
         <PageTitle name={existing ? "Objednávka" : "Nová objednávka"}
-                   prev={"/orders/products_to_product"}/>
+                   onBack={backHandler}/>
         <form className={"OrderInfo"} onSubmit={e => submitHandler(e)}>
             <div className={"input-field"}>
                 <Input
@@ -140,7 +146,11 @@ const OrderInfo = ({existing}) => {
                 }
             </div>
         </form>
-    </>;
+        {exitAlert && <Alert
+            yesRoute={"/orders/products_to_product"}
+            onHide={() => setExitAlert(false)}>
+            Pokračovať bez úprav?</Alert>}
+    </>
 };
 
 export default OrderInfo;

@@ -24,7 +24,7 @@ const TestingItem = ({test, laboratory}) => {
     });
 
     useEffect(() => {
-        if(test.document) {
+        if (test.document) {
             const docRef = ref(storage, test.document);
             getFileName(docRef).then((name) => {
                 setDocument(prevState =>
@@ -118,29 +118,30 @@ const TestingItem = ({test, laboratory}) => {
         <p>{test.test_id}</p>
         <p>{name}</p>
         <p>{details}</p>
-        <select value={status}
-                name={"status"}
-                onChange={(e) =>
-                    selectHandler(e)}>
-            <option value={0}>
-                Čaká sa vzorka
-            </option>
-            <option value={1}>
-                Vzorka pripravená
-            </option>
-            <option value={2}>
-                Testuje sa
-            </option>
-            <option value={3}>
-                Čaká sa na schválenie
-            </option>
-        </select>
+        {!test.document
+            ? <select value={status}
+                      name={"status"}
+                      onChange={(e) =>
+                          selectHandler(e)}>
+                <option value={0}>
+                    Čaká sa vzorka
+                </option>
+                <option value={1}>
+                    Vzorka pripravená
+                </option>
+                <option value={2}>
+                    Testuje sa
+                </option>
+            </select>
+            : test.accepted === null
+                ? "Čaká sa na schválenie"
+                : test.accepted ? "SCHVALENÉ" : "ZAMIETNUTÉ"}
         <div className={"test-results"}>
             <input className={"hidden-input"}
-                type={"file"}
-                id={`document-${test.test_id}`}
-                name={`document-${test.test_id}`}
-                onChange={fileInput}
+                   type={"file"}
+                   id={`document-${test.test_id}`}
+                   name={`document-${test.test_id}`}
+                   onChange={fileInput}
             />
             <label htmlFor={`document-${test.test_id}`}>
                 {document.name
@@ -150,9 +151,9 @@ const TestingItem = ({test, laboratory}) => {
                     : 'Upload File'}
             </label>
         </div>
-        <button onClick={submitDocumentHandler}>
+        {!test.document && <button onClick={submitDocumentHandler}>
             <FaArrowRight/>
-        </button>
+        </button>}
     </div>
 }
 

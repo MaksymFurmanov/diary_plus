@@ -1,18 +1,20 @@
 import {RxCross2} from "react-icons/rx";
 import React from "react";
-import {useOrders} from "../../providers/OrdersProvider";
 import {useMaterials} from "../../providers/MaterialsProvider";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import useLoadData from "../../hooks/useLoadData";
 import {useEntryStock, useSetEntryStock} from "../../providers/EntryStockProvider";
 import {useOutputStock, useSetOutputStock} from "../../providers/OutputStockProvider";
+import {useProducts} from "../../providers/ProductsProvider";
+import {useUser} from "../../providers/UserProvider";
 
 const StockList = ({type}) => {
+    const user = useUser();
     const placesToChange = usePlacesToChange();
     const setPlacesToChange = useSetPlacesToChange();
     const items = {
         entry: useMaterials(),
-        output: useOrders()
+        output: useProducts()
     }
     const places = {
         entry: useEntryStock(),
@@ -21,7 +23,7 @@ const StockList = ({type}) => {
     const setEntryStock = useSetEntryStock();
     const setOutputStock = useSetOutputStock();
 
-    const [loadData, setLoadData] = useLoadData();
+    const [loadData] = useLoadData();
 
     const setStock = (newPlaces) => {
         if (type === "entry") {
@@ -38,7 +40,7 @@ const StockList = ({type}) => {
 
     const item_id = {
         entry: 'material_id',
-        output: 'order_id'
+        output: 'product_id'
     }
 
     const data_type = {
@@ -61,11 +63,11 @@ const StockList = ({type}) => {
             }
         } else if (type === "output") {
             return {
-                order_id: item.order_id,
-                pallet_color: item.product.pallet_color,
-                per_pallet: item.product.per_pallet,
-                itemName: `Produkt: ${item.product.name}`,
-                itemDetails: `Typ: ${item.product.type}`
+                product_id: item.product_id,
+                pallet_color: item.pallet_color,
+                per_pallet: item.per_pallet,
+                itemName: `Produkt: ${item.name}`,
+                itemDetails: `Typ: ${item.type}`
             }
         }
         return null
@@ -94,13 +96,20 @@ const StockList = ({type}) => {
         });
     }
 
+    const productsSet = new Set();
     const itemsList = itemsData.map((item, index) => {
         if (item !== null) {
+            if (type === "output") if (!productsSet.has(item.product_id)) {
+                productsSet.add(item.product_id);
+            } else return <React.Fragment key={index}/>
             return <React.Fragment key={index}>
                 <li>
                     <div className={"StockPlace"}
-                         style={{backgroundColor: item.pallet_color}}
-                         onClick={() => submitHandler(item[item_id[type]])}/>
+                         style={{
+                             backgroundColor: item.pallet_color,
+                             cursor: user.manager ? "pointer" : "default"
+                         }}
+                         onClick={() => user.manager && submitHandler(item[item_id[type]])}/>
                     <div><p>—</p></div>
                     <div>
                         <p>Počet: {item.per_pallet}</p>
@@ -111,7 +120,7 @@ const StockList = ({type}) => {
                 {index !== length - 1 && <div className={"line"}/>}
             </React.Fragment>
         } else {
-            return <React.Fragment key={index}></React.Fragment>
+            return <React.Fragment key={index}/>
         }
     });
 
