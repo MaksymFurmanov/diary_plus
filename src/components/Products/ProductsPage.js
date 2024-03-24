@@ -5,11 +5,11 @@ import {BsPlusCircleFill} from "react-icons/bs";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {useProducts} from "../../providers/ProductsProvider";
 import placeholder from "../../fig/img/product_placeholder.webp"
-import {useUser} from "../../providers/UserProvider";
 import {useState} from "react";
+import {useSelector} from "react-redux";
 
 const ProductsPage = () => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
     const products = useProducts();
 
     const navigate = useNavigate();

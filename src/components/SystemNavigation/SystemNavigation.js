@@ -2,11 +2,13 @@ import Button from "../BasicComponents/Button.tsx";
 import {IoPerson} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import navItemsList from "./NavItemsList";
-import {useUser} from "../../providers/UserProvider";
 import {Fragment} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {reinitialize} from "../../state/user/userSlice.ts";
 
 const SystemNavigation = () => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -19,13 +21,18 @@ const SystemNavigation = () => {
             </Button>
         }
         else return <Fragment key={index}/>
-    })
+    });
+
+    const logOut = () => {
+        dispatch(reinitialize());
+        navigate("/")
+    }
 
     return (
         <div className={"SystemNavigation"}>
             <div className={"user-info v-center"}>
                 <div>
-                    <Button onClick={() => navigate("/")}>
+                    <Button onClick={logOut}>
                         ODHLASIŤ SA
                     </Button>
                     <Button onClick={() => navigate("/about_system")}>

@@ -7,10 +7,10 @@ import StockList from "./StockList";
 import Button from "../BasicComponents/Button.tsx";
 import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import useLoadData from "../../hooks/useLoadData";
-import {useUser} from "../../providers/UserProvider";
+import {useSelector} from "react-redux";
 
 const StockPage = () => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
     const places = {
         entry: useEntryStock(),
         output: useOutputStock()

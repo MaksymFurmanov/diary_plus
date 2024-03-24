@@ -6,10 +6,10 @@ import {storage} from "../../firebase-config";
 import {useSetTestsMaterials, useTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import {useSetTestsProducts, useTestsProducts} from "../../providers/TestsProductsProvider";
 import useLoadDataItem from "../../hooks/useLoadDataItem";
-import {useUser} from "../../providers/UserProvider";
+import {useSelector} from "react-redux";
 
 const ResultsItem = ({test, laboratory}) => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
     const tests = {
         laboratory_1: useTestsMaterials(),
         laboratory_2: useTestsProducts()

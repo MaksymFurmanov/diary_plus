@@ -10,6 +10,9 @@ const Alert = ({children, type, yesRoute, noRoute, onHide}) => {
 
     let iconSVG, buttons;
     switch (type) {
+        case "loading":
+
+            break;
         case "trashBin":
             iconSVG = <FaTrash/>;
             buttons = <>

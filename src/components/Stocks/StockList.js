@@ -6,10 +6,10 @@ import useLoadData from "../../hooks/useLoadData";
 import {useEntryStock, useSetEntryStock} from "../../providers/EntryStockProvider";
 import {useOutputStock, useSetOutputStock} from "../../providers/OutputStockProvider";
 import {useProducts} from "../../providers/ProductsProvider";
-import {useUser} from "../../providers/UserProvider";
+import {useSelector} from "react-redux";
 
 const StockList = ({type}) => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
     const placesToChange = usePlacesToChange();
     const setPlacesToChange = useSetPlacesToChange();
     const items = {

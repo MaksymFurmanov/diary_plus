@@ -1,22 +1,18 @@
 import Button from "../BasicComponents/Button.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {IoMdEye, IoMdEyeOff} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
-import Input from "../BasicComponents/Input.tsx";
-import {useServer} from "../../providers/ServerProvider";
-import {useSetUser} from "../../providers/UserProvider";
 import Alert from "../BasicComponents/Alert";
+import {useDispatch, useSelector} from "react-redux";
+import {logIn} from "../../state/user/userSlice.ts";
+import {useForm} from "react-hook-form";
 
 const LogInPage = () => {
-    const setUser = useSetUser();
-    const api = useServer();
+    const {loading, error, success} = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
-
-    const [userForm, setUserForm] = useState({
-        login: "",
-        password: "",
-    });
+    const {register, handleSubmit} = useForm();
 
     const [passwordToggle, setPasswordToggle] = useState(false);
     const [connectionError, setConnectionError] = useState(false);
@@ -27,18 +23,21 @@ const LogInPage = () => {
         setPasswordToggle(!passwordToggle);
     }
 
-    const loginResult = async () => {
+    /*const loginResult = async (login, password) => {
         try {
             const response = await fetch(
-                `${api}/user/log-in?username=${userForm.login}&password=${userForm.password}`
+                `${api}/user/log-in?username=${login}&password=${password}`
             );
             if (response.ok) {
-                const user = await response.json();
+                const newUser = await response.json();
 
-                setUser({
-                    ...user, manager:
-                        user.department.manager_id === user.employee_id
-                });
+                dispatch(setUser(user, {
+                    ...newUser,
+                    manager: newUser.departments.manager_id === newUser.employee_id
+                }));
+
+                localStorage.setItem("user", JSON.stringify(newUser));
+
                 navigate("/navigation");
             } else {
                 setAuthError(true);
@@ -46,39 +45,45 @@ const LogInPage = () => {
         } catch (e) {
             setConnectionError(true);
         }
+    }*/
+
+    useEffect(() => {
+        if(success) navigate("/navigation");
+        if(error) {
+            if(error === "Authentication failed") {
+                setAuthError(true);
+            } else if (error === "Network error") {
+                setConnectionError(true);
+            } else {
+                console.error(error);
+            }
+        }
+    }, [error, navigate, success]);
+
+    const submitHandler = (data) => {
+        dispatch(logIn(data));
     }
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        loginResult();
+    const errorHandler = (e) => {
+        console.log(e);
     }
 
     return <>
-        <form onSubmit={submitHandler} className={"LogInPage"}>
+        <form onSubmit={handleSubmit(submitHandler, errorHandler)} className={"LogInPage"}>
             <div className="log-in-background v-center">
                 <h1>PRIHLÁSENIE</h1>
                 <div className={"white-outline login-inputs"}>
-                    <div>
-                        <Input type={"text"}
-                               name={"login"}
-                               position={"close"}
-                               size={3}
-                               value={userForm.login}
-                               setter={setUserForm}
-                               state={userForm}
-                               autoComplete={"username"}>
-                            Meno</Input>
+                    <div className={"login-input"}>
+                        <label>Meno</label>
+                        <input type={"text"}
+                               autoComplete={"username"}
+                               {...register('login')}/>
                     </div>
-                    <div className={"password"}>
-                        <Input type={passwordToggle ? "text" : "password"}
-                               position={"close"}
-                               size={3}
-                               name={"password"}
-                               value={userForm.password}
-                               setter={setUserForm}
-                               state={userForm}
-                               autoComplete="current-password">
-                            Heslo</Input>
+                    <div className={"password-input"}>
+                        <label>Heslo</label>
+                        <input type={passwordToggle ? "text" : "password"}
+                               autoComplete="current-password"
+                               {...register('password')}/>
                         <button onClick={(e) =>
                             passwordHandler(e)}>
                             {passwordToggle
@@ -106,6 +111,7 @@ const LogInPage = () => {
             Nesprávne meno alebo heslo.
             Skontrolujte alebo kontaktujte administrátora
         </Alert>}
+        {loading && <Alert>Loading</Alert>}
     </>
 }
 

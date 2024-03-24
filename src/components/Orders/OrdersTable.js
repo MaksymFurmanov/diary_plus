@@ -7,10 +7,10 @@ import {useMaterials, useSetMaterials} from "../../providers/MaterialsProvider";
 import {useSetTestsMaterials} from "../../providers/TestsMaterialsProvider";
 import useDeleteData from "../../hooks/useDeleteData";
 import {useSetOrders} from "../../providers/OrdersProvider";
-import {useUser} from "../../providers/UserProvider";
+import {useSelector} from "react-redux";
 
 const OrdersTable = ({items, type}) => {
-    const user = useUser();
+    const user = useSelector(state => state.user.userInfo);
     const materials = useMaterials();
     const setMaterials = useSetMaterials();
     const setTestsMaterials = useSetTestsMaterials();

@@ -5,10 +5,10 @@ import {useMaterials} from "../../providers/MaterialsProvider";
 import OrdersTable from "./OrdersTable";
 import OrdersGraph from "./OrdersGraph";
 import {BsPlusCircleFill} from "react-icons/bs";
-import {useUser} from "../../providers/UserProvider";
+import {useSelector} from "react-redux";
 
 const OrdersPage = () => {
-    const user = useUser();
+    const user = useSelector((state) => state.user.userInfo);
     const items = {
         products_to_product: useOrders(),
         raw_materials: useMaterials()
