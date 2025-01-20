@@ -1,22 +1,23 @@
-import {ButtonHTMLAttributes, FC} from "react";
+import React, {ButtonHTMLAttributes, FC} from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    colorType?: number
+    colorType?: number;
 }
 
 const Button: FC<ButtonProps> = ({
                                      children,
                                      colorType,
-                                     ...rest}) => {
+                                     ...rest
+                                 }) => {
     const colorStyles = colorType === 2
         ? {backgroundColor: 'white', color: 'black'}
-        : {backgroundColor: 'black', color: 'white'}
+        : {backgroundColor: 'black', color: 'white'};
 
-    return <button className={"Button"}
-                   style={colorStyles}
-                   {...rest}>
-        {children}
-    </button>
-}
+    return (
+        <button className="Button" style={colorStyles} {...rest}>
+            {children}
+        </button>
+    );
+};
 
-export default Button
+export default Button;

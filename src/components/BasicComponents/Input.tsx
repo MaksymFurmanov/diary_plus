@@ -70,30 +70,32 @@ const Input: FC<InputProps> = ({
             positionType = "space-between"
     }
 
-    return <div className={"Input"}
-                style={{justifyContent: positionType}}>
-        {type !== "select"
-            ? <>
-                <label htmlFor={name}>{children}</label>
-                <input type={type}
-                       name={name}
-                       id={name}
-                       onChange={inputHandler}
-                       style={{width: width}}
-                       {...rest}/>
-            </>
-            : <>
-                <label htmlFor={name}>{children}</label>
-                <select id={name}
-                        name={name}
-                        onChange={inputHandler}
-                        style={{width: width}}
-                        {...rest}>
-                    <option value={-1}></option>
-                    {options}
-                </select>
-            </>}
-    </div>
+    return (
+        <div className={"Input"}
+             style={{justifyContent: positionType}}>
+            {type !== "select"
+                ? <>
+                    <label htmlFor={name}>{children}</label>
+                    <input type={type}
+                           name={name}
+                           id={name}
+                           onChange={inputHandler}
+                           style={{width: width}}
+                           {...rest}/>
+                </>
+                : <>
+                    <label htmlFor={name}>{children}</label>
+                    <select id={name}
+                            name={name}
+                            onChange={inputHandler}
+                            style={{width: width}}
+                            {...rest}>
+                        <option value={-1}></option>
+                        {options}
+                    </select>
+                </>}
+        </div>
+    );
 }
 
 export default Input;

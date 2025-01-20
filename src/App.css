@@ -266,9 +266,8 @@ input, select {
 
 .SystemNavigation {
     display: flex;
-    gap: 8em;
     margin: 2em auto;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .user-info {
@@ -446,7 +445,7 @@ input, select {
     color: #F8F8F8;
 }
 
-.AddProcess input {
+.AddProcessInput input {
     background: inherit;
     color: #F8F8F8;
     width: inherit;
@@ -455,12 +454,12 @@ input, select {
     font-size: 0.9rem;
 }
 
-.AddProcess div {
+.AddProcessInput div {
     display: flex;
     width: inherit;
 }
 
-.AddProcess p {
+.AddProcessInput p {
     margin-right: 0.1em;
 }
 
@@ -594,50 +593,50 @@ input, select {
     height: 25em;
 }
 
-.OrdersPage {
+.Dashboard {
     display: flex;
     justify-content: space-around;
 }
 
-.OrdersPage table {
+.Dashboard table {
     border-collapse: collapse;
     border-radius: 15px;
     overflow: hidden;
 }
 
-.OrdersPage tbody {
+.Dashboard tbody {
     overflow: scroll;
 }
 
-.OrdersPage th, .OrdersPage td {
+.Dashboard th, .Dashboard td {
     text-align: center;
     padding: 0.5em 1em;
     border: 1px solid;
 }
 
-.OrdersPage th {
+.Dashboard th {
     background-color: black;
     border-color: #F8F8F8;
     color: #F8F8F8;
 }
 
-.OrdersPage td {
+.Dashboard td {
     border-color: black;
 }
 
-.OrdersPage td button {
+.Dashboard td button {
     font-size: 0.8rem;
 }
 
-.OrdersPage td button svg {
+.Dashboard td button svg {
     width: 1.2em;
 }
 
-.OrdersPage td:last-child div {
+.Dashboard td:last-child div {
     display: flex;
 }
 
-.OrdersGraph {
+.PieChart {
     width: 25em;
     height: 23em;
 }
@@ -804,6 +803,7 @@ input, select {
 .department-title {
     display: flex;
     align-items: end;
+    cursor: pointer;
 }
 
 .department-title h2 {
@@ -813,7 +813,6 @@ input, select {
 
 .department-title svg {
     width: 1.5em;
-    cursor: pointer;
     margin: 0 0.5em 0.5em 0;
 }
 
@@ -853,7 +852,7 @@ input, select {
 }
 
 .EmployeeInfo, .OrderInfo,
-.MaterialInfo {
+.MaterialForm {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -865,11 +864,11 @@ input, select {
     width: fit-content;
 }
 
-.bottom-buttons {
+.MutateButtons {
     display: flex;
     justify-content: end;
 }
 
-.bottom-buttons button:last-child {
+.MutateButtons button:last-child {
     margin-left: 2em;
 }
