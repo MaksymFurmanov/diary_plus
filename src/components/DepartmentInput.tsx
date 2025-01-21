@@ -2,7 +2,8 @@ import {Department, ProductionProcess} from "../../types";
 import {getDepartments} from "../../utils/storage/departments";
 import {ChangeEvent} from "react";
 
-const DepartmentInput = ({process, inputHandler}: {
+const DepartmentInput = ({process, inputHandler
+  }: {
     process: ProductionProcess,
     inputHandler: (e: ChangeEvent<HTMLSelectElement>) => void
 }) => {

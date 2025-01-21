@@ -1,0 +1,82 @@
+import {useState} from "react";
+import {IoMdEye, IoMdEyeOff} from "react-icons/io";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {useForm} from "react-hook-form";
+import {useServer} from "../providers/ServerProvider";
+import {useSetUser} from "../providers/UserProvider";
+import Button from "../components/BasicComponents/Button.tsx";
+import Alert from "../components/BasicComponents/Alert";
+
+const LoginPage = () => {
+    const api = useServer();
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+    
+    const {register, handleSubmit} = useForm();
+    
+    const [connectionError, setConnectionError] = useState(false);
+    const [authError, setAuthError] = useState(false);
+
+    const loginResult = async (login, password) => {
+        try {
+            /*const response = await fetch(
+                `${api}/user/log-in?username=${login}&password=${password}`
+            );*/
+            const response = {ok: true}
+            if (response.ok) {
+                const newUser = await response.json();
+
+                setUser({
+                    ...newUser,
+                    manager: newUser.department.manager_id === newUser.employee_id
+                });
+
+                localStorage.setItem("user", JSON.stringify(newUser));
+
+                navigate("/navigation");
+            } else {
+                setAuthError(true);
+            }
+        } catch (e) {
+            console.log(e)
+            setConnectionError(true);
+        }
+    }
+
+    /*    useEffect(() => {
+            if (success) navigate("/navigation");
+            if (error) {
+                if (error === "Authentication failed") {
+                    setAuthError(true);
+                } else if (error === "Network error") {
+                    setConnectionError(true);
+                } else {
+                    console.error(error);
+                }
+            }
+        }, [error, navigate, success]);*/
+
+    return (
+        <>
+            <LoginForm/>
+            {connectionError &&
+                (<Alert type={"connection-error"}
+                       onHide={() => setConnectionError(false)}>
+                    Bad internet connection.
+Please check and try again.
+                </Alert>)
+
+            }
+            {authError && <Alert type={"error"}
+                                 onHide={() => setAuthError(false)}>
+                Incorrect username or password.
+Please check or contact administrator.
+            </Alert>}
+        </>
+    );
+}
+
+export default LogIn

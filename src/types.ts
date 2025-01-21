@@ -6,6 +6,11 @@ export type Employee = {
     date_of_birth: Date
 }
 
+export type EmployeeInput = {
+  id?: string,
+  
+}
+
 export type User = {
     employee_id: string,
     login: string,
@@ -31,7 +36,7 @@ export type Material = {
 }
 
 export type MaterialInput = {
-    id: string | undefined,
+    id?: string,
     name: string,
     supplier: string,
     date_of_order?: Date,
@@ -61,7 +66,7 @@ export type ProductionProcess = {
 }
 
 export type ProductInput = {
-    id: string | undefined,
+    id?: string,
     name: string,
     type: string,
     per_pallet: number,
@@ -87,7 +92,7 @@ export type Order = {
 }
 
 export type OrderInput = {
-    id: string | undefined,
+    id?: string,
     product_id: string,
     product_name: string,
     customer: string,

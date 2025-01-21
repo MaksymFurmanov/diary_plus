@@ -109,11 +109,11 @@ const routes: Route[] = [
     },
     {
         path: "/admin/new_employee",
-        element: <EmployeeInfo existing={false}/>
+        element: <EmployeeInputProvider><EmployeeInfo existing={false}/></EmployeeInputProvider>
     },
     {
         path: "/admin/:employeeId",
-        element: <EmployeeInfo existing={true}/>
+        element: <EmployeeInputProvider><EmployeeInfo existing={true}/></EmployeeInputProvider>
     },
     {
         path: "/about_system",

@@ -11,10 +11,10 @@ export type Document = {
 }
 
 const DocumentInput = ({test}: {
-    test: MaterialsTest | ProductsTest
+    test: MaterialsTest | ProductsTest,
+    document: Document,
+    setSocument: Dispatch<SetStateAction<Document>>
 }) => {
-
-
     useEffect(() => {
         if (test.document_url) {
             const docRef = ref(storage, test.document_url);

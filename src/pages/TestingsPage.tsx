@@ -32,7 +32,7 @@ const TestingItems = ({laboratory}: {
 }) => {
     if (laboratory === 1) {
         const tests = getMaterialsTests();
-        if(!tests) return<Fragment/>;
+        if(!tests) return <Fragment/>;
 
         return tests.map((item, index) => {
             return <TestingItem key={index}

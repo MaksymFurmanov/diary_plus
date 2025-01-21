@@ -7,9 +7,10 @@ const ProductionPage = () => {
     const orders = getOrders();
 
     return <>
-        <PageTitle name={"Plán výroby"}/>
+        <PageTitle name={"Production plan"}/>
         <div className={"ProductionPage v-center"}>
-            {orders ? orders.map((order, index) => {
+            {orders ? (
+            orders.map((order, index) => {
                     if (order.done_date === null) {
                         return (
                             <ProductionItem key={index}
@@ -18,7 +19,7 @@ const ProductionPage = () => {
                         )
                     } else return <Fragment key={index}/>
                 })
-                : <></>
+                ) : <></>;
             }
         </div>
     </>
