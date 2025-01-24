@@ -5,3 +5,4 @@ export const getOutputStockPlaces = (): OutputStockPlace[] | null => {
     if(!outputStockPlacesRaw) return null;
     return JSON.parse(outputStockPlacesRaw) as OutputStockPlace[];
 }
+

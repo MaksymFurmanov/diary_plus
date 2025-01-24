@@ -11,7 +11,7 @@ import {isManager} from "../utils/storage/departments";
 
 const StockPage = () => {
     const user = useUser();
-    const manager = isManager(user?.employee_id, ["11", "0"]);
+    const manager = isManager(user.employee_id, ["11", "0"]);
 
     const places = {
         entry: useEntryStock(),

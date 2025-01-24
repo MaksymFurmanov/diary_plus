@@ -1,132 +1,24 @@
 import {RxCross2} from "react-icons/rx";
 import React from "react";
-import {usePlacesToChange, useSetPlacesToChange} from "../../providers/PlacesToChangeProvider";
 import {useUser} from "../../providers/UserProvider";
 
-const StockList = ({type}: { type: "entry" | "output" }) => {
-    const user = useUser();
-    const placesToChange = usePlacesToChange();
-    const setPlacesToChange = useSetPlacesToChange();
-    const items = {
-        entry: useMaterials(),
-        output: useProducts()
-    }
-    const places = {
-        entry: useEntryStock(),
-        output: useOutputStock()
-    }
-    const setEntryStock = useSetEntryStock();
-    const setOutputStock = useSetOutputStock();
-
-    const [loadData] = useLoadData();
-
-    const setStock = (newPlaces) => {
-        if (type === "entry") {
-            setEntryStock(newPlaces);
-        } else if (type === "output") {
-            setOutputStock(newPlaces);
-        }
-    }
-
-    const place_id = {
-        entry: 'entry_stock_place_id',
-        output: 'output_stock_place_id'
-    }
-
-    const item_id = {
-        entry: 'material_id',
-        output: 'product_id'
-    }
-
-    const data_type = {
-        entry: "entry-stock-places",
-        output: "output-stock-places"
-    }
-
-    const length = items[type].length;
-
-    const itemsData = items[type].map((item) => {
-        if (type === "entry") {
-            if (item.arriving_date !== null) {
-                return {
-                    material_id: item.material_id,
-                    pallet_color: item.pallet_color,
-                    per_pallet: item.per_pallet,
-                    itemName: `Surovina: ${item.name}`,
-                    itemDetails: `Zdroj: ${item.supplier}`
-                }
-            }
-        } else if (type === "output") {
-            return {
-                product_id: item.product_id,
-                pallet_color: item.pallet_color,
-                per_pallet: item.per_pallet,
-                itemName: `Produkt: ${item.name}`,
-                itemDetails: `Typ: ${item.type}`
-            }
-        }
-        return null
-    });
-
-    const submitHandler = (itemId) => {
-        const changedPlaces = placesToChange.map((placeToChange) => {
-            const newPlace = places[type].find((place) =>
-                place[place_id[type]] === placeToChange);
-            newPlace[item_id[type]] = itemId;
-            return newPlace;
-        });
-
-        loadData(data_type[type], changedPlaces).then(() => {
-            const newPlaces = places[type].map((place) => {
-                if (placesToChange.find((placeToChange) =>
-                    placeToChange === place[place_id[type]])) {
-                    const newPlace = {...place}
-                    newPlace[item_id[type]] = itemId;
-                    return newPlace
-                }
-                return place
-            });
-            setStock(newPlaces);
-            setPlacesToChange([]);
-        });
-    }
-
-    const productsSet = new Set();
-    const itemsList = itemsData.map((item, index) => {
-        if (item !== null) {
-            if (type === "output") if (!productsSet.has(item.product_id)) {
-                productsSet.add(item.product_id);
-            } else return <React.Fragment key={index}/>
-            return <React.Fragment key={index}>
-                <li>
-                    <div className={"StockPlace"}
-                         style={{
-                             backgroundColor: item.pallet_color,
-                             cursor: user.manager ? "pointer" : "default"
-                         }}
-                         onClick={() => user.manager && submitHandler(item[item_id[type]])}/>
-                    <div><p>—</p></div>
-                    <div>
-                        <p>Volume: {item.per_pallet}</p>
-                        <p>{item.itemName}</p>
-                        <p>{item.itemDetails}</p>
-                    </div>
-                </li>
-                {index !== length - 1 && <div className={"line"}/>}
-            </React.Fragment>
-        } else {
-            return <React.Fragment key={index}/>
-        }
-    });
+const StockList = ({type}: { 
+  type: "entry" | "output" 
+}) => {
+  const items: Material[] | Order[] | null = type === "entry" ? getMaterials() : getOrders()
+  
+  const length = items.length;
 
     return (
         <ul className={"StockList v-center"}>
             <li><h3>Pallet selection</h3></li>
             <div className={"line"}/>
             <div className={"stock-pallets"}>
-                {itemsList}
+                {items && (
+                <Items items={items}/>
+                )}
             </div>
-            <li key={itemsList.length}>
+            <li key={length}>
                 <div className={"StockPlace"}>
                     <RxCross2/>
                 </div>
@@ -135,6 +27,52 @@ const StockList = ({type}: { type: "entry" | "output" }) => {
             </li>
         </ul>
     );
+}
+
+const Items = ({items}: {
+  items: Material[] | Order[],
+  type: "entry" | "output"
+}) => {
+  const user = useUser();
+  const manager= useManager(user.employee_id, ["0"]);
+    
+  const {places, setPlaces} = useSelectedStockPlaces();
+  
+  const itemsData: DisplayPlaceData = getStockPlaceData(items, type);
+
+const submitHandler = (itemId) => {
+  const changedPlaces = stockPlaces.map((stockPlace) => {
+    const newPlace = places.find((place) =>
+      stockPlace.id === place);
+    newPlace.id = itemId;
+    return newPlace;
+  });
+
+  if(type === "entry") {
+    updateEntryStock(places)
+  } else {
+    updateOutputStock(places)
+  }
+}
+
+  return itemsData.map((item, index) => {
+  <Fragment>
+                <li>
+                    <div className={"StockPlace"}
+                         style={{ backgroundColor: item.pallet_color,
+                             cursor: manager ? "pointer" : "default"
+                         }}
+                         onClick={() => manager && submitHandler(item.id)}/>
+                    <div><p>—</p></div>
+                    <div>
+                        <p>Volume: {item.per_pallet}</p>
+                        <p>{item.name}</p>
+                        <p>{item.details}</p>
+                    </div>
+                </li>
+                {index !== length - 1 && <div className={"line"}/>}
+            </Fragment>
+});
 }
 
 export default StockList
