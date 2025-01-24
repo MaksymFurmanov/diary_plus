@@ -5,6 +5,7 @@ import {BsPlusCircleFill} from "react-icons/bs";
 import PieData from "../components/Dashboard/PieData";
 import Table from "../components/Dashboard/Table";
 import {DashboardType} from "../types";
+import {isManager} from "../utils/storage/departments";
 
 const title = {
     orders: "Orders",
@@ -19,6 +20,7 @@ const newItemRoute = {
 const DashboardPage = ({type}: DashboardType) => {
     const user = useUser();
     if (!user) throw new Error("User not found");
+    const manager = isManager(user.employee_id, ["0"]);
 
     const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ const DashboardPage = ({type}: DashboardType) => {
         <div className={"h-stretch-center"}>
             <PageTitle name={title[type]}/>
 
-            {user.manager && (
+            {manager && (
                 <button className={"plus-button"}
                         onClick={() => navigate(newItemRoute[type])}>
                     <BsPlusCircleFill/>

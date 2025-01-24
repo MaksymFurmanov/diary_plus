@@ -4,18 +4,24 @@ export type Employee = {
     name: string,
     position: string,
     date_of_birth: Date
-}
+}1
 
 export type EmployeeInput = {
-  id?: string,
-  
+    id?: string,
+    department_id: string,
+    name: string,
+    position: string,
+    date_of_birth: string,
+    login: string,
+    password: string,
+    manager: boolean,
+    changed: boolean
 }
 
 export type User = {
     employee_id: string,
     login: string,
-    password: string,
-    manager: boolean
+    password: string
 }
 
 export type Department = {

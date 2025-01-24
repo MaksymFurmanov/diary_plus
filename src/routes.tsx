@@ -1,5 +1,5 @@
 import Main from "./pages/Main";
-import LogIn from "./pages/LogIn";
+import LoginPage from "./pages/LoginPage";
 import SystemNavigation from "./pages/SystemNavigation";
 import DashboardPage from "./pages/DashboardPage";
 import ProductionPage from "./pages/ProductionPage";
@@ -9,13 +9,14 @@ import StockPage from "./pages/StockPage";
 import QualityControl from "./pages/QualityControl";
 import Administration from "./pages/Administration";
 import AboutSystem from "./pages/AboutSystem";
-import EmployeeInfo from "./pages/EmployeeInfo";
+import EmployeePage from "./pages/EmployeePage";
 import OrderPage from "./pages/OrderPage";
 import MaterialPage from "./pages/MaterialPage";
 import {ReactNode} from "react";
 import OrderInputProvider from "./providers/OrderInputProvider";
 import MaterialInputProvider from "./providers/MaterialInputProvider";
 import TestingsPage from "./pages/TestingsPage";
+import EmployeeInputProvider from "./providers/EmployeeInputProvider";
 
 type Route = {
     path: string,
@@ -29,7 +30,7 @@ const routes: Route[] = [
     },
     {
         path: "/log_in",
-        element: <LogIn/>
+        element: <LoginPage/>
     },
     {
         path: "/navigation",
@@ -109,11 +110,15 @@ const routes: Route[] = [
     },
     {
         path: "/admin/new_employee",
-        element: <EmployeeInputProvider><EmployeeInfo existing={false}/></EmployeeInputProvider>
+        element: <EmployeeInputProvider>
+            <EmployeePage existing={false}/>
+        </EmployeeInputProvider>
     },
     {
         path: "/admin/:employeeId",
-        element: <EmployeeInputProvider><EmployeeInfo existing={true}/></EmployeeInputProvider>
+        element: <EmployeeInputProvider>
+            <EmployeePage existing={true}/>
+        </EmployeeInputProvider>
     },
     {
         path: "/about_system",

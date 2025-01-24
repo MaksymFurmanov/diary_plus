@@ -6,6 +6,7 @@ import {getProductionProcesses} from "../../utils/storage/productionProcesses";
 import {Order, Product, ProductionProcess} from "../../types";
 import {useUser} from "../../providers/UserProvider";
 import {useNavigate} from "react-router-dom";
+import {isManager} from "../../utils/storage/departments";
 
 const getStatus = (
     productionProcessId: string | null
@@ -14,17 +15,20 @@ const getStatus = (
 
     const productionProcesses = getProductionProcesses();
 
-    const productionProcess = productionProcesses?.find((productionProcess: ProductionProcess) =>
-        productionProcess.id === productionProcessId
-    );
+    const productionProcess = productionProcesses
+        ?.find((productionProcess: ProductionProcess) =>
+            productionProcess.id === productionProcessId
+        );
     if (!productionProcess) return "Not found production process";
 
-    return productionProcess.done_name;
+    return productionProcess.done_name
+        || `${productionProcess.queue} process done`;
 }
 
 const OrderRows = () => {
     const user = useUser();
     if (!user) throw new Error("User not found");
+    const manager = isManager(user.employee_id, ["0"]);
 
     const navigate = useNavigate();
 
@@ -49,7 +53,7 @@ const OrderRows = () => {
                 <td>{status}</td>
                 <td>{order.volume}</td>
                 <td>{order.deadline.toISOString()}</td>
-                {user.manager && <td>
+                {manager && <td>
                     <div>
                         <button onClick={() =>
                             navigate(`/orders/${order.id}`)}

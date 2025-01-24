@@ -5,10 +5,12 @@ import {Material} from "../../types";
 import {useUser} from "../../providers/UserProvider";
 import {deleteMaterial, getMaterials, materialArrived} from "../../utils/storage/materials";
 import {useNavigate} from "react-router-dom";
+import {isManager} from "../../utils/storage/departments";
 
 const MaterialRows = () => {
     const user = useUser();
     if (!user) throw new Error("User not found");
+    const manager = isManager(user.employee_id, ["0"]);
 
     const navigate = useNavigate();
 
@@ -25,12 +27,12 @@ const MaterialRows = () => {
                 <td>
                     {material.arriving_date
                         ? material.arriving_date.toISOString()
-                        : user.manager
+                        : manager
                             ? <ArrivedButton materialId={material.id}/>
                             : "ARRIVING"
                     }
                 </td>
-                {user.manager && (
+                {manager && (
                     <td>
                         <div>
                             <button onClick={() =>

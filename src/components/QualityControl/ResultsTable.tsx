@@ -19,7 +19,7 @@ const ResultsTable = ({laboratory}: {
                 <h3>{title[laboratory]}</h3>
             </div>
             <div className={"results-body"}>
-                <ResultsItems/>
+                <ResultItems laboratory={laboratory}/>
             </div>
         </div>
     );
@@ -28,12 +28,14 @@ const ResultsTable = ({laboratory}: {
 const ResultItems = ({laboratory}: {
     laboratory: 1 | 2
 }) => {
-    let items: MaterialsTest[] | ProductsTest[]
+    let items: MaterialsTest[] | ProductsTest[] | null;
     if (laboratory === 1) {
         items = getMaterialsTests();
     } else {
         items = getProductsTests();
     }
+
+    if(!items) return <></>;
 
     return items.map((test, index) => {
         return (

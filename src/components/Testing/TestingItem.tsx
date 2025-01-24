@@ -30,7 +30,10 @@ const TestingItem = ({test, laboratory}: {
                     ? "Waiting for review"
                     : test.accepted ? "ACCEPTED" : "DECLINED"
             }
-            <DocumentInput test={test}/>
+            <DocumentInput test={test}
+                           document={document}
+                           setDocument={setDocument}
+            />
             {!test.document_url && (
                 <SubmitButton test={test}
                               document={document}

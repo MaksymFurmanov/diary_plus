@@ -1,12 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {BsPlusCircleFill} from "react-icons/bs";
-import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
-import placeholder from "./../fig/img/product_placeholder.webp"
-import {useState} from "react";
-import {useProducts} from "../providers/ProductsProvider";
-import {useUser} from "../providers/UserProvider";
-import Button from "./../components/BasicComponents/Button.tsx";
 import PageTitle from "../components/BasicComponents/PageTitle";
+import ProductsGallery from "../components/Products/ProductsGallery";
 
 const ProductsPage = () => {
     const navigate = useNavigate();
@@ -14,7 +9,7 @@ const ProductsPage = () => {
     return <>
         <PageTitle name={"Produkty"}/>
         <div className={"ProductsPage"}>
-            <ProductsPage/>
+            <ProductsGallery/>
             
             <button className={"plus-button"}
                     onClick={() => navigate("new_product")}>
