@@ -108,19 +108,20 @@ export type OrderInput = {
     changed: boolean
 };
 
-export type EntryStockPlace = {
-    id: string,
-    material_id: string | null,
-    box: number,
-    queue: number
+type StockPlace = {
+  id: string,
+  box: number,
+  queue: number
 }
 
+export type EntryStockPlace = {
+    material_id: string | null,
+} & StockPlace;
+
 export type OutputStockPlace = {
-    id: string,
     order_id: string | null,
-    box: number,
-    queue: number
-}
+    put_date: Date
+} & StockPlace;
 
 export type Test = {
     id: string,

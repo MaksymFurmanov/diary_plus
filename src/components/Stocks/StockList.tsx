@@ -2,11 +2,10 @@ import {RxCross2} from "react-icons/rx";
 import React from "react";
 import {useUser} from "../../providers/UserProvider";
 
-const StockList = ({type}: { 
+const StockList = ({type}: {
+  items: Material[] | Order[],
   type: "entry" | "output" 
 }) => {
-  const items: Material[] | Order[] | null = type === "entry" ? getMaterials() : getOrders()
-  
   const length = items.length;
 
     return (

@@ -22,16 +22,15 @@ const LoginPage = () => {
 
     const loginResult = async (login, password) => {
         try {
-            /*const response = await fetch(
-                `${api}/user/log-in?username=${login}&password=${password}`
-            );*/
             const response = {ok: true}
             if (response.ok) {
-                const newUser = await response.json();
+                const newUser: User = {
+                  
+                };
 
                 setUser({
                     ...newUser,
-                    manager: newUser.department.manager_id === newUser.employee_id
+                    manager: isManager(newUser)
                 });
 
                 localStorage.setItem("user", JSON.stringify(newUser));
@@ -45,19 +44,6 @@ const LoginPage = () => {
             setConnectionError(true);
         }
     }
-
-    /*    useEffect(() => {
-            if (success) navigate("/navigation");
-            if (error) {
-                if (error === "Authentication failed") {
-                    setAuthError(true);
-                } else if (error === "Network error") {
-                    setConnectionError(true);
-                } else {
-                    console.error(error);
-                }
-            }
-        }, [error, navigate, success]);*/
 
     return (
         <>

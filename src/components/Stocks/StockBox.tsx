@@ -5,33 +5,21 @@ import {useUser} from "../../providers/UserProvider";
 import {EntryStockPlace, OutputStockPlace} from "../../types";
 import {useSelectedStockPlaces} from "../../providers/SelectedStockPlacesProvider";
 
-const StockBox = ({box, type}: {
+const StockBox = ({items, box, type, manager}: {
+    items: Mateial[] | Order[],
     box: EntryStockPlace[] | OutputStockPlace[],
     type: "entry" | "output",
     manager: boolean | undefined
 }) => {
-
-    const items = {
-        entry: useMaterials(),
-        output: useProducts()
-    }
     const {places, setPlaces} = useSelectedStockPlaces();
 
-    const required_date = {
-        entry: 'arriving_date',
-        output: 'done_date'
-    }
-
-    const sizeStyle = box.length === 6
+    const sizeStyle = type === "vertical"
         ? "vertical-stock-box"
         : "horizontal-stock-box";
 
-    const selectHandler = (place) => {
-        const placeId = place[place_id[type]];
-
-        if (placeId !== undefined) {
-            const placesToChangeIndex = places.findIndex((placesToChangeItem) =>
-                placesToChangeItem === placeId);
+    const selectHandler = (placeId) => {
+            const occupiedPlaceIndex = places.findIndex((occupiedPlace) =>
+                occupiedPlace === placeId);
 
             if (placesToChangeIndex !== -1) {
                 const newPlacesToChange = [...places];
@@ -39,32 +27,39 @@ const StockBox = ({box, type}: {
                 setPlaces(newPlacesToChange);
                 return;
             }
-        }
         setPlaces(prevState => [...prevState, placeId]);
     }
 
     const places = box.map((place, index) => {
         let palletColor = "#F8F8F8";
-        let date;
-        const itemId = place[item_id[type]];
+        let date = null;
 
-        if (itemId !== null) {
-            let foundItem = items[type].find((item) =>
-                itemId === item[item_id[type]]);
-            date = foundItem[required_date[type]];
-            palletColor = foundItem.pallet_color;
+        if (place !== null) {
+          if(type === "entry") {
+            const material: Material = (items as Material[]).find((material) => material.id === (place as EntryStockPlace).material_id);
+            
+            palletColor = material.palletColor;
+            date = material.arriving_date;
+          } else {
+            const order: Order = (items as Order[]).find((order) => order.id === (place as OutputStockPlace).order_id);
+            
+           palletColor = order.pallet_collor;
+           date = (place as OutputStockPlace).put_date;
+          }
         }
 
         const isSelected = !!places.find((id) =>
-            id === place[place_id[type]]);
+            id === place?.id);
 
-        return <StockPlace key={index}
+        return (
+        <StockPlace key={index}
                            style={{cursor: manager ? "pointer" : "default"}}
                            palletColor={palletColor}
                            date={date}
                            onClick={() => manager && selectHandler(place.id)}
                            selected={isSelected}
-        />;
+        />
+        );
     });
 
     return (
