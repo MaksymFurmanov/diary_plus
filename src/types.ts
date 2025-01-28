@@ -4,7 +4,7 @@ export type Employee = {
     name: string,
     position: string,
     date_of_birth: Date
-}1
+}
 
 export type EmployeeInput = {
     id?: string,
@@ -108,20 +108,16 @@ export type OrderInput = {
     changed: boolean
 };
 
-type StockPlace = {
-  id: string,
-  box: number,
-  queue: number
+export type EntryStockPlace = {
+    id: string
+    material_id: string | null,
 }
 
-export type EntryStockPlace = {
-    material_id: string | null,
-} & StockPlace;
-
 export type OutputStockPlace = {
+    id: string
     order_id: string | null,
     put_date: Date
-} & StockPlace;
+};
 
 export type Test = {
     id: string,

@@ -70,6 +70,13 @@ const employees: Employee[] = [
         name: "Zuzana Kováčová",
         position: "Analytik kvality",
         date_of_birth: new Date("03.07.1990")
+    },
+    {
+      id: 10,
+      department_id: 2,
+      name: "Maksym Furmanov",
+      position: "Manager",
+      date_of_birth: new Date("17.03.2004")
     }
 ];
 

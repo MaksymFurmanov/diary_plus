@@ -1,6 +1,6 @@
 const LoginForm = () => {
 const submitHandler = (data) => {
-        loginResult(data.login, data.password);
+        login(data.login, data.password);
     }
     
 return (

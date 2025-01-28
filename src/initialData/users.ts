@@ -51,6 +51,11 @@ const users: User[] = [
         login: "zuzana90",
         password: "analytikpass456"
     },
+    {
+      employee_id: 10,
+      login: "",
+      password: ""
+    }
 ];
 
 export default users;

@@ -13,7 +13,7 @@ const departments: Department[] = [
     },
     {
         id: "2",
-        manager_id: "0",
+        manager_id: "10",
         name: "Oddelenie riadenia"
     },
     {

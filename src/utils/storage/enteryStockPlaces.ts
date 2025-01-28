@@ -6,15 +6,29 @@ export const getEntryStockPlaces = (): EntryStockPlace[] | null => {
     return JSON.parse(entryStockPlacesRaw) as EntryStockPlace[];
 }
 
-export const updateEntryStock = (places: string[]) => {
+export const updateEntryStock = (places: string[], materialId: string) => {
   const stockPlaces = getEntryStockPlaces() || [];
+  if(!getMaterialById(materialId)) throw new Error("The material not Found");
   
-  const changedPlaces = stockPlaces.map((stockPlace) => {
-    const newPlace = places.find((place) =>
-      stockPlace.id === place);
-    newPlace.id = itemId;
-    return newPlace;
-  });
+  const placesSet = new Set(places);
   
-  
+  let changedPlaces = stockPlaces.map((stockPlace) => {
+      if(placesSet.has(stockPlace.id)) {
+        placesSet.delete(stockPlace.id);
+          return {
+            ...stockPlace,
+            material_id: materialId
+          }
+      }
+     
+     return stockPlace;
+    });
+    
+   placesSet.forEach(place => {
+     changedPlaces.push({
+       id: place,
+       material_id: materialId
+     })
+   });
+    localStorage.set("entryStockPlaces", changedPlaces);
 }

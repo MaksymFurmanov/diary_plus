@@ -9,23 +9,19 @@ import Button from "../components/BasicComponents/Button.tsx";
 import Alert from "../components/BasicComponents/Alert";
 
 const LoginPage = () => {
-    const api = useServer();
-
-    const dispatch = useDispatch();
-
     const navigate = useNavigate();
-    
-    const {register, handleSubmit} = useForm();
     
     const [connectionError, setConnectionError] = useState(false);
     const [authError, setAuthError] = useState(false);
 
-    const loginResult = async (login, password) => {
+    const loginHandler = async (login, password) => {
         try {
             const response = {ok: true}
             if (response.ok) {
                 const newUser: User = {
-                  
+                  employee_id: 10,
+      login: "",
+      password: ""
                 };
 
                 setUser({
@@ -47,7 +43,7 @@ const LoginPage = () => {
 
     return (
         <>
-            <LoginForm/>
+            <LoginForm />
             {connectionError &&
                 (<Alert type={"connection-error"}
                        onHide={() => setConnectionError(false)}>
