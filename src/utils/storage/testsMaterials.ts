@@ -28,3 +28,7 @@ export const changeMaterialsTestResult = (
 
     localStorage.setItem("materialsTests", JSON.stringify(data));
 }
+
+export const deleteTest = () => {
+  
+}
