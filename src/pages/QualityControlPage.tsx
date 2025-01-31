@@ -1,15 +1,15 @@
 import PageTitle from "../components/BasicComponents/PageTitle";
 import ResultsTable from "../components/QualityControl/ResultsTable";
 
-const QualityControl = () => {
+const QualityControlPage = () => {
 
     return <>
         <PageTitle name={"Kontrola kvality"}/>
         <div className={"QualityControlPage"}>
-            <ResultsTable laboratory={"laboratory_1"}/>
-            <ResultsTable laboratory={"laboratory_2"}/>
+            <ResultsTable laboratory={1}/>
+            <ResultsTable laboratory={2}/>
         </div>
     </>
 }
 
-export default QualityControl
+export default QualityControlPage

@@ -6,7 +6,7 @@ import ProductionPage from "./pages/ProductionPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductPage from "./pages/ProductPage";
 import StockPage from "./pages/StockPage";
-import QualityControl from "./pages/QualityControl";
+import QualityControlPage from "./pages/QualityControlPage";
 import Administration from "./pages/Administration";
 import AboutSystem from "./pages/AboutSystem";
 import EmployeePage from "./pages/EmployeePage";
@@ -102,7 +102,7 @@ const routes: Route[] = [
     },
     {
         path: "/quality_control",
-        element: <QualityControl/>
+        element: <QualityControlPage/>
     },
     {
         path: "/admin",

@@ -1,8 +1,4 @@
 import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from "react";
-import {ref} from "firebase/storage";
-import getFileName from "../../utils/getFileName";
-/*import firebase from "firebase/compat";
-import storage = firebase.storage;*/
 import {MaterialsTest, ProductsTest} from "../../types";
 
 export type Document = {

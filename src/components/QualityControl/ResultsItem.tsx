@@ -6,14 +6,7 @@ import {isManager} from "../../utils/storage/departments";
 import getTestInfo from "../../utils/getTestInfo";
 import {changeMaterialsTestResult} from "../../utils/storage/testsMaterials";
 import {changeProductsTestResult} from "../../utils/storage/testsProducts";
-
-const handleDownload = (documentURL: string, name: string) => {
-    const link = document.createElement('a');
-    link.target = "_blank";
-    link.href = documentURL;
-    link.download = name;
-    link.click();
-};
+import handleDownload from "../../utils/handleDownload";
 
 const ResultsItem = ({test, laboratory}: {
     test: MaterialsTest | ProductsTest,

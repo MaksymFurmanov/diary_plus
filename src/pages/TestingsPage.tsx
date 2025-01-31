@@ -35,14 +35,18 @@ const TestingItems = ({laboratory}: {
         : getProductsTests();
     if (!tests) return <Fragment/>;
 
-    return tests.map((item, index) => {
-        return (
-            <TestingItem key={index}
-                         test={item}
-                         laboratory={laboratory}
-            />
-        );
-    })
+    return (
+        <>
+            {tests.map((item, index) => {
+                return (
+                    <TestingItem key={index}
+                                 test={item}
+                                 laboratory={laboratory}
+                    />
+                );
+            })}
+        </>
+    )
 }
 
 export default TestingsPage;

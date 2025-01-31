@@ -35,17 +35,21 @@ const ResultItems = ({laboratory}: {
         items = getProductsTests();
     }
 
-    if(!items) return <></>;
+    if (!items) return <></>;
 
-    return items.map((test, index) => {
-        return (
-            test.document_url
-                ? <ResultsItem key={index}
-                               laboratory={laboratory}
-                               test={test}/>
-                : <Fragment key={index}/>
-        )
-    })
+    return (
+        <>
+            {items.map((test, index) => {
+                return (
+                    test.document_url
+                        ? <ResultsItem key={index}
+                                       laboratory={laboratory}
+                                       test={test}/>
+                        : <Fragment key={index}/>
+                )
+            })}
+        </>
+    )
 }
 
 export default ResultsTable

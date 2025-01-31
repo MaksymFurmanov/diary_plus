@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import Button from "../components/BasicComponents/Button.tsx";
+import Button from "../components/BasicComponents/Button";
 
 const Main = () => {
     const navigate = useNavigate();

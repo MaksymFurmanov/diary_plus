@@ -1,3 +1,4 @@
+/*
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {ProductInput} from "../types";
 import firebase from "firebase/compat";
@@ -37,4 +38,4 @@ const loadImgToStorage = async (product: ProductInput) => {
     }
 }
 
-export default loadImgToStorage;
+export default loadImgToStorage;*/

@@ -1,5 +1,5 @@
 import {FaArrowRight} from "react-icons/fa6";
-import {storage} from "../../firebase-config";
+//import {storage} from "../../firebase-config";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {MaterialsTest, ProductsTest} from "../../types";
 import getTestInfo from "../../utils/getTestInfo";
@@ -55,7 +55,7 @@ const SubmitButton = ({test, document, laboratory}: {
     laboratory: 1 | 2
 }) => {
     const submitDocumentHandler = () => {
-        const documentRef = ref(storage,
+        /*const documentRef = ref(storage,
             `/${route[laboratory]}/${test.id}/document`);
 
         try {
@@ -73,18 +73,18 @@ const SubmitButton = ({test, document, laboratory}: {
                         const newItem = {
                             ...test, document: url
                         }
-                        /*loadDataItem(route[laboratory], newItem).then(() => {
+                        /!*loadDataItem(route[laboratory], newItem).then(() => {
                             let newTests = [...tests[laboratory]]
                             const index = newTests.findIndex((testItem) =>
                                 testItem.test_id === test.test_id);
                             newTests[index] = newItem;
                             setTests(newTests);
-                        });*/
+                        });*!/
                     });
             }
         } catch (e) {
             console.log(e)
-        }
+        }*/
     }
 
     return (

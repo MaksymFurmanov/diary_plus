@@ -10,6 +10,7 @@ import {getOrders} from "../utils/storage/orders";
 import {getEntryStockPlaces, removeEntryStockPlaces} from "../utils/storage/enteryStockPlaces";
 import {getOutputStockPlaces, removeOutputStockPlaces} from "../utils/storage/outputStockPlaces";
 import {useSelectedStockPlaces} from "../providers/SelectedStockPlacesProvider";
+import {EntryStockPlace, OutputStockPlace} from "../types";
 
 const title = {
     entry: "Entry stock",
@@ -26,21 +27,28 @@ const StockPage = () => {
 
     const items = type === "entry" ? getMaterials() || [] : getOrders() || [];
 
-    const occupiedPlaces = type === "entry"
-        ? getEntryStockPlaces() || []
-        : getOutputStockPlaces() || [];
-    const occupiedPlacesIds = occupiedPlaces ? new Set(occupiedPlaces.map((place) => place.id)) : new Set();
-
     let boxSplit = [];
-    for (let i = 0; i < 12; i++) {
-        if (i > 3 && i < 7) {
-            for (let j = 0; j < 6; j++) {
-                const obj = occupiedPlacesIds.has(i)
-                    ? occupiedPlaces!.find((place) =>
-                        place.id === String(i))
-                    : undefined;
-                if (j === 0) boxSplit[i] = [obj];
-                else boxSplit[i].push(obj);
+
+    if (type === "entry") {
+        const entryPlaces = getEntryStockPlaces() || [];
+        for (let i = 0; i < 12; i++) {
+            if (i > 3 && i < 7) {
+                for (let j = 0; j < 6; j++) {
+                    const obj = entryPlaces.find((place: EntryStockPlace) => place.id === String(i)) || undefined;
+                    if (j === 0) boxSplit[i] = [obj];
+                    else boxSplit[i].push(obj);
+                }
+            }
+        }
+    } else {
+        const outputPlaces = getOutputStockPlaces() || [];
+        for (let i = 0; i < 12; i++) {
+            if (i > 3 && i < 7) {
+                for (let j = 0; j < 6; j++) {
+                    const obj = outputPlaces.find((place: OutputStockPlace) => place.id === String(i)) || undefined;
+                    if (j === 0) boxSplit[i] = [obj];
+                    else boxSplit[i].push(obj);
+                }
             }
         }
     }
@@ -123,9 +131,11 @@ const UnselectButton = () => {
     const {setPlaces} = useSelectedStockPlaces();
 
     return (
-        <Button onClick={() => {setPlaces([])}}>
-        Unselect
-    </Button>
+        <Button onClick={() => {
+            setPlaces([])
+        }}>
+            Unselect
+        </Button>
     );
 };
 

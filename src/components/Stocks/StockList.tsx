@@ -39,7 +39,7 @@ const Items = ({items, type}: {
     type: "entry" | "output"
 }) => {
     const {user} = useUser();
-    if(!user) throw new Error("User not found");
+    if (!user) throw new Error("User not found");
     const manager = isManager(user.employee_id, ["0"]);
 
     const {places} = useSelectedStockPlaces();
@@ -54,25 +54,29 @@ const Items = ({items, type}: {
         }
     }
 
-    return itemsData.map((item, index) =>
-        <Fragment key={index}>
-            <li>
-                <div className={"StockPlace"}
-                     style={{
-                         backgroundColor: item.pallet_color,
-                         cursor: manager ? "pointer" : "default"
-                     }}
-                     onClick={() => manager && submitHandler(item.id)}
-                />
-                <div><p>—</p></div>
-                <div>
-                    <p>Volume: {item.volume}</p>
-                    <p>{item.name}</p>
-                    <p>{item.details}</p>
-                </div>
-            </li>
-            {index !== itemsData.length - 1 && <div className={"line"}/>}
-        </Fragment>
+    return (
+        <>
+            {itemsData.map((item, index) =>
+                <Fragment key={index}>
+                    <li>
+                        <div className={"StockPlace"}
+                             style={{
+                                 backgroundColor: item.pallet_color,
+                                 cursor: manager ? "pointer" : "default"
+                             }}
+                             onClick={() => manager && submitHandler(item.id)}
+                        />
+                        <div><p>—</p></div>
+                        <div>
+                            <p>Volume: {item.volume}</p>
+                            <p>{item.name}</p>
+                            <p>{item.details}</p>
+                        </div>
+                    </li>
+                    {index !== itemsData.length - 1 && <div className={"line"}/>}
+                </Fragment>
+            )}
+        </>
     );
 }
 
