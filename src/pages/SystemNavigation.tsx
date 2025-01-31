@@ -3,33 +3,22 @@ import {useNavigate} from "react-router-dom";
 import {Fragment} from "react";
 import {useUser} from "../providers/UserProvider";
 import navItemsList from "../appRoutes";
-import Button from "../components/BasicComponents/Button.tsx";
+import Button from "../components/BasicComponents/Button";
+import {getEmployeeById} from "../utils/storage/employees";
 
 const SystemNavigation = () => {
-    const user = useUser();
+    const {user} = useUser();
+    if (!user) throw new Error("User not found");
+    const employee = getEmployeeById(user.employee_id);
+    if (!employee) throw new Error("Employee not found");
 
     const navigate = useNavigate();
-
-    const navItems = navItemsList.map((item,
-                                       index) => {
-        if(item.departments.includes(user.department_id)){
-            return <Button key={index}
-                           onClick={() => navigate(item.navigation)}>
-                {item.name}
-            </Button>
-        }
-        else return <Fragment key={index}/>
-    });
-
-    const logOut = () => {
-        navigate("/")
-    }
 
     return (
         <div className={"SystemNavigation"}>
             <div className={"user-info v-center"}>
                 <div>
-                    <Button onClick={logOut}>
+                    <Button onClick={() => {navigate("/")}}>
                         ODHLASIŤ SA
                     </Button>
                     <Button onClick={() => navigate("/about_system")}>
@@ -38,12 +27,23 @@ const SystemNavigation = () => {
                 </div>
                 <div>
                     <IoPerson/>
-                    <p>{user.name}</p>
-                    <p>{user.position}</p>
+                    <p>{employee.name}</p>
+                    <p>{employee.position}</p>
                 </div>
             </div>
             <nav className={"nav-panel"}>
-                {navItems}
+                {navItemsList.map((item,
+                                   index) => {
+                    if (item.departments.includes(employee.department_id)) {
+                        return (
+                            <Button key={index}
+                                    onClick={() => navigate(item.navigation)}
+                            >
+                                {item.name}
+                            </Button>
+                        )
+                    } else return <Fragment key={index}/>
+                })}
             </nav>
         </div>
     )

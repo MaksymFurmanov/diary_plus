@@ -26,7 +26,7 @@ const getStatus = (
 }
 
 const OrderRows = () => {
-    const user = useUser();
+    const {user} = useUser();
     if (!user) throw new Error("User not found");
     const manager = isManager(user.employee_id, ["0"]);
 
@@ -35,37 +35,41 @@ const OrderRows = () => {
     const orders = getOrders();
     const products = getProducts();
 
-    return orders ? orders.map((order: Order, index) => {
-        const product = products?.find((product: Product) =>
-            product.id === order.product_id);
-        if (!product) throw new Error("Product not found in the order"
-            + order.customer
-            + order.deadline
-        );
+    return (
+        <>
+            {orders && orders.map((order: Order, index) => {
+                const product = products?.find((product: Product) =>
+                    product.id === order.product_id);
+                if (!product) throw new Error("Product not found in the order"
+                    + order.customer
+                    + order.deadline
+                );
 
-        const status = getStatus(order.production_process_id);
+                const status = getStatus(order.production_process_id);
 
-        return (
-            <tr key={index}>
-                <td>{product.name}</td>
-                <td>{product.type}</td>
-                <td>{order.customer}</td>
-                <td>{status}</td>
-                <td>{order.volume}</td>
-                <td>{order.deadline.toISOString()}</td>
-                {manager && <td>
-                    <div>
-                        <button onClick={() =>
-                            navigate(`/orders/${order.id}`)}
-                        >
-                            <FaPen/>
-                        </button>
-                        <DeleteButton orderId={order.id}/>
-                    </div>
-                </td>}
-            </tr>
-        )
-    }) : <></>;
+                return (
+                    <tr key={index}>
+                        <td>{product.name}</td>
+                        <td>{product.type}</td>
+                        <td>{order.customer}</td>
+                        <td>{status}</td>
+                        <td>{order.volume}</td>
+                        <td>{order.deadline.toISOString()}</td>
+                        {manager && <td>
+                            <div>
+                                <button onClick={() =>
+                                    navigate(`/orders/${order.id}`)}
+                                >
+                                    <FaPen/>
+                                </button>
+                                <DeleteButton orderId={order.id}/>
+                            </div>
+                        </td>}
+                    </tr>
+                )
+            })}
+        </>
+    )
 }
 
 const DeleteButton = ({orderId}: { orderId: string }) => {

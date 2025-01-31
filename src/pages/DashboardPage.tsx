@@ -18,7 +18,7 @@ const newItemRoute = {
 }
 
 const DashboardPage = ({type}: DashboardType) => {
-    const user = useUser();
+    const {user} = useUser();
     if (!user) throw new Error("User not found");
     const manager = isManager(user.employee_id, ["0"]);
 

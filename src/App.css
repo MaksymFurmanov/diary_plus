@@ -1,11 +1,11 @@
 @font-face {
     font-family: Kurale;
-    src: url("fig/fonts/Kurale-Regular.ttf");
+    src: url("assets/fonts/Kurale-Regular.ttf");
 }
 
 @font-face {
     font-family: Saira;
-    src: url("fig/fonts/Saira-Regular.ttf");
+    src: url("assets/fonts/Saira-Regular.ttf");
 }
 
 body {

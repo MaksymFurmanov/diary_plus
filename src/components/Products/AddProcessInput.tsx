@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useProductInput} from "../../providers/ProductInputProvider";
 import {nanoid} from "@reduxjs/toolkit";
+import {ProductionProcess} from "../../types";
 
 const AddProcessInput = () => {
     const [name, setName] = useState<string>("");
@@ -20,12 +21,12 @@ const AddProcessInput = () => {
                         ...prevState.productionProcesses,
                         {
                             id: nanoid(),
-                            department_id: "",
-                            product_id: product.id as string,
+                            product_id: product.id,
+                            department_id: undefined,
                             name: name,
                             queue: queue,
-                            done_name: ""
-                        }
+                            done_name: undefined
+                        } as ProductionProcess
                     ]
                 }
             });

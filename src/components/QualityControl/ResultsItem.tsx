@@ -19,7 +19,7 @@ const ResultsItem = ({test, laboratory}: {
     test: MaterialsTest | ProductsTest,
     laboratory: 1 | 2
 }) => {
-    const user = useUser();
+    const {user} = useUser();
     if (!user) throw new Error("No user found");
     const manager = isManager(user.employee_id, ["6"]);
 

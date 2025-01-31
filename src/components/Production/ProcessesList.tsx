@@ -1,6 +1,8 @@
 import {Fragment} from "react";
-import ArrowImg from "../../../public/arrow_wave.svg";
-import ProductionProcess from "./ProductionProcess";
+// @ts-ignore
+import ArrowImg from "../../assets/images/arrow_wave.svg";
+import Process from "./Process";
+import {ProductionProcess} from "../../types";
 
 const ProcessesList = ({production_processes, orderId, current_id}: {
     production_processes: ProductionProcess[],
@@ -15,20 +17,25 @@ const ProcessesList = ({production_processes, orderId, current_id}: {
         )
         : null;
 
-    return production_processes.map((production_process, index) => (
-        <Fragment key={index}>
-            <ProductionProcess
-                key={`process-${index}`}
-                orderId={orderId}
-                production_process={production_process}
-                isDone={!!nextProcess && nextProcess.queue > production_process.queue}
-            />
-            {production_process.queue !== lastProcess - 1 &&
-                <ArrowImg className={"arrow"}
-                          key={`arrow-${index}`}/>
-            }
-        </Fragment>
-    ));
+    return (
+        <>
+            {production_processes.map((production_process, index) => (
+                <Fragment key={index}>
+                    <Process
+                        key={`process-${index}`}
+                        orderId={orderId}
+                        production_process={production_process}
+                        isDone={!!nextProcess && nextProcess.queue > production_process.queue}
+                    />
+                    {production_process.queue !== lastProcess - 1 &&
+                        <ArrowImg className={"arrow"}
+                                  key={`arrow-${index}`}
+                        />
+                    }
+                </Fragment>
+            ))}
+        </>
+    );
 }
 
 export default ProcessesList;

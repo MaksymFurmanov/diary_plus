@@ -5,19 +5,22 @@ import {useUser} from "../../providers/UserProvider";
 import {isManager} from "../../utils/storage/departments";
 import {markProcessDone} from "../../utils/storage/orders";
 
-const ProductionProcess = ({orderId, production_process, isDone}: {
+const Process = ({orderId, production_process, isDone}: {
     orderId: string,
     production_process: ProductionProcess,
     isDone: boolean
 }) => {
-    const user = useUser();
-    if(!user) throw new Error("No user found");
+    const {user} = useUser();
+    if (!user) throw new Error("No user found");
 
     const doneHandler = () => {
         markProcessDone(orderId, production_process);
     }
 
-    const changeAccess = isManager(user.employee_id, production_process.department_id);
+    const changeAccess = isManager(
+        user.employee_id,
+        production_process.department_id ? [production_process.department_id] : undefined
+    );
 
     return <div className={"ProductionProcess v-center"}>
         <div
@@ -38,4 +41,4 @@ const ProductionProcess = ({orderId, production_process, isDone}: {
     </div>
 };
 
-export default ProductionProcess;
+export default Process;

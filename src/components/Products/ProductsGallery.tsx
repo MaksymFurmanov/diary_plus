@@ -4,9 +4,10 @@ import {useUser} from "../../providers/UserProvider";
 import Button from "../BasicComponents/Button";
 import {useNavigate} from "react-router-dom";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
-import placeholder from "./../../../public/product_placeholder.webp";
 import {getProducts} from "../../utils/storage/products";
 import {Product} from "../../types";
+
+const Placeholder = "../../assets/product_placeholder.webp";
 
 const ProductsGallery = () => {
     const [cardsIndex, setCardsIndex] = useState(0);
@@ -53,28 +54,32 @@ const ProductsGallery = () => {
 const ProductCards = ({products}: {
     products: Product[]
 }) => {
-    const user = useUser();
+    const {user} = useUser();
     if (!user) throw new Error("User not found");
     const manager = isManager(user.employee_id, ["0", "1"]);
 
     const navigate = useNavigate();
 
-    return products.map((product, index) => {
-        return (
-            <div key={index} className={"product-card"}>
-                <img src={product.img_url || placeholder} alt={""}/>
-                <p>Product: {product.name}</p>
-                <p>Type: {product.type}</p>
-                {manager && (
-                    <Button onClick={() =>
-                        navigate(`edit/${product.id}`)} colorType={2}
-                    >
-                        More
-                    </Button>
-                )}
-            </div>
-        );
-    });
+    return (
+        <>
+            {products.map((product, index) => {
+                return (
+                    <div key={index} className={"product-card"}>
+                        <img src={product.img_url || Placeholder} alt={""}/>
+                        <p>Product: {product.name}</p>
+                        <p>Type: {product.type}</p>
+                        {manager && (
+                            <Button onClick={() =>
+                                navigate(`edit/${product.id}`)} colorType={2}
+                            >
+                                More
+                            </Button>
+                        )}
+                    </div>
+                );
+            })}
+        </>
+    )
 }
 
 export default ProductsGallery;

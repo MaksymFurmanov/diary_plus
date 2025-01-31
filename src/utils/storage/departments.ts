@@ -6,10 +6,10 @@ export const getDepartments = (): Department[] | null => {
     return JSON.parse(departmentsRaw) as Department[];
 }
 
-export const isManager = (userId?: string, departmentsIds?: string[]): boolean | null => {
-    if(!userId) return null;
+export const isManager = (userId?: string, departmentsIds?: string[]): boolean => {
+    if(!userId) return false;
     const departmentsRaw = localStorage.getItem("departments");
-    if(!departmentsRaw) return null;
+    if(!departmentsRaw) return false;
 
     const allDepartments = JSON.parse(departmentsRaw) as Department[];
 
@@ -20,21 +20,21 @@ export const isManager = (userId?: string, departmentsIds?: string[]): boolean |
     //If departments specified
     const department = allDepartments.find((department: Department) =>
         departmentsIds.find((departmentId: string) => department.id === departmentId));
-    if(!department) return null;
+    if(!department) return false;
 
     return department.manager_id === userId;
 }
 
 export const setManager = (userId: string, departmentId: string) => {
-    if(!userId) return null;
+    if(!userId) return false;
     const departmentsRaw = localStorage.getItem("departments");
-    if(!departmentsRaw) return null;
+    if(!departmentsRaw) return false;
 
     let data = JSON.parse(departmentsRaw) as Department[];
 
     const department = data.find((department: Department) =>
         department.id === departmentId);
-    if(!department) return null;
+    if(!department) return false;
 
     data = data.map((departmentItem: Department) => {
         if(departmentItem.id === department.id) return {...departmentItem, manager_id: userId};

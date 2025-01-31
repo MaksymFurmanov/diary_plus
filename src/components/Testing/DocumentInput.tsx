@@ -1,8 +1,8 @@
 import {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from "react";
 import {ref} from "firebase/storage";
 import getFileName from "../../utils/getFileName";
-import firebase from "firebase/compat";
-import storage = firebase.storage;
+/*import firebase from "firebase/compat";
+import storage = firebase.storage;*/
 import {MaterialsTest, ProductsTest} from "../../types";
 
 export type Document = {
@@ -15,7 +15,7 @@ const DocumentInput = ({test, document, setDocument}: {
     document: Document,
     setDocument: Dispatch<SetStateAction<Document>>
 }) => {
-    useEffect(() => {
+    useEffect(() => {/*
         if (test.document_url) {
             const docRef = ref(storage, test.document_url);
             getFileName(docRef).then((name) => {
@@ -23,7 +23,7 @@ const DocumentInput = ({test, document, setDocument}: {
                     return {...prevState, name: name || undefined}
                 });
             });
-        }
+        }*/
     }, [setDocument, test.document_url]);
 
     const fileInput = (e: ChangeEvent<HTMLInputElement>) => {

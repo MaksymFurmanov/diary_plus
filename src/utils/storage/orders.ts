@@ -1,6 +1,7 @@
 import {Order, OrderInput, ProductionProcess} from "../../types";
 import {nanoid} from "@reduxjs/toolkit";
 import {getProductionProcessesByProduct} from "./productionProcesses";
+import {createProductsTest} from "./testsProducts";
 
 export const getOrders = (): Order[] | null => {
     const departmentsRaw = localStorage.getItem("departments");
@@ -98,11 +99,13 @@ export const markProcessDone = (
 
     const data = orders.map((orderItem) => {
         if (orderItem.id === orderId) {
+            const done = productionProcess.queue + 1 === productionProcesses.length;
+            if(done) createProductsTest(orderId);
+
             return {
                 ...orderItem,
                 production_process_id: productionProcess.id,
-                done_date: productionProcess.queue + 1 === productionProcesses.length
-                    ? new Date() : null
+                done_date: done ? new Date() : null
             }
         }
 

@@ -1,26 +1,40 @@
-export type DisplayPlaceData = {
-  pallet_color: string,
-  per_pallet: number,
-  name: string,
-  details: string
-}
+import {Material, Order} from "../types";
+import {getProductById} from "./storage/products";
 
-const getStockPlaceData = (items: Material[] | Order[], type: "entry" | "output") => {
-  if (type === "entry") {
-  if (item.arriving_date !== null) {
-    return {
-      pallet_color: item.pallet_color,
-      per_pallet: item.per_pallet,
-      name: `Raw material: ${item.name}`,
-      details: `Source: ${item.supplier}`
+export type DisplayPlaceData = {
+    id: string;
+    pallet_color: string;
+    volume: number;
+    name: string;
+    details: string;
+};
+
+export const getStockPlaceData = (
+    items: Material[] | Order[],
+    type: "entry" | "output"
+): DisplayPlaceData[] => {
+    if (type === "entry") {
+        return (items as Material[])
+            .filter((item) => item.arriving_date !== null)
+            .map((item) => ({
+                id: item.id,
+                pallet_color: item.pallet_color,
+                volume: item.per_pallet,
+                name: `Raw material: ${item.name}`,
+                details: `Source: ${item.supplier}`,
+            }));
+    } else {
+        return (items as Order[]).map((item) => {
+            const product = getProductById(item.product_id);
+            if (!product) throw new Error("Product for the order not found");
+
+            return {
+                id: item.id,
+                pallet_color: item.pallet_color,
+                volume: item.volume,
+                name: `Product: ${product.name}`,
+                details: `Type: ${product.type}`,
+            };
+        });
     }
-  }
-} else if (type === "output") {
-  return {
-    pallet_color: item.pallet_color,
-    per_pallet: item.per_pallet,
-    name: `Product: ${item.name}`,
-    details: `Type: ${item.type}`
-  }
-}
-}
+};

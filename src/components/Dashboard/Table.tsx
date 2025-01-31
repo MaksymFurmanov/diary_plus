@@ -10,8 +10,6 @@ const columns = {
 }
 
 const Table = ({type}: DashboardType) => {
-    const tableItems = type === "orders" ? <OrderRows/> : <MaterialRows/>;
-
     return (
         <div className={"table-container"}>
             <table>
@@ -24,7 +22,7 @@ const Table = ({type}: DashboardType) => {
                 </tr>
                 </thead>
                 <tbody>
-                {tableItems}
+                {type === "orders" ? <OrderRows/> : <MaterialRows/>}
                 </tbody>
             </table>
         </div>

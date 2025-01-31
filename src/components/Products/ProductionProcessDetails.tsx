@@ -4,7 +4,7 @@ import {ProductionProcess} from "../../types";
 import {useProductInput} from "../../providers/ProductInputProvider";
 import {DetailsBoxType} from "./ProductionPlanInput";
 import useClickOutside from "../../hooks/useClickOutside";
-import DepartmentInput from "./DepartmentInput";
+import DepartmentInput from "../DepartmentInput";
 
 const ProductionProcessDetails = ({
                                       detailsBoxData,
@@ -71,8 +71,8 @@ const ProductionProcessDetails = ({
                        onChange={inputHandler}
                 />
             </div>
-            <DepartmentInput process={process}
-                             inputHandler={inputHandler}
+            <DepartmentInput state={process}
+                             setter={inputHandler}
             />
             <div>
                 <label htmlFor={"done_name"}>

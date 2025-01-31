@@ -6,6 +6,7 @@ import PositionInput from "./PositionInput";
 import MutateButtons from "../BasicComponents/MutateButtons";
 import {createEmployee, deleteEmployee, updateEmployee} from "../../utils/storage/employees";
 import {setManager} from "../../utils/storage/departments";
+import {ChangeEvent} from "react";
 
 const EmployeeForm = () => {
     const navigate = useNavigate();
@@ -13,11 +14,12 @@ const EmployeeForm = () => {
     const {employee, setEmployee} = useEmployeeInput();
 
     const deleteHandler = () => {
+        if (!employee.id) return;
         deleteEmployee(employee.id);
         navigate("/admin");
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (employee.id) {
@@ -28,6 +30,15 @@ const EmployeeForm = () => {
         }
 
         navigate("/admin");
+    }
+
+    const departmentSetter = (e: ChangeEvent<HTMLSelectElement>) => {
+        setEmployee(prevState => {
+            return {
+                ...prevState,
+                department_id: e.target.value
+            }
+        })
     }
 
     return (
@@ -50,7 +61,7 @@ const EmployeeForm = () => {
                 Date of birth:
             </Input>
 
-            <DepartmentInput process={} inputHandler={}/>
+            <DepartmentInput state={employee} setter={departmentSetter}/>
 
             <div className={"h-center"} style={{gap: "2em"}}
             >

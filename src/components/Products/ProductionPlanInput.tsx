@@ -44,7 +44,7 @@ const ProductionPlanInput = () => {
             <div className={"ProductionPlan"}
                  onScroll={closeDetails}
             >
-                <ProductionPlanItems setDetailsBox={setDetailsBox} />
+                <ProductionPlanItems setDetailsBox={setDetailsBox}/>
 
                 <ProductionProcessDetails
                     detailsBoxData={detailsBox}
@@ -63,20 +63,24 @@ const ProductionPlanItems = ({setDetailsBox}: {
 }) => {
     const {product} = useProductInput();
 
-    return useMemo(() =>
-        product.productionProcesses
-            .sort((a, b) => a.queue - b.queue)
-            .map((process, index) => {
-                return (
-                    <ProductionPlanProcess
-                        key={index}
-                        process={process}
-                        setDetailsBox={setDetailsBox}
-                        index={index}
-                        last={product.productionProcesses.length - 1}
-                    />
-                );
-            }), [product.productionProcesses]);
+    return (
+        <>
+            {useMemo(() =>
+                product.productionProcesses
+                    .sort((a, b) => a.queue - b.queue)
+                    .map((process, index) => {
+                        return (
+                            <ProductionPlanProcess
+                                key={index}
+                                process={process}
+                                setDetailsBox={setDetailsBox}
+                                index={index}
+                                last={product.productionProcesses.length - 1}
+                            />
+                        );
+                    }), [product.productionProcesses, setDetailsBox])}
+        </>
+    )
 }
 
 export default ProductionPlanInput;

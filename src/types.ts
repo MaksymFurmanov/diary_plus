@@ -65,10 +65,10 @@ export type Product = {
 export type ProductionProcess = {
     id: string,
     product_id: string,
-    department_id: string | null,
+    department_id?: string,
     name: string,
     queue: number,
-    done_name: string | null
+    done_name?: string
 }
 
 export type ProductInput = {
@@ -123,7 +123,7 @@ export type Test = {
     id: string,
     accepted: boolean,
     status: 0 | 1 | 2 | 3,
-    document_url: string
+    document_url?: string
 }
 
 export type MaterialsTest = {

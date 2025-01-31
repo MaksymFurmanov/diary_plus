@@ -25,7 +25,7 @@ const EmployeeInfo = ({existing}: {
         setEmployee((prevState) => ({
                 ...prevState,
                 ...existingEmployee,
-                manager: isManager(employeeId, existingEmployee.department_id)
+                manager: isManager(employeeId, [existingEmployee.department_id])
             })
         );
 

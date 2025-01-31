@@ -1,6 +1,7 @@
 import {useProductInput} from "../../providers/ProductInputProvider";
 import {ChangeEvent} from "react";
-import ProductPlaceholder from "../../../public/product_placeholder.webp";
+// @ts-ignore
+import ProductPlaceholder from "../../assets/images/product_placeholder.webp";
 
 const ImageInput = () => {
     const {product, setProduct} = useProductInput();

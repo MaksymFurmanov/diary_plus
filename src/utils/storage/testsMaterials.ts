@@ -1,4 +1,5 @@
 import {MaterialsTest} from "../../types";
+import {nanoid} from "@reduxjs/toolkit";
 
 export const getMaterialsTests = (): MaterialsTest[] | null => {
     const materialsTestsRaw = localStorage.getItem("materialsTests");
@@ -29,6 +30,25 @@ export const changeMaterialsTestResult = (
     localStorage.setItem("materialsTests", JSON.stringify(data));
 }
 
-export const deleteTest = () => {
-  
+export const createMaterialsTest = (materialId: string) => {
+    const materialsTests = getMaterialsTests() || [];
+
+    const id = nanoid();
+    const data = materialsTests.push({
+        id,
+        accepted: false,
+        status: 0,
+        document_url: undefined,
+        material_id: materialId
+    } as MaterialsTest);
+
+    localStorage.setItem("materialsTests", JSON.stringify(data));
+}
+
+export const deleteMaterialsTest = (testId: string) => {
+    const tests = getMaterialsTests();
+    if(!tests) return null;
+
+    const data = tests.filter((test) => test.id !== testId);
+    localStorage.setItem("materialsTests", JSON.stringify(data));
 }

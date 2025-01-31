@@ -5,14 +5,15 @@ import Tooltip from '@mui/material/Tooltip';
 const StockPlace = React.memo(({palletColor, style, date, selected, onClick}: {
     palletColor: string,
     style: CSSProperties,
-    date: Date,
+    date: Date | null,
     selected: boolean,
     onClick: () => void
 }) => {
     return (
         <Tooltip disableFocusListener
                  disableTouchListener
-                 title={(<p>{date.toISOString()}</p>)}>
+                 title={date && (<p>{date.toISOString()}</p>)}
+        >
             <div className={"StockPlace"}
                  style={{...style, backgroundColor: palletColor}}
                  onClick={onClick}>

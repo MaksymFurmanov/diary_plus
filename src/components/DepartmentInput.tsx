@@ -1,11 +1,10 @@
-import {Department, ProductionProcess} from "../../types";
-import {getDepartments} from "../../utils/storage/departments";
+import {getDepartments} from "../utils/storage/departments";
+import {Department} from "../types";
 import {ChangeEvent} from "react";
 
-const DepartmentInput = ({process, inputHandler
-  }: {
-    process: ProductionProcess,
-    inputHandler: (e: ChangeEvent<HTMLSelectElement>) => void
+const DepartmentInput = ({state, setter}: {
+    state: any,
+    setter: (e: ChangeEvent<HTMLSelectElement>) => void
 }) => {
     const departments = getDepartments();
     if (!departments) throw new Error("Departments fetching failed");
@@ -17,8 +16,8 @@ const DepartmentInput = ({process, inputHandler
             </label>
             <select name={"department_id"}
                     id={"department_id"}
-                    value={process.department_id || ""}
-                    onChange={inputHandler}
+                    value={state.department_id || ""}
+                    onChange={setter}
             >
                 <option value={-1}/>
                 {departments.map((department: Department,

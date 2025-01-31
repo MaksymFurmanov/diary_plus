@@ -1,12 +1,18 @@
 import {RxCross2} from "react-icons/rx";
-import React from "react";
+import React, {Fragment} from "react";
 import {useUser} from "../../providers/UserProvider";
+import {updateEntryStock} from "../../utils/storage/enteryStockPlaces";
+import {DisplayPlaceData, getStockPlaceData} from "../../utils/getStockPlaceData";
+import {useSelectedStockPlaces} from "../../providers/SelectedStockPlacesProvider";
+import {isManager} from "../../utils/storage/departments";
+import {Material, Order} from "../../types";
+import {updateOutputStock} from "../../utils/storage/outputStockPlaces";
 
-const StockList = ({type}: {
-  items: Material[] | Order[],
-  type: "entry" | "output" 
+const StockList = ({items, type}: {
+    items: Material[] | Order[],
+    type: "entry" | "output"
 }) => {
-  const length = items.length;
+    const length = items.length;
 
     return (
         <ul className={"StockList v-center"}>
@@ -14,7 +20,7 @@ const StockList = ({type}: {
             <div className={"line"}/>
             <div className={"stock-pallets"}>
                 {items && (
-                <Items items={items}/>
+                    <Items items={items} type={type}/>
                 )}
             </div>
             <li key={length}>
@@ -28,50 +34,46 @@ const StockList = ({type}: {
     );
 }
 
-const Items = ({items}: {
-  items: Material[] | Order[],
-  type: "entry" | "output"
+const Items = ({items, type}: {
+    items: Material[] | Order[],
+    type: "entry" | "output"
 }) => {
-  const user = useUser();
-  const manager= useManager(user.employee_id, ["0"]);
-    
-  const {places, setPlaces} = useSelectedStockPlaces();
-  
-  const itemsData: DisplayPlaceData = getStockPlaceData(items, type);
+    const {user} = useUser();
+    if(!user) throw new Error("User not found");
+    const manager = isManager(user.employee_id, ["0"]);
 
-const submitHandler = (itemId) => {
-  const changedPlaces = stockPlaces.map((stockPlace) => {
-    const newPlace = places.find((place) =>
-      stockPlace.id === place);
-    newPlace.id = itemId;
-    return newPlace;
-  });
+    const {places} = useSelectedStockPlaces();
 
-  if(type === "entry") {
-    updateEntryStock(places)
-  } else {
-    updateOutputStock(places)
-  }
-}
+    const itemsData: DisplayPlaceData[] = getStockPlaceData(items, type);
 
-  return itemsData.map((item, index) => {
-  <Fragment>
-                <li>
-                    <div className={"StockPlace"}
-                         style={{ backgroundColor: item.pallet_color,
-                             cursor: manager ? "pointer" : "default"
-                         }}
-                         onClick={() => manager && submitHandler(item.id)}/>
-                    <div><p>—</p></div>
-                    <div>
-                        <p>Volume: {item.per_pallet}</p>
-                        <p>{item.name}</p>
-                        <p>{item.details}</p>
-                    </div>
-                </li>
-                {index !== length - 1 && <div className={"line"}/>}
-            </Fragment>
-});
+    const submitHandler = (itemId: string) => {
+        if (type === "entry") {
+            updateEntryStock(places, itemId);
+        } else {
+            updateOutputStock(places, itemId);
+        }
+    }
+
+    return itemsData.map((item, index) =>
+        <Fragment key={index}>
+            <li>
+                <div className={"StockPlace"}
+                     style={{
+                         backgroundColor: item.pallet_color,
+                         cursor: manager ? "pointer" : "default"
+                     }}
+                     onClick={() => manager && submitHandler(item.id)}
+                />
+                <div><p>—</p></div>
+                <div>
+                    <p>Volume: {item.volume}</p>
+                    <p>{item.name}</p>
+                    <p>{item.details}</p>
+                </div>
+            </li>
+            {index !== itemsData.length - 1 && <div className={"line"}/>}
+        </Fragment>
+    );
 }
 
 export default StockList
