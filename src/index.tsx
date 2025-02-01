@@ -4,6 +4,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 
+initializeLocalStorage("users", users);
+initializeLocalStorage("products", products);
+initializeLocalStorage("materials", users);
+
 const rootElement = document.getElementById('root');
 if (rootElement) {
     const root = ReactDOM.createRoot(rootElement);
