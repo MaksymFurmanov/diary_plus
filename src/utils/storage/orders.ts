@@ -4,26 +4,20 @@ import {getProductionProcessesByProduct} from "./productionProcesses";
 import {createProductsTest} from "./testsProducts";
 
 export const getOrders = (): Order[] | null => {
-    const departmentsRaw = localStorage.getItem("departments");
-    if (!departmentsRaw) return null;
-    return JSON.parse(departmentsRaw) as Order[];
+    const ordersRaw = localStorage.getItem("orders");
+    if (!ordersRaw) return null;
+    return JSON.parse(ordersRaw) as Order[];
 }
 
 export const getOrderById = (orderId?: string): Order | null => {
     if(!orderId) return null;
-    const ordersRaw = localStorage.getItem("orders");
-    if (!ordersRaw) throw new Error("DashboardPage not found");
 
-    const data: Order[] = JSON.parse(ordersRaw) as Order[];
+    const data: Order[] = getOrders() || [];
     return data.find((order) => order.id === orderId) || null;
 }
 
 export const createOrder = (orderInput: OrderInput): void => {
-    const ordersRaw = localStorage.getItem("orders");
-
-    let data: Order[] = ordersRaw
-        ? JSON.parse(ordersRaw) as Order[]
-        : [];
+    let data: Order[] = getOrders() || [];
 
     const id = nanoid();
 
@@ -42,10 +36,7 @@ export const createOrder = (orderInput: OrderInput): void => {
 }
 
 export const updateOrder = (orderInput: OrderInput): void => {
-    const ordersRaw = localStorage.getItem("orders");
-    if (!ordersRaw) throw new Error("DashboardPage not found");
-
-    let data: Order[] = JSON.parse(ordersRaw) as Order[];
+    let data: Order[] = getOrders() || [];
 
     const oldOrder = data.find((order) => order.id === orderInput.id);
     if (!oldOrder) throw new Error("The order not found");

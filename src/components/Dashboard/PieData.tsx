@@ -47,7 +47,7 @@ const ordersData = (): ChartData[] => {
         const product = products.find(product =>
             product.id === order.product_id);
         if (!product) {
-            throw new Error("No product for the order found");
+            throw new Error(`No product for the order ${order.id} found`);
         }
 
         return {

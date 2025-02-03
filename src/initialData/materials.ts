@@ -7,8 +7,8 @@ const materials: Material[] = [
         supplier: "Bočkového L. Farm",
         volume: 14,
         per_pallet: 10,
-        date_of_order: new Date("05.11.2023"),
-        arriving_date: new Date("09.11.2023"),
+        date_of_order: new Date("2023-11-05"),
+        arriving_date: new Date("2023-11-09"),
         pallet_color: "#81FFBB"
     },
     {
@@ -17,8 +17,8 @@ const materials: Material[] = [
         supplier: "Zelené právo Farm",
         volume: 24,
         per_pallet: 10,
-        date_of_order: new Date("05.11.2023"),
-        arriving_date: new Date("09.11.2023"),
+        date_of_order: new Date("2023-11-05"),
+        arriving_date: new Date("2023-11-09"),
         pallet_color: "#81D2FF"
     },
     {
@@ -27,8 +27,8 @@ const materials: Material[] = [
         supplier: "Orlová M. Farm",
         volume: 16,
         per_pallet: 10,
-        date_of_order: new Date("05.11.2023"),
-        arriving_date: new Date("09.11.2023"),
+        date_of_order: new Date("2023-11-05"),
+        arriving_date: new Date("2023-11-09"),
         pallet_color: "#DE81FF"
     },
     {
@@ -37,7 +37,7 @@ const materials: Material[] = [
         supplier: "Orlová M. Farm",
         volume: 20,
         per_pallet: 10,
-        date_of_order: new Date("05.11.2023"),
+        date_of_order: new Date("2023-11-05"),
         arriving_date: null,
         pallet_color: "#F04C6A"
     }

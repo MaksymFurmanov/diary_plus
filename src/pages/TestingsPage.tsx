@@ -11,8 +11,9 @@ const title = {
 }
 
 const TestingsPage = () => {
-    const {laboratoryRaw} = useParams();
-    const laboratory = Number(laboratoryRaw) as 1 | 2;
+    const {laboratory_type} = useParams();
+    const laboratory = Number(laboratory_type) as 1 | 2;
+
     if (!(laboratory in [1, 2])) throw new Error("Laboratory is not found");
 
     return <>

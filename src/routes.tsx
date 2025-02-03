@@ -17,6 +17,7 @@ import OrderInputProvider from "./providers/OrderInputProvider";
 import MaterialInputProvider from "./providers/MaterialInputProvider";
 import TestingsPage from "./pages/TestingsPage";
 import EmployeeInputProvider from "./providers/EmployeeInputProvider";
+import SelectedStockPlacesProvider from "./providers/SelectedStockPlacesProvider";
 
 type Route = {
     path: string,
@@ -94,10 +95,12 @@ const routes: Route[] = [
     },
     {
         path: "/stock/:type",
-        element: <StockPage/>
+        element: <SelectedStockPlacesProvider>
+            <StockPage/>
+        </SelectedStockPlacesProvider>
     },
     {
-        path: "/testings/:laboratory",
+        path: "/testings/:laboratory_type",
         element: <TestingsPage/>
     },
     {

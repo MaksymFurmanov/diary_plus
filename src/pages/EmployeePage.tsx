@@ -29,7 +29,7 @@ const EmployeeInfo = ({existing}: {
             })
         );
 
-    }, []);
+    }, [employeeId, existing, setEmployee]);
 
     return <>
         <PageTitle name={existing ? "Employee" : "New employee"}

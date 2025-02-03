@@ -46,6 +46,7 @@ const OrderRows = () => {
                 );
 
                 const status = getStatus(order.production_process_id);
+                console.log("Order", order)
 
                 return (
                     <tr key={index}>
@@ -54,17 +55,19 @@ const OrderRows = () => {
                         <td>{order.customer}</td>
                         <td>{status}</td>
                         <td>{order.volume}</td>
-                        <td>{order.deadline.toISOString()}</td>
-                        {manager && <td>
-                            <div>
-                                <button onClick={() =>
-                                    navigate(`/orders/${order.id}`)}
-                                >
-                                    <FaPen/>
-                                </button>
-                                <DeleteButton orderId={order.id}/>
-                            </div>
-                        </td>}
+                        <td>{order.deadline.toString().slice(0, 10)}</td>
+                        {manager && (
+                            <td>
+                                <div>
+                                    <button onClick={() =>
+                                        navigate(`/orders/${order.id}`)}
+                                    >
+                                        <FaPen/>
+                                    </button>
+                                    <DeleteButton orderId={order.id}/>
+                                </div>
+                            </td>
+                        )}
                     </tr>
                 )
             })}

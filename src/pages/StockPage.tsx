@@ -12,6 +12,7 @@ import {getOutputStockPlaces, removeOutputStockPlaces} from "../utils/storage/ou
 import {useSelectedStockPlaces} from "../providers/SelectedStockPlacesProvider";
 import {EntryStockPlace, OutputStockPlace} from "../types";
 
+
 const title = {
     entry: "Entry stock",
     output: "Output stock",
@@ -27,25 +28,47 @@ const StockPage = () => {
 
     const items = type === "entry" ? getMaterials() || [] : getOrders() || [];
 
-    let boxSplit = [];
+    let boxSplit: ((EntryStockPlace | string)[] | (OutputStockPlace | string)[])[] = [];
 
     if (type === "entry") {
         const entryPlaces = getEntryStockPlaces() || [];
+
         for (let i = 0; i < 12; i++) {
             if (i > 3 && i < 7) {
                 for (let j = 0; j < 6; j++) {
-                    const obj = entryPlaces.find((place: EntryStockPlace) => place.id === String(i)) || undefined;
-                    if (j === 0) boxSplit[i] = [obj];
+                    const obj = entryPlaces.find((place: EntryStockPlace) =>
+                            place.id === String(i))
+                        || String(6 * i + j);
+                    if (!boxSplit[i]) boxSplit[i] = [obj];
+                    else boxSplit[i].push(obj);
+                }
+            } else {
+                for (let j = 0; j < 8; j++) {
+                    const obj = entryPlaces.find((place: EntryStockPlace) =>
+                            place.id === String(i))
+                        || String(8 * i + j);
+                    if (!boxSplit[i]) boxSplit[i] = [obj];
                     else boxSplit[i].push(obj);
                 }
             }
         }
     } else {
         const outputPlaces = getOutputStockPlaces() || [];
+
         for (let i = 0; i < 12; i++) {
             if (i > 3 && i < 7) {
                 for (let j = 0; j < 6; j++) {
-                    const obj = outputPlaces.find((place: OutputStockPlace) => place.id === String(i)) || undefined;
+                    const obj = outputPlaces.find((place: OutputStockPlace) =>
+                            place.id === String(i))
+                        || String(6 * i + j);
+                    if (j === 0) boxSplit[i] = [obj];
+                    else boxSplit[i].push(obj);
+                }
+            } else {
+                for (let j = 0; j < 6; j++) {
+                    const obj = outputPlaces.find((place: OutputStockPlace) =>
+                            place.id === String(i))
+                        || String(8 * i + j);
                     if (j === 0) boxSplit[i] = [obj];
                     else boxSplit[i].push(obj);
                 }

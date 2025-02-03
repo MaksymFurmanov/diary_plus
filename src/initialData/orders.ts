@@ -7,8 +7,8 @@ const orders: Order[] = [
         production_process_id: "0",
         customer: "Kaufland",
         volume: 200,
-        deadline: new Date("26.10.2023"),
-        done_date: new Date("02.11.2023"),
+        deadline: new Date("2023-10-26"),
+        done_date: new Date("2023-11-02"),
         pallet_color: "#E32A4B",
     },
     {
@@ -17,8 +17,8 @@ const orders: Order[] = [
         production_process_id: "1",
         customer: "Lidl",
         volume: 200,
-        deadline: new Date("26.10.2023"),
-        done_date: new Date("02.11.2023"),
+        deadline: new Date("2023-10-26"),
+        done_date: new Date("2023-11-02"),
         pallet_color: "#F9CC5A",
     },
     {
@@ -27,8 +27,8 @@ const orders: Order[] = [
         production_process_id: "2",
         customer: "Kaufland",
         volume: 200,
-        deadline: new Date("26.10.2023"),
-        done_date: new Date("02.11.2023"),
+        deadline: new Date("2023-10-26"),
+        done_date: new Date("2023-11-02"),
         pallet_color: "#9DB3FF",
     }
 ];

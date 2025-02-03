@@ -18,7 +18,7 @@ const SystemNavigation = () => {
         <div className={"SystemNavigation"}>
             <div className={"user-info v-center"}>
                 <div>
-                    <Button onClick={() => {navigate("/")}}>
+                    <Button onClick={() => navigate("/")}>
                         ODHLASIŤ SA
                     </Button>
                     <Button onClick={() => navigate("/about_system")}>
@@ -31,9 +31,9 @@ const SystemNavigation = () => {
                     <p>{employee.position}</p>
                 </div>
             </div>
+
             <nav className={"nav-panel"}>
-                {navItemsList.map((item,
-                                   index) => {
+                {navItemsList.map((item, index) => {
                     if (item.departments.includes(employee.department_id)) {
                         return (
                             <Button key={index}

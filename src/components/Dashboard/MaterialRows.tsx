@@ -25,10 +25,10 @@ const MaterialRows = () => {
                         <td>{material.supplier}</td>
                         <td>{material.per_pallet}</td>
                         <td>{material.volume}</td>
-                        <td>{material.date_of_order.toISOString()}</td>
+                        <td>{material.date_of_order.toString().slice(0, 10)}</td>
                         <td>
                             {material.arriving_date
-                                ? material.arriving_date.toISOString()
+                                ? material.arriving_date.toString().slice(0, 10)
                                 : manager
                                     ? <ArrivedButton materialId={material.id}/>
                                     : "ARRIVING"

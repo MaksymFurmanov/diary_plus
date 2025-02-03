@@ -1,8 +1,8 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useState} from "react";
 
 interface PlacesContextType {
     places: string[];
-    setPlaces: React.Dispatch<React.SetStateAction<string[]>>;
+    setPlaces: Dispatch<SetStateAction<string[]>>;
 }
 
 const PlacesContext = createContext<PlacesContextType | undefined>(undefined);

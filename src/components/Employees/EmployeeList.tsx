@@ -26,7 +26,9 @@ const EmployeeList = ({department}: {
             <div className={"line"}/>
             {showToggle && (
                 <div className={"employee-cards"}>
-                    {employees && employees.map((employee, index) => (
+                    {employees && employees
+                        .filter(employee => employee.department_id === department.id)
+                        .map((employee, index) => (
                         <EmployeeCard key={index}
                                       employee={employee}
                                       isManager={department.manager_id

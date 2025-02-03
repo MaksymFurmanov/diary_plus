@@ -16,7 +16,7 @@ const EmployeeCard = ({employee, isManager}: {
             <div><IoPerson/></div>
             <p>{employee.name}</p>
             <p>{employee.position}</p>
-            <Button onClick={() => navigate(`edit/${employee.id}`)}>
+            <Button onClick={() => navigate(`${employee.id}`)}>
                 VIAC
             </Button>
         </div>

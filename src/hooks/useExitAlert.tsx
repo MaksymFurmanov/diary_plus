@@ -8,7 +8,7 @@ const useExitAlert = (condition: boolean, exitRoute: string) => {
 
     const exitFunction = () => {
         if (condition) setExitAlert(true);
-        else navigate(exitRoute);
+        else navigate(`/${exitRoute}`);
     }
 
     const ExitAlert = exitAlert ? (

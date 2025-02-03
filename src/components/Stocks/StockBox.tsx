@@ -4,7 +4,7 @@ import {useSelectedStockPlaces} from "../../providers/SelectedStockPlacesProvide
 
 const StockBox = ({items, box, type, form, manager}: {
     items: Material[] | Order[],
-    box: Array<EntryStockPlace | OutputStockPlace | undefined>,
+    box: ((EntryStockPlace | string)[] | (OutputStockPlace | string)[])[],
     type: "entry" | "output",
     form: "vertical" | "horizontal",
     manager: boolean | undefined

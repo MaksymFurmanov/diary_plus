@@ -19,7 +19,7 @@ const OrderPage = ({existing}: {
         if (!existing) return;
 
         const existingOrder = getOrderById(orderId);
-        if (!existingOrder) throw new Error("Order not found");
+        if (!existingOrder) throw new Error(`Order not found`);
 
         setOrder(prevState => {
             return {
