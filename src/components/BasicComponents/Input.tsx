@@ -91,7 +91,7 @@ const Input: FC<InputProps> = ({
                             style={{width: width}}
                             {...rest}>
                         <option value={-1}></option>
-                        {options}
+                        {options && options}
                     </select>
                 </>}
         </div>

@@ -5,14 +5,13 @@ import {useProductInput} from "../../providers/ProductInputProvider";
 import {FormEvent} from "react";
 import MutateButtons from "../BasicComponents/MutateButtons";
 import ImageInput from "./ImageInput";
-import {} from "../../utils/storage/products";
 import QualityStandardsInput from "./QualityStandardsInput";
 import {useNavigate} from "react-router-dom";
 
 const ProductForm = () => {
     const {product, setProduct} = useProductInput();
 
-    const navigete = useNavigate();
+    const navigate = useNavigate();
 
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,7 +26,7 @@ const ProductForm = () => {
             console.error(error);
         }
 
-        navigete("/products");
+        navigate("/products");
     };
 
     return (
