@@ -19,10 +19,7 @@ const SystemNavigation = () => {
             <div className={"user-info v-center"}>
                 <div>
                     <Button onClick={() => navigate("/")}>
-                        ODHLASIŤ SA
-                    </Button>
-                    <Button onClick={() => navigate("/about_system")}>
-                        O systéme
+                        LOG OUT
                     </Button>
                 </div>
                 <div>

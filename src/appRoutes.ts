@@ -31,7 +31,7 @@ const AppRoutes: AppRoute[] = [
         departments: ["2", "1", "0"],
     },
     {
-        name: "Outgoing Stock",
+        name: "Output Stock",
         navigation: "/stock/output",
         departments: ["2", "1", "0"],
     },

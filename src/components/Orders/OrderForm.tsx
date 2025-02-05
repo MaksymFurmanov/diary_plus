@@ -48,11 +48,11 @@ const OrderForm = () => {
                     Volume:
                 </Input>
 
-                <Input
-                    name={"deadline"}
-                    value={order.deadline}
-                    setter={setOrder}
-                    state={order}
+                <Input type={"date"}
+                       name={"deadline"}
+                       value={order.deadline}
+                       setter={setOrder}
+                       state={order}
                 >
                     Deadline:
                 </Input>

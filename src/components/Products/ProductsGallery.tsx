@@ -56,7 +56,7 @@ const ProductCards = ({products}: {
 }) => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const manager = isManager(user.employee_id, ["0", "1"]);
+    const manager = isManager(user.employee_id, ["2", "1"]);
 
     const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ const ProductCards = ({products}: {
                         <p>Type: {product.type}</p>
                         {manager && (
                             <Button onClick={() =>
-                                navigate(`edit/${product.id}`)} colorType={2}
+                                navigate(`/products/${product.id}`)} colorType={2}
                             >
                                 More
                             </Button>

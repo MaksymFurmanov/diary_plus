@@ -1,6 +1,5 @@
 import {Fragment} from "react";
-// @ts-ignore
-import ArrowImg from "../../assets/images/arrow_wave.svg";
+import {ReactSVG} from 'react-svg'
 import Process from "./Process";
 import {ProductionProcess} from "../../types";
 
@@ -28,7 +27,8 @@ const ProcessesList = ({production_processes, orderId, current_id}: {
                         isDone={!!nextProcess && nextProcess.queue > production_process.queue}
                     />
                     {production_process.queue !== lastProcess - 1 &&
-                        <ArrowImg className={"arrow"}
+                        <ReactSVG src={"../../assets/images/arrow_wave.svg"}
+                                  className={"arrow"}
                                   key={`arrow-${index}`}
                         />
                     }

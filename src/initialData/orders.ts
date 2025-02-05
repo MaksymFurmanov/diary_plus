@@ -8,7 +8,7 @@ const orders: Order[] = [
         customer: "Kaufland",
         volume: 200,
         deadline: new Date("2023-10-26"),
-        done_date: new Date("2023-11-02"),
+        done_date: null,
         pallet_color: "#E32A4B",
     },
     {
@@ -18,7 +18,7 @@ const orders: Order[] = [
         customer: "Lidl",
         volume: 200,
         deadline: new Date("2023-10-26"),
-        done_date: new Date("2023-11-02"),
+        done_date: null,
         pallet_color: "#F9CC5A",
     },
     {
@@ -28,7 +28,7 @@ const orders: Order[] = [
         customer: "Kaufland",
         volume: 200,
         deadline: new Date("2023-10-26"),
-        done_date: new Date("2023-11-02"),
+        done_date: null,
         pallet_color: "#9DB3FF",
     }
 ];

@@ -66,7 +66,7 @@ const LoginForm = ({setAuthError, setConnectionError}: LoginFormProps) => {
                 </div>
             </div>
             <div className={"v-center"}>
-                <Button type="submit">PRIHLÁSIŤ SA</Button>
+                <Button type="submit">LOG IN</Button>
             </div>
         </form>
     );

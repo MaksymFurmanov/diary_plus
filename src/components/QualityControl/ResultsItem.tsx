@@ -14,7 +14,7 @@ const ResultsItem = ({test, laboratory}: {
 }) => {
     const {user} = useUser();
     if (!user) throw new Error("No user found");
-    const manager = isManager(user.employee_id, ["6"]);
+    const manager = isManager(user.employee_id, ["6", "2"]);
 
 //export into a custom hook
     const [documentName, setDocumentName] = useState<string | null>(null);

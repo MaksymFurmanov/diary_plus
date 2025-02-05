@@ -28,7 +28,7 @@ const ProductionItem = ({order}: { order: Order }) => {
                     <picture onClick={() => setShowToggle(!showToggle)}>
                         {showToggle ? <IoIosArrowDown/> : <IoIosArrowUp/>}
                     </picture>
-                    <p>{order.deadline.toISOString().slice(0, 8)}</p>
+                    <p>{order.deadline.toString().slice(0, 10)}</p>
                 </div>
                 <p>{`${product.name}: ${product.type}`}</p>
                 <p>{order.volume + ' ks'}</p>

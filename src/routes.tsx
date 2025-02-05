@@ -8,7 +8,6 @@ import ProductPage from "./pages/ProductPage";
 import StockPage from "./pages/StockPage";
 import QualityControlPage from "./pages/QualityControlPage";
 import Administration from "./pages/Administration";
-import AboutSystem from "./pages/AboutSystem";
 import EmployeePage from "./pages/EmployeePage";
 import OrderPage from "./pages/OrderPage";
 import MaterialPage from "./pages/MaterialPage";
@@ -18,6 +17,7 @@ import MaterialInputProvider from "./providers/MaterialInputProvider";
 import TestingsPage from "./pages/TestingsPage";
 import EmployeeInputProvider from "./providers/EmployeeInputProvider";
 import SelectedStockPlacesProvider from "./providers/SelectedStockPlacesProvider";
+import ProductInputProvider from "./providers/ProductInputProvider";
 
 type Route = {
     path: string,
@@ -91,7 +91,9 @@ const routes: Route[] = [
     },
     {
         path: "/products/:productId",
-        element: <ProductPage existing={true}/>
+        element: <ProductInputProvider>
+            <ProductPage existing={true}/>
+        </ProductInputProvider>
     },
     {
         path: "/stock/:type",
@@ -123,10 +125,6 @@ const routes: Route[] = [
             <EmployeePage existing={true}/>
         </EmployeeInputProvider>
     },
-    {
-        path: "/about_system",
-        element: <AboutSystem/>
-    }
 ];
 
 export default routes

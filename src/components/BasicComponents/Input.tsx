@@ -5,7 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLSelectEl
     state: object,
     size?: number,
     position?: string,
-    options?: JSX.Element[]
+    options?: JSX.Element[] | JSX.Element
 }
 
 const Input: FC<InputProps> = ({

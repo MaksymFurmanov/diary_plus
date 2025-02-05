@@ -13,7 +13,7 @@ export const updateOutputStock = (places: string[], orderId: string) => {
 
     const placesSet = new Set(places);
 
-    let changedPlaces = stockPlaces.map((stockPlace) => {
+    let data = stockPlaces.map((stockPlace) => {
         if (placesSet.has(stockPlace.id)) {
             placesSet.delete(stockPlace.id);
             return {
@@ -26,13 +26,13 @@ export const updateOutputStock = (places: string[], orderId: string) => {
     });
 
     placesSet.forEach(place => {
-        changedPlaces.push({
+        data.push({
             id: place,
             order_id: orderId,
             put_date: new Date()
         })
     });
-    localStorage.set("outputStockPlaces", changedPlaces);
+    localStorage.setItem("outputStockPlaces", JSON.stringify(data));
 }
 
 export const removeOutputStockPlaces = (places: string[]) => {
@@ -45,5 +45,5 @@ export const removeOutputStockPlaces = (places: string[]) => {
         !placesSet.has(place.id)
     );
 
-    localStorage.set("outputStockPlaces", data);
+    localStorage.setItem("outputStockPlaces", JSON.stringify(data));
 }

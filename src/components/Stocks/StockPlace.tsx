@@ -12,7 +12,7 @@ const StockPlace = React.memo(({palletColor, style, date, selected, onClick}: {
     return (
         <Tooltip disableFocusListener
                  disableTouchListener
-                 title={date && (<p>{date.toISOString()}</p>)}
+                 title={date && (<p>{date.toString().slice(0, 10)}</p>)}
         >
             <div className={"StockPlace"}
                  style={{...style, backgroundColor: palletColor}}

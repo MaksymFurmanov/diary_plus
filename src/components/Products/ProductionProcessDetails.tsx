@@ -15,11 +15,6 @@ const ProductionProcessDetails = ({
 }) => {
     const {product, setProduct} = useProductInput();
 
-    const process = product.productionProcesses.find((process: ProductionProcess) =>
-        process.queue === detailsBoxData.process_queue
-    )
-    if (!process) throw new Error("Failed to find the process");
-
     const containerRef = useRef(null);
     const [dimensions, setDimensions] = useState({
         width: 0,
@@ -35,6 +30,11 @@ const ProductionProcessDetails = ({
     }, []);
 
     useClickOutside(containerRef, closeHandler);
+
+    const process = product.productionProcesses.find((process: ProductionProcess) =>
+        process.queue === detailsBoxData.process_queue
+    )
+    if (!process) return <></>;
 
     const inputHandler = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const {name, value} = e.target;

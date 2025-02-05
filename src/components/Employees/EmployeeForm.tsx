@@ -52,8 +52,9 @@ const EmployeeForm = () => {
                    state={employee}>
                 Name and surname:
             </Input>
-            <Input name={"date_of_birth"}
-                   value={employee.date_of_birth}
+            <Input type={"date"}
+                   name={"date_of_birth"}
+                   value={employee.date_of_birth.toString().slice(0, 10)}
                    size={2}
                    position={"close"}
                    setter={setEmployee}

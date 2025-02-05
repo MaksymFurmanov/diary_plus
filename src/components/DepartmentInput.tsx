@@ -1,6 +1,7 @@
 import {getDepartments} from "../utils/storage/departments";
 import {Department} from "../types";
 import {ChangeEvent} from "react";
+import Input from "./BasicComponents/Input";
 
 const DepartmentInput = ({state, setter}: {
     state: any,
@@ -14,21 +15,23 @@ const DepartmentInput = ({state, setter}: {
             <label htmlFor={"department_id"}>
                 Department:
             </label>
-            <select name={"department_id"}
-                    id={"department_id"}
-                    value={state.department_id || ""}
-                    onChange={setter}
-            >
-                <option value={-1}/>
-                {departments.map((department: Department,
-                                  index: number) => {
-                    return (
-                        <option value={department.id} key={index}>
-                            {department.name}
-                        </option>
-                    )
-                })}
-            </select>
+            <Input type={"select"}
+                   name={"department_id"}
+                   id={"department_id"}
+                   state={state}
+                   setter={setter}
+                   options={<>
+                       <option value={-1}/>
+                       {departments.map((department: Department,
+                                         index: number) => {
+                           return (
+                               <option value={department.id} key={index}>
+                                   {department.name}
+                               </option>
+                           )
+                       })}
+                   </>}
+            />
         </div>
     );
 }

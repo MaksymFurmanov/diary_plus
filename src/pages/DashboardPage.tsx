@@ -13,14 +13,14 @@ const title = {
 }
 
 const newItemRoute = {
-    orders: "orders/new_order",
+    orders: "/orders/new_order",
     materials: "/materials/new_material"
 }
 
 const DashboardPage = ({type}: DashboardType) => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const manager = isManager(user.employee_id, ["0"]);
+    const manager = isManager(user.employee_id);
 
     const navigate = useNavigate();
 

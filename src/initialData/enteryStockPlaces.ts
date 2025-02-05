@@ -176,69 +176,69 @@ const entryStockPlaces: EntryStockPlace[] = [
     //box 12
     {
         id: "80",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "81",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "82",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "83",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "84",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "85",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "86",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "87",
-        material_id: "3"
+        material_id: "2"
     },
 
     //box 13
     {
         id: "88",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "89",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "90",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "91",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "92",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "93",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "94",
-        material_id: "3"
+        material_id: "2"
     },
     {
         id: "95",
-        material_id: "3"
+        material_id: "2"
     }
 ];
 

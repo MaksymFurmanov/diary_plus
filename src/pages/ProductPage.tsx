@@ -1,7 +1,7 @@
 import PageTitle from "../components/BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {getProductById, getProducts} from "../utils/storage/products";
+import {getProductById} from "../utils/storage/products";
 import ProductForm from "../components/Products/ProductForm";
 import useExitAlert from "../hooks/useExitAlert";
 import {useProductInput} from "../providers/ProductInputProvider";
@@ -11,7 +11,7 @@ const ProductPage = ({existing}: { existing: boolean }) => {
 
     const {product, setProduct} = useProductInput();
 
-    const {ExitAlert, exitFunction} = useExitAlert(product.changed && existing, "dashboard/orders");
+    const {ExitAlert, exitFunction} = useExitAlert(product.changed && existing, "products");
 
     useEffect(() => {
         if (!existing) return;
