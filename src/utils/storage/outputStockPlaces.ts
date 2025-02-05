@@ -1,49 +1,37 @@
-import {OutputStockPlace} from "../../types";
-import {getMaterialById} from "./materials";
+import { OutputStockPlace } from "../../types";
 
-export const getOutputStockPlaces = (): OutputStockPlace[] | null => {
-    const outputStockPlacesRaw = localStorage.getItem("outputStockPlaces");
-    if(!outputStockPlacesRaw) return null;
-    return JSON.parse(outputStockPlacesRaw) as OutputStockPlace[];
-}
+export const getOutputStockPlaces = (outputStockPlacesRaw: string | null): OutputStockPlace[] => {
+    return outputStockPlacesRaw ? JSON.parse(outputStockPlacesRaw) as OutputStockPlace[] : [];
+};
 
-export const updateOutputStock = (places: string[], orderId: string) => {
-    const stockPlaces = getOutputStockPlaces() || [];
-    if (!getMaterialById(orderId)) throw new Error("The order not Found");
-
+export const updateOutputStock = (
+    stockPlaces: OutputStockPlace[],
+    places: string[],
+    orderId: string
+): OutputStockPlace[] => {
     const placesSet = new Set(places);
 
-    let data = stockPlaces.map((stockPlace) => {
-        if (placesSet.has(stockPlace.id)) {
-            placesSet.delete(stockPlace.id);
-            return {
-                ...stockPlace,
-                material_id: orderId
-            }
-        }
-
-        return stockPlace;
-    });
+    let data = stockPlaces.map(stockPlace =>
+        placesSet.has(stockPlace.id)
+            ? { ...stockPlace, order_id: orderId }
+            : stockPlace
+    );
 
     placesSet.forEach(place => {
         data.push({
             id: place,
             order_id: orderId,
             put_date: new Date()
-        })
+        });
     });
-    localStorage.setItem("outputStockPlaces", JSON.stringify(data));
-}
 
-export const removeOutputStockPlaces = (places: string[]) => {
-    const stockPlaces = getOutputStockPlaces();
-    if(!stockPlaces) return null;
+    return data;
+};
 
+export const removeOutputStockPlaces = (
+    stockPlaces: OutputStockPlace[],
+    places: string[]
+): OutputStockPlace[] => {
     const placesSet = new Set(places);
-
-    const data = stockPlaces.filter(place =>
-        !placesSet.has(place.id)
-    );
-
-    localStorage.setItem("outputStockPlaces", JSON.stringify(data));
-}
+    return stockPlaces.filter(place => !placesSet.has(place.id));
+};

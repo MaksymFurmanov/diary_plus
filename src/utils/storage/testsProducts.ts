@@ -1,54 +1,28 @@
-import {ProductsTest} from "../../types";
-import {nanoid} from "@reduxjs/toolkit";
+import { ProductsTest } from "../../types";
 
-export const getProductsTests = (): ProductsTest[] | null => {
-    const productsTestsRaw = localStorage.getItem("productsTests");
-    if(!productsTestsRaw) return null;
-    return JSON.parse(productsTestsRaw) as ProductsTest[];
-}
+export const getProductsTests = (productsTestsRaw: string | null): ProductsTest[] => {
+    return productsTestsRaw ? JSON.parse(productsTestsRaw) as ProductsTest[] : [];
+};
 
-export const changeProductsTestResult = (
-    testId: string,
-    result: boolean
-): void => {
-    const productsTestsRaw = localStorage.getItem("productsTests");
-    if (!productsTestsRaw) throw new Error("DashboardPage not found");
+export const changeProductsTestResult = (productsTests: ProductsTest[], testId: string, result: boolean): ProductsTest[] => {
+    return productsTests.map((test) => 
+        test.id === testId ? { ...test, accepted: result } as ProductsTest : test
+    );
+};
 
-    let data: ProductsTest[] = JSON.parse(productsTestsRaw) as ProductsTest[];
+export const createProductsTest = (productsTests: ProductsTest[], orderId: string, id: string): ProductsTest[] => {
+    return [
+        ...productsTests,
+        {
+            id,
+            accepted: false,
+            status: 0,
+            document_url: undefined,
+            order_id: orderId
+        } as ProductsTest
+    ];
+};
 
-    const oldProductsTest = data.find((test) => test.id === testId);
-    if (!oldProductsTest) throw new Error("The product not found");
-
-    data = data.map((test: ProductsTest) => {
-        if (test.id === testId) {
-            return {...test, accepted: result} as ProductsTest;
-        }
-
-        return test;
-    });
-
-    localStorage.setItem("productsTests", JSON.stringify(data));
-}
-
-export const createProductsTest = (orderId: string) => {
-    const productsTests = getProductsTests() || [];
-
-    const id = nanoid();
-    const data = productsTests.push({
-        id,
-        accepted: false,
-        status: 0,
-        document_url: undefined,
-        order_id: orderId
-    } as ProductsTest);
-
-    localStorage.setItem("productsTests", JSON.stringify(data));
-}
-
-export const deleteProductsTest = (testId: string) => {
-    const tests = getProductsTests();
-    if(!tests) return null;
-
-    const data = tests.filter((test) => test.id !== testId);
-    localStorage.setItem("productsTests", JSON.stringify(data));
-}
+export const deleteProductsTest = (productsTests: ProductsTest[], testId: string): ProductsTest[] => {
+    return productsTests.filter((test) => test.id !== testId);
+};

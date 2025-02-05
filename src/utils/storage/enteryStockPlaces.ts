@@ -1,48 +1,26 @@
-import {EntryStockPlace} from "../../types";
-import {getMaterialById} from "./materials";
+import { EntryStockPlace } from "../../types";
 
-export const getEntryStockPlaces = (): EntryStockPlace[] | null => {
-    const entryStockPlacesRaw = localStorage.getItem("entryStockPlaces");
-    if (!entryStockPlacesRaw) return null;
-    return JSON.parse(entryStockPlacesRaw) as EntryStockPlace[];
-}
+export const getEntryStockPlaces = (entryStockPlacesRaw: string | null): EntryStockPlace[] => {
+    return entryStockPlacesRaw ? JSON.parse(entryStockPlacesRaw) as EntryStockPlace[] : [];
+};
 
-export const updateEntryStock = (places: string[], materialId: string) => {
-    const stockPlaces = getEntryStockPlaces() || [];
-    if (!getMaterialById(materialId)) throw new Error("The material not Found");
-
+export const updateEntryStock = (stockPlaces: EntryStockPlace[], places: string[], materialId: string): EntryStockPlace[] => {
     const placesSet = new Set(places);
 
-    let data = stockPlaces.map((stockPlace) => {
-        if (placesSet.has(stockPlace.id)) {
-            placesSet.delete(stockPlace.id);
-            return {
-                ...stockPlace,
-                material_id: materialId
-            }
-        }
-
-        return stockPlace;
-    });
-
-    placesSet.forEach(place => {
-        data.push({
-            id: place,
-            material_id: materialId
-        })
-    });
-    localStorage.setItem("entryStockPlaces", JSON.stringify(data));
-}
-
-export const removeEntryStockPlaces = (places: string[]) => {
-    const stockPlaces = getEntryStockPlaces();
-    if(!stockPlaces) return null;
-
-    const placesSet = new Set(places);
-
-    const data = stockPlaces.filter(place =>
-        !placesSet.has(place.id)
+    let updatedStockPlaces = stockPlaces.map((stockPlace) =>
+        placesSet.has(stockPlace.id)
+            ? { ...stockPlace, material_id: materialId }
+            : stockPlace
     );
 
-    localStorage.setItem("entryStockPlaces", JSON.stringify(data));
-}
+    const newPlaces = [...placesSet]
+        .filter(placeId => !stockPlaces.some(stockPlace => stockPlace.id === placeId))
+        .map(placeId => ({ id: placeId, material_id: materialId }));
+
+    return [...updatedStockPlaces, ...newPlaces];
+};
+
+export const removeEntryStockPlaces = (stockPlaces: EntryStockPlace[], places: string[]): EntryStockPlace[] => {
+    const placesSet = new Set(places);
+    return stockPlaces.filter(place => !placesSet.has(place.id));
+};

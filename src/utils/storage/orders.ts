@@ -1,107 +1,64 @@
-import {Order, OrderInput, ProductionProcess} from "../../types";
-import {nanoid} from "@reduxjs/toolkit";
-import {getProductionProcessesByProduct} from "./productionProcesses";
-import {createProductsTest} from "./testsProducts";
+import { Order, OrderInput, ProductionProcess } from "../../types";
+import { nanoid } from "@reduxjs/toolkit";
 
-export const getOrders = (): Order[] | null => {
-    const ordersRaw = localStorage.getItem("orders");
-    if (!ordersRaw) return null;
-    return JSON.parse(ordersRaw) as Order[];
-}
+export const getOrders = (ordersRaw: string | null): Order[] => {
+  return ordersRaw ? JSON.parse(ordersRaw) as Order[] : [];
+};
 
-export const getOrderById = (orderId?: string): Order | null => {
-    if(!orderId) return null;
+export const getOrderById = (orders: Order[], orderId ? : string): Order | null => {
+  return orderId ? orders.find(order => order.id === orderId) || null : null;
+};
 
-    const data: Order[] = getOrders() || [];
-    return data.find((order) => order.id === orderId) || null;
-}
+export const createOrder = (orders: Order[], orderInput: OrderInput): Order[] => {
+  const id = nanoid();
 
-export const createOrder = (orderInput: OrderInput): void => {
-    let data: Order[] = getOrders() || [];
-
-    const id = nanoid();
-
-    data.push({
-        id: id,
-        product_id: orderInput.product_id,
-        production_process_id: null,
-        customer: orderInput.customer,
-        deadline: new Date(orderInput.deadline),
-        done_date: null,
-        volume: orderInput.volume,
-        pallet_color: orderInput.pallet_color
-    } as Order);
-
-    localStorage.setItem("orders", JSON.stringify(data));
-}
-
-export const updateOrder = (orderInput: OrderInput): void => {
-    let data: Order[] = getOrders() || [];
-
-    const oldOrder = data.find((order) => order.id === orderInput.id);
-    if (!oldOrder) throw new Error("The order not found");
-
-    data = data.map((order: Order) => {
-        if (order.id === orderInput.id) {
-            return {
-                id: oldOrder.id,
-                product_id: orderInput.product_id,
-                production_process_id: oldOrder.production_process_id,
-                customer: orderInput.customer,
-                deadline: new Date(orderInput.deadline),
-                done_date: oldOrder.done_date,
-                volume: orderInput.volume,
-                pallet_color: orderInput.pallet_color
-            } as Order;
+  return [
+        ...orders,
+    {
+      id,
+      product_id: orderInput.product_id,
+      production_process_id: null,
+      customer: orderInput.customer,
+      deadline: new Date(orderInput.deadline),
+      done_date: null,
+      volume: orderInput.volume,
+      pallet_color: orderInput.pallet_color
         }
+    ];
+};
 
-        return order;
-    });
+export const updateOrder = (orders: Order[], orderInput: OrderInput): Order[] => {
+  return orders.map(order =>
+    order.id === orderInput.id ?
+    {
+      ...order,
+      product_id: orderInput.product_id,
+      customer: orderInput.customer,
+      deadline: new Date(orderInput.deadline),
+      volume: orderInput.volume,
+      pallet_color: orderInput.pallet_color
+    } :
+    order
+  );
+};
 
-    localStorage.setItem("orders", JSON.stringify(data));
-}
-
-export const deleteOrder = (orderId: string): void => {
-    const ordersRaw = localStorage.getItem("orders");
-    if (!ordersRaw) throw new Error("DashboardPage not found");
-
-    let data: Order[] = JSON.parse(ordersRaw) as Order[];
-
-    const orderExists = data.some((order) => order.id === orderId);
-    if (!orderExists) throw new Error("The order not found");
-
-    data = data.filter((order: Order) =>
-        order.id !== orderId);
-    localStorage.setItem("orders", JSON.stringify(data));
-}
+export const deleteOrder = (orders: Order[], orderId: string): Order[] => {
+  return orders.filter(order => order.id !== orderId);
+};
 
 export const markProcessDone = (
-    orderId: string,
-    productionProcess: ProductionProcess
-) => {
-    const orders = getOrders();
-    if (!orders) return null;
-
-    const order = getOrderById(orderId);
-    if(!order) return null;
-
-    const productionProcesses = getProductionProcessesByProduct(order.product_id);
-    if (!productionProcesses) return null;
-
-    const data = orders.map((orderItem) => {
-        if (orderItem.id === orderId) {
-            const done = productionProcess.queue + 1 === productionProcesses.length;
-            if(done) createProductsTest(orderId);
-
-            return {
-                ...orderItem,
-                production_process_id: productionProcess.id,
-                done_date: done ? new Date() : null
-            }
-        }
-
-        return orderItem;
-    });
-
-    localStorage.setItem("orders", JSON.stringify(data))
-}
+  orders: Order[],
+  orderId: string,
+  productionProcess: ProductionProcess,
+  productionProcesses: ProductionProcess[]
+): Order[] => {
+  return orders.map(order =>
+    order.id === orderId ?
+    {
+      ...order,
+      production_process_id: productionProcess.id,
+      done_date: productionProcess.queue + 1 === productionProcesses.length ? new Date() : null
+    } :
+    order
+  );
+};

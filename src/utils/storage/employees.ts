@@ -1,113 +1,40 @@
-import {Employee, EmployeeInput, User} from "../../types";
-import {nanoid} from "@reduxjs/toolkit";
-import {setManager} from "./departments";
+import { Employee, EmployeeInput } from "../../types";
+import { nanoid } from "@reduxjs/toolkit";
+import { setManager } from "./departments";
 
-export const getEmployees = (): Employee[] | null => {
-    const employeesRaw = localStorage.getItem("employees");
-    if (!employeesRaw) return null;
-    return JSON.parse(employeesRaw) as Employee[];
+export const getEmployees = (employeesRaw: string | null): Employee[] => {
+  return employeesRaw ? JSON.parse(employeesRaw) as Employee[] : [];
 }
 
-export const getEmployeeById = (employeeId: string | undefined) => {
-    if (!employeeId) return null;
-    const employeesRaw = localStorage.getItem("employees");
-    if (!employeesRaw) return null;
-
-    const allEmployees = JSON.parse(employeesRaw);
-    return allEmployees.find((employee: Employee) => employee.id === employeeId);
+export const getEmployeeById = (employees: Employee[], employeeId: string | undefined): Employee | null => {
+  if (!employeeId) return null;
+  return employees.find((employee) => employee.id === employeeId) || null;
 }
 
-export const createEmployee = (employeeInput: EmployeeInput): void => {
-    const employeesRaw = localStorage.getItem("employees");
-    const usersRaw = localStorage.getItem("users");
+export const createEmployee = (employees: Employee[], employeeInput: EmployeeInput): Employee[] => {
+  const id = nanoid();
 
-    let data: Employee[] = employeesRaw
-        ? JSON.parse(employeesRaw) as Employee[]
-        : [];
+  const newEmployee: Employee = {
+    id,
+    department_id: employeeInput.department_id
+    name: employeeInput.name,
+    position: employeeInput.position,
+    date_of_birth: new Date(employeeInput.date_of_birth),
+  };
 
-    let usersData: User[] = usersRaw
-        ? JSON.parse(usersRaw) as User[]
-        : []
+  if (employeeInput.manager) setManager(id, employeeInput.department_id);
 
-    const id = nanoid();
+  return [...employees, newEmployee];
+};
 
-    data.push({
-        id,
-        department_id: employeeInput.department_id,
-        name: employeeInput.name,
-        position: employeeInput.position,
-        date_of_birth: new Date(employeeInput.date_of_birth),
-    } as Employee);
+export const updateEmployee = (employees: Employee[], employeeInput: EmployeeInput): Employee[] => {
+  return employees.map(emp =>
+    emp.id === employeeInput.id ?
+    { ...emp, ...employeeInput, date_of_birth: new Date(employeeInput.date_of_birth) } :
+    emp
+  );
+};
 
-    usersData.push({
-        employee_id: id,
-        login: employeeInput.login,
-        password: employeeInput.password
-    } as User);
-
-    localStorage.setItem("employees", JSON.stringify(data));
-    localStorage.setItem("users", JSON.stringify(usersData));
-
-    if (employeeInput.manager) setManager(id, employeeInput.department_id);
-}
-
-export const updateEmployee = (employeeInput: EmployeeInput): void => {
-    const employeesRaw = localStorage.getItem("employees");
-    if (!employeesRaw) throw new Error("Employees not found");
-
-    let data: Employee[] = JSON.parse(employeesRaw) as Employee[];
-
-    const oldEmployee = data.find((employee) => employee.id === employeeInput.id);
-    if (!oldEmployee) throw new Error("The employee not found");
-
-    const usersRaw = localStorage.getItem("users");
-    if (!usersRaw) throw new Error("Users not found");
-
-    let usersData: User[] = JSON.parse(usersRaw) as User[];
-
-    const oldUser = usersData.find((user) => user.employee_id === employeeInput.id);
-    if (!oldUser) throw new Error("The user not found");
-
-    data = data.map((employee: Employee) => {
-        if (employee.id === employeeInput.id) {
-            return {
-                id: oldEmployee.id,
-                department_id: employeeInput.department_id,
-                name: employeeInput.name,
-                position: employeeInput.position,
-                date_of_birth: new Date(employeeInput.date_of_birth),
-            } as Employee;
-        }
-
-        return employee;
-    });
-
-    usersData = usersData.map((user: User) => {
-        if (user.employee_id !== employeeInput.id) {
-            return {
-                employee_id: oldUser.employee_id,
-                login: employeeInput.login,
-                password: employeeInput.password
-            } as User;
-        }
-
-        return user;
-    });
-
-    localStorage.setItem("employees", JSON.stringify(data));
-    localStorage.setItem("users", JSON.stringify(usersData));
-}
-
-export const deleteEmployee = (employeeId: string): void => {
-    const employeesRaw = localStorage.getItem("employees");
-    if (!employeesRaw) throw new Error("Employees not found");
-
-    let data: Employee[] = JSON.parse(employeesRaw) as Employee[];
-
-    const employeeExists = data.some((employee) => employee.id === employeeId);
-    if (!employeeExists) throw new Error("The employee not found");
-
-    data = data.filter((employee: Employee) =>
-        employee.id !== employeeId);
-    localStorage.setItem("employees", JSON.stringify(data));
-}
+export const deleteEmployee = (employees: Employee[], employeeId: string): Employee[] => {
+  return employees.filter((employee) => employee.id !== employeeId);
+};
