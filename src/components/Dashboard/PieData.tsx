@@ -1,8 +1,9 @@
 import {PieChart} from "@mui/x-charts";
 import {DashboardType, Material, Order} from "../../types";
-import {getProducts} from "../../utils/storage/products";
-import {getOrders} from "../../utils/storage/orders";
-import {getMaterials} from "../../utils/storage/materials";
+import {selectMaterials} from "../../features/materialsSlice";
+import {selectOrders} from "../../features/ordersSlice";
+import store from "../../state";
+import {selectProducts} from "../../features/productsSlice";
 
 type ChartData = {
     label: string,
@@ -37,10 +38,11 @@ const PieData = ({type}: DashboardType) => {
 }
 
 const ordersData = (): ChartData[] => {
-    const orders = getOrders();
+    const state = store.getState();
+    const orders = selectOrders(state);
     if(!orders) return [];
 
-    const products = getProducts();
+    const products = selectProducts(state);
     if(!products) throw Error("No products found");
 
     return orders.map((order: Order) => {
@@ -58,7 +60,8 @@ const ordersData = (): ChartData[] => {
 }
 
 const materialsData = (): ChartData[] => {
-    const materials = getMaterials();
+    const state = store.getState();
+    const materials = selectMaterials(state);
     if(!materials) return [];
 
     return materials.map((material: Material) => {

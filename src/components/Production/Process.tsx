@@ -3,24 +3,30 @@ import {FaCheck} from 'react-icons/fa';
 import {ProductionProcess} from "../../types";
 import {useUser} from "../../providers/UserProvider";
 import {isManager} from "../../utils/storage/departments";
-import {markProcessDone} from "../../utils/storage/orders";
+import {useDispatch} from "react-redux";
+import {markProcessDone} from "../../features/ordersSlice";
 
-const Process = ({orderId, production_process, isDone}: {
+const Process = ({orderId, production_process, nextProcessQueue}: {
     orderId: string,
     production_process: ProductionProcess,
-    isDone: boolean
+    nextProcessQueue?: number
 }) => {
     const {user} = useUser();
     if (!user) throw new Error("No user found");
 
+    const dispatch = useDispatch();
+
     const doneHandler = () => {
-        markProcessDone(orderId, production_process);
+        dispatch(markProcessDone({orderId, productionProcess: production_process}));
     }
+
+    const isDone = nextProcessQueue !== undefined
+        ? nextProcessQueue > production_process.queue : true;
 
     const changeAccess = isManager(
         user.employee_id,
-        production_process.department_id ? [production_process.department_id] : undefined
-    );
+        production_process.department_id ? ["2", production_process.department_id] : ["2"]
+    ) && production_process.queue === nextProcessQueue;
 
     return <div className={"ProductionProcess v-center"}>
         <div

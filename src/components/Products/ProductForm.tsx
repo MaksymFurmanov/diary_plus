@@ -1,15 +1,18 @@
 import Input from "../BasicComponents/Input";
 import ProductionPlanInput from "./ProductionPlanInput";
-import {createProduct, deleteProduct, updateProduct} from "../../utils/storage/products";
 import {useProductInput} from "../../providers/ProductInputProvider";
 import {FormEvent} from "react";
 import MutateButtons from "../BasicComponents/MutateButtons";
 import ImageInput from "./ImageInput";
 import QualityStandardsInput from "./QualityStandardsInput";
 import {useNavigate} from "react-router-dom";
+import {addProduct, editProduct, removeProduct} from "../../features/productsSlice";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../state";
 
 const ProductForm = () => {
     const {product, setProduct} = useProductInput();
+    const dispatch = useDispatch<AppDispatch>();
 
     const navigate = useNavigate();
 
@@ -18,9 +21,9 @@ const ProductForm = () => {
 
         try {
             if (product.id) {
-                updateProduct(product);
+                dispatch(editProduct(product));
             } else {
-                createProduct(product);
+                dispatch(addProduct(product));
             }
         } catch (error) {
             console.error(error);
@@ -28,6 +31,11 @@ const ProductForm = () => {
 
         navigate("/products");
     };
+
+    const deleteHandler = () => {
+        if (!product.id) return;
+        dispatch(removeProduct(product.id));
+    }
 
     return (
         <form className={"ProductInfo evenly"} onSubmit={e => submitHandler(e)}>
@@ -64,7 +72,7 @@ const ProductForm = () => {
                     <ProductionPlanInput/>
                 </div>
                 <MutateButtons id={product.id}
-                               deleteHandler={deleteProduct}
+                               deleteHandler={deleteHandler}
                 />
             </div>
         </form>

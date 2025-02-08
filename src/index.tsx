@@ -15,6 +15,8 @@ import productionProcesses from "./initialData/productionProcesses";
 import testsMaterials from "./initialData/testsMaterials";
 import testsProducts from "./initialData/testsProducts";
 import employees from "./initialData/employees";
+import store from "./state";
+import {Provider} from 'react-redux';
 
 initLocalStorage("users", users);
 initLocalStorage("departments", departments);
@@ -32,7 +34,9 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
-        <App/>
+        <Provider store={store}>
+            <App/>
+        </Provider>
     );
 } else {
     console.error('Root element not found');

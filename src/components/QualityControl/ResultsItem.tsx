@@ -4,9 +4,11 @@ import {useUser} from "../../providers/UserProvider";
 import {MaterialsTest, ProductsTest, TestDisplayData} from "../../types";
 import {isManager} from "../../utils/storage/departments";
 import getTestInfo from "../../utils/getTestInfo";
-import {changeMaterialsTestResult} from "../../utils/storage/testsMaterials";
-import {changeProductsTestResult} from "../../utils/storage/testsProducts";
 import handleDownload from "../../utils/handleDownload";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../state";
+import {setMaterialsTestResult} from "../../features/materialsTestsSlice";
+import {setProductsTestResult} from "../../features/productsTestsSlice";
 
 const ResultsItem = ({test, laboratory}: {
     test: MaterialsTest | ProductsTest,
@@ -106,11 +108,13 @@ const ResultButton = ({children, testId, result, laboratory}: {
     result: boolean,
     laboratory: 1 | 2
 }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
     const handleResult = () => {
         if (laboratory === 1) {
-            changeMaterialsTestResult(testId, result);
+            dispatch(setMaterialsTestResult({testId, result}));
         } else {
-            changeProductsTestResult(testId, result);
+            dispatch(setProductsTestResult({testId, result}));
         }
     }
 

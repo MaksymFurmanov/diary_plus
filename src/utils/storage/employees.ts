@@ -1,40 +1,43 @@
-import { Employee, EmployeeInput } from "../../types";
-import { nanoid } from "@reduxjs/toolkit";
-import { setManager } from "./departments";
+import {Employee, EmployeeInput} from "../../types";
+import {nanoid} from "@reduxjs/toolkit";
 
-export const getEmployees = (employeesRaw: string | null): Employee[] => {
-  return employeesRaw ? JSON.parse(employeesRaw) as Employee[] : [];
+export const getEmployees = (): Employee[] => {
+    const employeesRaw = localStorage.getItem("employees");
+    return employeesRaw ? JSON.parse(employeesRaw) as Employee[] : [];
 }
 
-export const getEmployeeById = (employees: Employee[], employeeId: string | undefined): Employee | null => {
-  if (!employeeId) return null;
-  return employees.find((employee) => employee.id === employeeId) || null;
-}
+export const createEmployee = (employeeInput: EmployeeInput): Employee[] => {
+    const employees = getEmployees();
+    const id = nanoid();
 
-export const createEmployee = (employees: Employee[], employeeInput: EmployeeInput): Employee[] => {
-  const id = nanoid();
+    const newEmployee: Employee = {
+        id,
+        department_id: employeeInput.department_id,
+        name: employeeInput.name,
+        position: employeeInput.position,
+        date_of_birth: new Date(employeeInput.date_of_birth),
+    };
 
-  const newEmployee: Employee = {
-    id,
-    department_id: employeeInput.department_id
-    name: employeeInput.name,
-    position: employeeInput.position,
-    date_of_birth: new Date(employeeInput.date_of_birth),
-  };
-
-  if (employeeInput.manager) setManager(id, employeeInput.department_id);
-
-  return [...employees, newEmployee];
+    const updatedEmployees = [...employees, newEmployee];
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    return updatedEmployees;
 };
 
-export const updateEmployee = (employees: Employee[], employeeInput: EmployeeInput): Employee[] => {
-  return employees.map(emp =>
-    emp.id === employeeInput.id ?
-    { ...emp, ...employeeInput, date_of_birth: new Date(employeeInput.date_of_birth) } :
-    emp
-  );
+export const updateEmployee = (employeeInput: EmployeeInput): Employee[] => {
+    const employees = getEmployees();
+    const updatedEmployees = employees.map(employeeItem =>
+        employeeItem.id === employeeInput.id
+            ? {...employeeItem, ...employeeInput, date_of_birth: new Date(employeeInput.date_of_birth)}
+            : employeeItem
+    );
+
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    return updatedEmployees;
 };
 
-export const deleteEmployee = (employees: Employee[], employeeId: string): Employee[] => {
-  return employees.filter((employee) => employee.id !== employeeId);
+export const deleteEmployee = (employeeId: string): Employee[] => {
+    const employees = getEmployees();
+    const updatedEmployees = employees.filter((employeeItem) => employeeItem.id !== employeeId);
+    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+    return updatedEmployees;
 };

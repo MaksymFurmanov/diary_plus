@@ -3,18 +3,19 @@ import {FaPen} from "react-icons/fa";
 import {BiSolidTrashAlt} from "react-icons/bi";
 import {Material} from "../../types";
 import {useUser} from "../../providers/UserProvider";
-import {deleteMaterial, getMaterials, materialArrived} from "../../utils/storage/materials";
 import {useNavigate} from "react-router-dom";
 import {isManager} from "../../utils/storage/departments";
+import {useDispatch, useSelector} from "react-redux";
+import {markMaterialsArrived, removeMaterial, selectMaterials} from "../../features/materialsSlice";
 
 const MaterialRows = () => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const manager = isManager(user.employee_id, ["0"]);
+    const manager = isManager(user.employee_id, ["2"]);
 
     const navigate = useNavigate();
 
-    const materials = getMaterials();
+    const materials = useSelector(selectMaterials);
 
     return (
         <>
@@ -54,17 +55,21 @@ const MaterialRows = () => {
 }
 
 const ArrivedButton = ({materialId}: { materialId: string }) => {
+    const dispatch = useDispatch();
+
     return (
-        <Button onClick={() => materialArrived(materialId)}>
+        <Button onClick={() => dispatch(markMaterialsArrived(materialId))}>
             ARRIVED
         </Button>
     );
 }
 
 const DeleteButton = ({materialId}: { materialId: string }) => {
+    const dispatch = useDispatch();
+
     return (
         <button onClick={() => {
-            deleteMaterial(materialId)
+            dispatch(removeMaterial(materialId))
         }}>
             <BiSolidTrashAlt/>
         </button>

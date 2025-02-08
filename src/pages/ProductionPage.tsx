@@ -1,23 +1,22 @@
 import {Fragment} from "react";
 import ProductionItem from "../components/Production/ProductionItem";
 import PageTitle from "../components/BasicComponents/PageTitle";
-import {getOrders} from "../utils/storage/orders";
+import {useSelector} from "react-redux";
+import {selectOrders} from "../features/ordersSlice";
 
 const ProductionPage = () => {
-    const orders = getOrders();
+    const orders = useSelector(selectOrders);
 
     return <>
         <PageTitle name={"Production plan"}/>
         <div className={"ProductionPage v-center"}>
             {orders && (
                 orders.map((order, index) => {
-                    if (order.done_date === null) {
-                        return (
-                            <ProductionItem key={index}
-                                            order={order}
-                            />
-                        )
-                    } else return <Fragment key={index}/>
+                    return (
+                        <ProductionItem key={index}
+                                        order={order}
+                        />
+                    )
                 })
             )}
         </div>

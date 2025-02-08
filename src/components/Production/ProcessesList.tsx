@@ -3,18 +3,24 @@ import {ReactSVG} from 'react-svg'
 import Process from "./Process";
 import {ProductionProcess} from "../../types";
 
-const ProcessesList = ({production_processes, orderId, current_id}: {
+const ProcessesList = ({production_processes, orderId, lastDoneId}: {
     production_processes: ProductionProcess[],
     orderId: string,
-    current_id: string | null
+    lastDoneId: string | null
 }) => {
     const lastProcess = production_processes.length;
 
-    const nextProcess = current_id !== null
+    const lastDoneProcess = lastDoneId !== null
         ? production_processes.find((production_processes: ProductionProcess) =>
-            production_processes.id === current_id
+            production_processes.id === lastDoneId
         )
-        : null;
+        : undefined;
+
+    const nextProcess = lastDoneProcess
+        ? production_processes.find((production_processes) =>
+        production_processes.queue === lastDoneProcess.queue + 1)
+        : production_processes.find((production_processes) =>
+            production_processes.queue === 0);
 
     return (
         <>
@@ -24,7 +30,7 @@ const ProcessesList = ({production_processes, orderId, current_id}: {
                         key={`process-${index}`}
                         orderId={orderId}
                         production_process={production_process}
-                        isDone={!!nextProcess && nextProcess.queue > production_process.queue}
+                        nextProcessQueue={nextProcess?.queue}
                     />
                     {production_process.queue !== lastProcess - 1 &&
                         <ReactSVG src={"../../assets/images/arrow_wave.svg"}

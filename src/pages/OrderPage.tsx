@@ -3,13 +3,16 @@ import {useEffect} from "react";
 import PageTitle from "../components/BasicComponents/PageTitle";
 import OrderForm from "../components/Orders/OrderForm";
 import {useOrderInput} from "../providers/OrderInputProvider";
-import {getOrderById} from "../utils/storage/orders";
 import useExitAlert from "../hooks/useExitAlert";
+import {useSelector} from "react-redux";
+import {selectOrderById} from "../features/ordersSlice";
+import {RootState} from "../state";
 
 const OrderPage = ({existing}: {
     existing: boolean
 }) => {
     const {orderId} = useParams();
+    const existingOrder = useSelector((state: RootState) => selectOrderById(state, orderId));
 
     const {order, setOrder} = useOrderInput();
 
@@ -18,7 +21,6 @@ const OrderPage = ({existing}: {
     useEffect(() => {
         if (!existing) return;
 
-        const existingOrder = getOrderById(orderId);
         if (!existingOrder) throw new Error(`Order not found`);
 
         setOrder(prevState => {

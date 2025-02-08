@@ -1,9 +1,10 @@
-import {getEmployees} from "../../utils/storage/employees";
 import {useEmployeeInput} from "../../providers/EmployeeInputProvider";
 import Input from "../BasicComponents/Input";
+import {useSelector} from "react-redux";
+import {selectEmployees} from "../../features/employeesSlice";
 
 const PositionInput = () => {
-    const employees = getEmployees() || [];
+    const employees = useSelector(selectEmployees) || [];
 
     const {employee, setEmployee} = useEmployeeInput();
 

@@ -4,12 +4,14 @@ import {Fragment} from "react";
 import {useUser} from "../providers/UserProvider";
 import navItemsList from "../appRoutes";
 import Button from "../components/BasicComponents/Button";
-import {getEmployeeById} from "../utils/storage/employees";
+import {useSelector} from "react-redux";
+import {RootState} from "../state";
+import {selectEmployeeById} from "../features/employeesSlice";
 
 const SystemNavigation = () => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const employee = getEmployeeById(user.employee_id);
+    const employee = useSelector((state: RootState) => selectEmployeeById(state, user.employee_id));
     if (!employee) throw new Error("Employee not found");
 
     const navigate = useNavigate();

@@ -1,8 +1,10 @@
 import ResultsItem from "./ResultsItem";
 import {Fragment} from "react";
 import {MaterialsTest, ProductsTest} from "../../types";
-import {getMaterialsTests} from "../../utils/storage/testsMaterials";
-import {getProductsTests} from "../../utils/storage/testsProducts";
+import {useSelector} from "react-redux";
+import {RootState} from "../../state";
+import {selectMaterialsTests} from "../../features/materialsTestsSlice";
+import {selectProductsTests} from "../../features/productsTestsSlice";
 
 const title = {
     1: "Laboratory 1, materials",
@@ -28,18 +30,15 @@ const ResultsTable = ({laboratory}: {
 const ResultItems = ({laboratory}: {
     laboratory: 1 | 2
 }) => {
-    let items: MaterialsTest[] | ProductsTest[] | null;
-    if (laboratory === 1) {
-        items = getMaterialsTests();
-    } else {
-        items = getProductsTests();
-    }
+    const testsSelector: (state: RootState) => MaterialsTest[] | ProductsTest[] =
+        laboratory === 1 ? selectMaterialsTests : selectProductsTests
+    let tests = useSelector(testsSelector);
 
-    if (!items) return <></>;
+    if (!tests) return <></>;
 
     return (
         <>
-            {items.map((test, index) => {
+            {tests.map((test, index) => {
                 return (
                     test.document_url
                         ? <ResultsItem key={index}

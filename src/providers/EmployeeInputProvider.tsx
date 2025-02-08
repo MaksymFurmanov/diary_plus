@@ -14,7 +14,7 @@ const initialState: EmployeeInput = {
     department_id: "",
     name: "",
     position: "",
-    date_of_birth: "",
+    date_of_birth: new Date(),
     login: "",
     password: "",
     manager: false,

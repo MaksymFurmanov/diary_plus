@@ -2,16 +2,18 @@ import {IoPerson} from "react-icons/io5";
 import Button from "../BasicComponents/Button";
 import {useNavigate} from "react-router-dom";
 import {Employee} from "../../types";
+import {isManager} from "../../utils/storage/departments";
 
-const EmployeeCard = ({employee, isManager}: {
+const EmployeeCard = ({employee}: {
     employee: Employee,
-    isManager: boolean
 }) => {
     const navigate = useNavigate();
 
+    const manager = isManager(employee.id);
+
     return (
         <div className={"EmployeeCard"}
-             style={{borderColor: isManager ? "red" : "default"}}
+             style={{borderColor: manager ? "red" : "default"}}
         >
             <div><IoPerson/></div>
             <p>{employee.name}</p>

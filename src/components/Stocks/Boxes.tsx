@@ -1,15 +1,18 @@
-import {getEntryStockPlaces} from "../../utils/storage/enteryStockPlaces";
-import {getOutputStockPlaces} from "../../utils/storage/outputStockPlaces";
 import VerticalBoxes from "./VerticalBoxes";
 import HorizontalBox from "./HorizontalBox";
-import {Material, Order} from "../../types";
+import {EntryStockPlace, Material, Order, OutputStockPlace} from "../../types";
+import {useSelector} from "react-redux";
+import {selectEntryStock} from "../../features/enteryStockPlacesSlice";
+import {selectOutputStock} from "../../features/outputStockPlacesSlice";
+import {RootState} from "../../state";
 
 const Boxes = ({type, items, manager}: {
     type: "entry" | "output",
     items: Material[] | Order[],
     manager: boolean
 }) => {
-    const stockPlaces = (type === "entry" ? getEntryStockPlaces() : getOutputStockPlaces()) || [];
+    const stockSelector: (state: RootState) => EntryStockPlace[] | OutputStockPlace[] = type === "entry" ? selectEntryStock : selectOutputStock;
+    const stockPlaces = useSelector(stockSelector) || [];
 
     let globalIndex = 0;
 

@@ -1,25 +1,46 @@
-import { Department } from "../../types";
+import {Department} from "../../types";
 
-export const getDepartments = (departmentsRaw: string | null): Department[] => {
+export const getDepartments = (): Department[] => {
+    const departmentsRaw = localStorage.getItem("departments");
     return departmentsRaw ? JSON.parse(departmentsRaw) as Department[] : [];
 };
 
-export const isManager = (departments: Department[], userId?: string, departmentsIds?: string[]): boolean => {
+export const isManager = (userId?: string, departmentsIds?: string[]): boolean => {
     if (!userId) return false;
+
+    const departments = getDepartments() || [];
 
     // If departments do not matter
     if (!departmentsIds) {
         return departments.some(department => department.manager_id === userId);
     }
 
-    // If specific departments are provided
+    // If departments are specified
     return departments.some(department =>
-        departmentsIds.includes(department.id) && department.manager_id === userId
+        departmentsIds.includes(department.id)
+        && department.manager_id === userId
     );
-};
+}
 
-export const setManager = (departments: Department[], userId: string, departmentId: string): Department[] => {
-    return departments.map(department =>
-        department.id === departmentId ? { ...department, manager_id: userId } : department
+export const setManager = (departmentId: string, userId: string): Department[] => {
+    const departments = getDepartments();
+    const updatedDepartments = departments.map(departmentItem =>
+        departmentItem.id === departmentId ? {...departmentItem, manager_id: userId} : departmentItem
     );
-};
+
+    localStorage.setItem("departments", JSON.stringify(updatedDepartments));
+    return updatedDepartments;
+}
+
+export const removeManager = (userId: string) => {
+    const departments = getDepartments();
+
+    const updatedDepartments = departments.map(department => {
+        return department.id === userId
+            ? {...department, manager_id: undefined}
+            : department
+    })
+
+    localStorage.setItem("departments", JSON.stringify(updatedDepartments));
+    return updatedDepartments;
+}

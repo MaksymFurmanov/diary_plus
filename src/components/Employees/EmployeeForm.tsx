@@ -4,18 +4,21 @@ import Input from "../BasicComponents/Input";
 import DepartmentInput from "../DepartmentInput";
 import PositionInput from "./PositionInput";
 import MutateButtons from "../BasicComponents/MutateButtons";
-import {createEmployee, deleteEmployee, updateEmployee} from "../../utils/storage/employees";
-import {setManager} from "../../utils/storage/departments";
 import {ChangeEvent} from "react";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../state";
+import {updateManager} from "../../features/departmentsSlice";
+import {addEmployee, editEmployee, removeEmployee} from "../../features/employeesSlice";
 
 const EmployeeForm = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     const {employee, setEmployee} = useEmployeeInput();
 
     const deleteHandler = () => {
         if (!employee.id) return;
-        deleteEmployee(employee.id);
+        removeEmployee(employee.id);
         navigate("/admin");
     }
 
@@ -23,10 +26,13 @@ const EmployeeForm = () => {
         e.preventDefault();
 
         if (employee.id) {
-            if (employee.manager) setManager(employee.id, employee.department_id);
-            updateEmployee(employee);
+            if (employee.manager) dispatch(updateManager({
+                userId: employee.id,
+                departmentId: employee.department_id
+            }));
+            dispatch(editEmployee(employee));
         } else {
-            createEmployee(employee);
+            dispatch(addEmployee(employee));
         }
 
         navigate("/admin");

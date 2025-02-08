@@ -1,13 +1,14 @@
-import {getDepartments} from "../utils/storage/departments";
 import {Department} from "../types";
 import {ChangeEvent} from "react";
 import Input from "./BasicComponents/Input";
+import {selectDepartments} from "../features/departmentsSlice";
+import {useSelector} from "react-redux";
 
 const DepartmentInput = ({state, setter}: {
     state: any,
     setter: (e: ChangeEvent<HTMLSelectElement>) => void
 }) => {
-    const departments = getDepartments();
+    const departments = useSelector(selectDepartments);
     if (!departments) throw new Error("Departments fetching failed");
 
     return (

@@ -1,9 +1,10 @@
-import {getMaterials} from "../../utils/storage/materials";
 import SelectRawMaterials from "./SelectRawMaterials";
 import SelectSupplier from "./SelectSupplier";
+import {useSelector} from "react-redux";
+import {selectMaterials} from "../../features/materialsSlice";
 
 const MaterialsAndSupplierInput = () => {
-    const materials = getMaterials();
+    const materials = useSelector(selectMaterials);
 
     let materialSet = new Set<string>(),
         supplierSet = new Set<string>();

@@ -1,5 +1,6 @@
 import {Material, Order} from "../types";
-import {getProductById} from "./storage/products";
+import {selectProductById} from "../features/productsSlice";
+import store from "../state";
 
 export type DisplayPlaceData = {
     id: string;
@@ -13,6 +14,8 @@ export const getStockPlaceData = (
     items: Material[] | Order[],
     type: "entry" | "output"
 ): DisplayPlaceData[] => {
+    const state = store.getState();
+
     if (type === "entry") {
         return (items as Material[])
             .filter((item) => item.arriving_date !== null)
@@ -25,7 +28,7 @@ export const getStockPlaceData = (
             }));
     } else {
         return (items as Order[]).map((item) => {
-            const product = getProductById(item.product_id);
+            const product = selectProductById(state, item.product_id);
             if (!product) throw new Error("Product for the order not found");
 
             return {

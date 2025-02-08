@@ -4,12 +4,15 @@ import PageTitle from "../components/BasicComponents/PageTitle";
 import StockList from "../components/Stocks/StockList";
 import Button from "../components/BasicComponents/Button";
 import {isManager} from "../utils/storage/departments";
-import {getMaterials} from "../utils/storage/materials";
-import {getOrders} from "../utils/storage/orders";
-import {removeEntryStockPlaces} from "../utils/storage/enteryStockPlaces";
-import {removeOutputStockPlaces} from "../utils/storage/outputStockPlaces";
 import {useSelectedStockPlaces} from "../providers/SelectedStockPlacesProvider";
 import Boxes from "../components/Stocks/Boxes";
+import {removeEntryStockPlaces} from "../features/enteryStockPlacesSlice";
+import {removeOutputStockPlaces} from "../features/outputStockPlacesSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectMaterials} from "../features/materialsSlice";
+import {selectOrders} from "../features/ordersSlice";
+import {Material, Order} from "../types";
+import {RootState} from "../state";
 
 const title = {
     entry: "Entry stock",
@@ -24,7 +27,9 @@ const StockPage = () => {
     const {type} = useParams();
     if (type !== "entry" && type !== "output") throw new Error("Stock page not found");
 
-    const items = (type === "entry" ? getMaterials() : getOrders()) || [];
+    const itemsSelector: (state: RootState) => Material[] | Order[] =
+        type === "entry" ? selectMaterials : selectOrders;
+    const items = useSelector(itemsSelector) || [];
 
     return (
         <>
@@ -53,12 +58,13 @@ const StockPage = () => {
 
 const RemoveButton = ({type}: { type: "entry" | "output" }) => {
     const {places, setPlaces} = useSelectedStockPlaces();
+    const dispatch = useDispatch();
 
     const removeHandler = () => {
         if (type === "entry") {
-            removeEntryStockPlaces(places);
+            dispatch(removeEntryStockPlaces(places));
         } else {
-            removeOutputStockPlaces(places);
+            dispatch(removeOutputStockPlaces(places));
         }
         setPlaces([]);
     };

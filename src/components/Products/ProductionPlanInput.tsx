@@ -1,9 +1,11 @@
 import {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
 import ProductionPlanProcess from "./ProductionPlanProcess";
 import ProductionProcessDetails from "./ProductionProcessDetails";
-import {getProductionProcessesByProduct} from "../../utils/storage/productionProcesses";
 import {useProductInput} from "../../providers/ProductInputProvider";
 import AddProcessButton from "../Production/AddProcessButton";
+import {useSelector} from "react-redux";
+import {RootState} from "../../state";
+import {selectProductionProcessesByProduct} from "../../features/productionProcessesSlice";
 
 export type DetailsBoxType = {
     process_queue: number,
@@ -13,6 +15,8 @@ export type DetailsBoxType = {
 
 const ProductionPlanInput = () => {
     const {product, setProduct} = useProductInput();
+    const filteredProcesses = useSelector((state: RootState) =>
+        selectProductionProcessesByProduct(state, product.id));
 
     const [detailsBox, setDetailsBox] = useState<DetailsBoxType>({
         process_queue: -1,
@@ -21,7 +25,6 @@ const ProductionPlanInput = () => {
     });
 
     useEffect(() => {
-        const filteredProcesses = getProductionProcessesByProduct(product.id);
         if (!filteredProcesses) return;
 
         setProduct((prevState) => {

@@ -4,15 +4,16 @@ import {useUser} from "../../providers/UserProvider";
 import Button from "../BasicComponents/Button";
 import {useNavigate} from "react-router-dom";
 import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
-import {getProducts} from "../../utils/storage/products";
 import {Product} from "../../types";
+import {selectProducts} from "../../features/productsSlice";
+import {useSelector} from "react-redux";
 
 const Placeholder = "../../assets/product_placeholder.webp";
 
 const ProductsGallery = () => {
     const [cardsIndex, setCardsIndex] = useState(0);
 
-    const products = getProducts();
+    const products = useSelector(selectProducts);
     if (!products) return <></>;
 
     const swipeHandler = (direction: "left" | "right") => {

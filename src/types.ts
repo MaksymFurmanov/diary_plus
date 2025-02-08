@@ -11,7 +11,7 @@ export type EmployeeInput = {
     department_id: string,
     name: string,
     position: string,
-    date_of_birth: string,
+    date_of_birth: Date,
     login: string,
     password: string,
     manager: boolean,
@@ -26,7 +26,7 @@ export type User = {
 
 export type Department = {
     id: string,
-    manager_id: string,
+    manager_id?: string,
     name: string
 }
 
@@ -58,8 +58,8 @@ export type Product = {
     name: string,
     type: string,
     per_pallet: number,
-    img_url: string,
-    quality_standards_url: string
+    img_url?: string,
+    quality_standards_url?: string
 }
 
 export type ProductionProcess = {
@@ -76,10 +76,10 @@ export type ProductInput = {
     name: string,
     type: string,
     per_pallet: number,
-    img_url: string | null,
+    img_url?: string,
     imageDisplay: string | ArrayBuffer | null,
     imageFile: File | null,
-    quality_standards_url: string | null,
+    quality_standards_url?: string,
     standardsDisplay: string | null,
     standardsFile: File | null,
     productionProcesses: ProductionProcess[]

@@ -1,43 +1,54 @@
-import { Product, ProductInput } from "../../types";
+import {Product, ProductInput} from "../../types";
+import {nanoid} from "@reduxjs/toolkit";
 
-export const getProducts = (productsRaw: string | null): Product[] => {
+export const getProducts = (): Product[] => {
+    const productsRaw = localStorage.getItem("products");
     return productsRaw ? JSON.parse(productsRaw) as Product[] : [];
 };
 
-export const getProductById = (products: Product[], productId?: string): Product | null => {
-    return productId ? products.find(product => product.id === productId) || null : null;
+export const getProductById = (productId?: string): Product | null => {
+    if (!productId) return null;
+
+    const products = getProducts();
+    return products.find((product) => product.id === productId) || null;
 };
 
-export const createProduct = (products: Product[], productInput: ProductInput, id: string): Product[] => {
-    return [
-        ...products,
-        {
-            id,
-            name: productInput.name,
-            type: productInput.type,
-            per_pallet: productInput.per_pallet,
-            img_url: productInput.img_url,
-            quality_standards_url: productInput.quality_standards_url
-        } as Product
-    ];
+export const createProduct = (productInput: ProductInput): Product[] => {
+    const products = getProducts();
+
+    const newProduct: Product = {
+        id: nanoid(),
+        name: productInput.name,
+        type: productInput.type,
+        per_pallet: productInput.per_pallet,
+        img_url: productInput.img_url,
+        quality_standards_url: productInput.quality_standards_url
+    };
+
+    const updatedProducts = [...products, newProduct];
+
+    localStorage.setItem("products", JSON.stringify(updatedProducts));
+    return updatedProducts;
 };
 
-export const updateProduct = (products: Product[], productInput: ProductInput): Product[] => {
-    return products.map((product: Product) => {
-        if (product.id === productInput.id) {
-            return {
-                id: product.id,
-                name: productInput.name,
-                type: productInput.type,
-                per_pallet: productInput.per_pallet,
-                img_url: productInput.img_url,
-                quality_standards_url: productInput.quality_standards_url
-            } as Product;
-        }
-        return product;
-    });
+export const updateProduct = (productInput: ProductInput): Product[] => {
+    const products = getProducts();
+
+    const updatedProducts = products.map((product) =>
+        product.id === productInput.id
+            ? {...product, ...productInput}
+            : product
+    );
+
+    localStorage.setItem("products", JSON.stringify(updatedProducts));
+    return updatedProducts;
 };
 
-export const deleteProduct = (products: Product[], productId: string): Product[] => {
-    return products.filter((product: Product) => product.id !== productId);
+export const deleteProduct = (productId: string): Product[] => {
+    const products = getProducts();
+
+    const updatedProducts = products.filter((product) => product.id !== productId);
+
+    localStorage.setItem("products", JSON.stringify(updatedProducts));
+    return updatedProducts;
 };

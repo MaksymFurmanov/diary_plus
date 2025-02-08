@@ -8,23 +8,34 @@ import SelectProductName from "./SelectProductName";
 import {FormEvent} from "react";
 import PalletColor from "../BasicComponents/PalletColor";
 import {OrderInput} from "../../types";
-import {createOrder, deleteOrder, updateOrder} from "../../utils/storage/orders";
+import {useDispatch} from "react-redux";
+import {addOrder, editOrder, removeOrder} from "../../features/ordersSlice";
+import {useNavigate} from "react-router-dom";
 
 const OrderForm = () => {
     const {order, setOrder}: OrderType = useOrderInput();
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             if (order.id) {
-                updateOrder(order);
+                dispatch(editOrder(order));
             } else {
-                createOrder(order);
+                dispatch(addOrder(order));
             }
         } catch (error) {
             console.error(error);
         }
+        navigate("/dashboard/orders");
+    }
+
+    const deleteHandler = () => {
+        if(!order.id) return;
+        dispatch(removeOrder(order.id))
     }
 
     const PalletColorElement = PalletColor<OrderInput>;
@@ -63,7 +74,7 @@ const OrderForm = () => {
                 />
             </div>
             <MutateButtons id={order.id}
-                           deleteHandler={deleteOrder}
+                           deleteHandler={deleteHandler}
             />
         </form>
     );

@@ -4,12 +4,15 @@ import PageTitle from "../components/BasicComponents/PageTitle";
 import MaterialForm from "../components/Materials/MaterialForm";
 import {useMaterialInput} from "../providers/MaterialInputProvider";
 import useExitAlert from "../hooks/useExitAlert";
-import {getMaterialById} from "../utils/storage/materials";
+import {useSelector} from "react-redux";
+import {selectMaterialById} from "../features/materialsSlice";
+import {RootState} from "../state";
 
 const MaterialPage = ({existing}: {
     existing: boolean
 }) => {
     const {materialId} = useParams();
+    const existingMaterial = useSelector((state: RootState) => selectMaterialById(state, materialId));
 
     const {material, setMaterial} = useMaterialInput();
 
@@ -18,7 +21,6 @@ const MaterialPage = ({existing}: {
     useEffect(() => {
         if (!existing) return;
 
-        const existingMaterial = getMaterialById(materialId);
         if(!existingMaterial)throw new Error("Material not found");
         
         setMaterial(prevState => ({

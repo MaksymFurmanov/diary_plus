@@ -1,19 +1,22 @@
 import {FaPen} from "react-icons/fa";
 import {BiSolidTrashAlt} from "react-icons/bi";
-import {deleteOrder, getOrders} from "../../utils/storage/orders";
-import {getProducts} from "../../utils/storage/products";
-import {getProductionProcesses} from "../../utils/storage/productionProcesses";
 import {Order, Product, ProductionProcess} from "../../types";
 import {useUser} from "../../providers/UserProvider";
 import {useNavigate} from "react-router-dom";
 import {isManager} from "../../utils/storage/departments";
+import {useDispatch, useSelector} from "react-redux";
+import {removeOrder, selectOrders} from "../../features/ordersSlice";
+import {selectProducts} from "../../features/productsSlice";
+import {selectProductionProcesses} from "../../features/productionProcessesSlice";
+import store from "../../state";
 
 const getStatus = (
     productionProcessId: string | null
 ): string => {
     if (!productionProcessId) return "Start of production";
 
-    const productionProcesses = getProductionProcesses();
+    const state = store.getState();
+    const productionProcesses = selectProductionProcesses(state);
 
     const productionProcess = productionProcesses
         ?.find((productionProcess: ProductionProcess) =>
@@ -28,12 +31,12 @@ const getStatus = (
 const OrderRows = () => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const manager = isManager(user.employee_id, ["0"]);
+    const manager = isManager(user.employee_id, ["2"]);
 
     const navigate = useNavigate();
 
-    const orders = getOrders();
-    const products = getProducts();
+    const orders = useSelector(selectOrders);
+    const products = useSelector(selectProducts);
 
     return (
         <>
@@ -76,9 +79,11 @@ const OrderRows = () => {
 }
 
 const DeleteButton = ({orderId}: { orderId: string }) => {
+    const dispatch = useDispatch();
+
     return (
         <button onClick={() => {
-            deleteOrder(orderId)
+            dispatch(removeOrder(orderId))
         }}>
             <BiSolidTrashAlt/>
         </button>

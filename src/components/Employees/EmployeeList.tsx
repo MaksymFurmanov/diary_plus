@@ -2,14 +2,15 @@ import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {useState} from "react";
 import EmployeeCard from "./EmployeeCard";
 import {Department} from "../../types";
-import {getEmployees} from "../../utils/storage/employees";
+import {useSelector} from "react-redux";
+import {selectEmployees} from "../../features/employeesSlice";
 
 const EmployeeList = ({department}: {
     department: Department
 }) => {
     const [showToggle, setShowToggle] = useState<boolean>(true);
 
-    const employees = getEmployees();
+    const employees = useSelector(selectEmployees);
 
     return (
         <div className={"EmployeeList"}>
@@ -31,8 +32,6 @@ const EmployeeList = ({department}: {
                         .map((employee, index) => (
                         <EmployeeCard key={index}
                                       employee={employee}
-                                      isManager={department.manager_id
-                                          === employee.id}
                         />
                     ))}
                 </div>

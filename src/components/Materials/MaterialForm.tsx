@@ -3,25 +3,36 @@ import PalletColor from "../BasicComponents/PalletColor";
 import MutateButtons from "../BasicComponents/MutateButtons";
 import {useMaterialInput} from "../../providers/MaterialInputProvider";
 import {FormEvent} from "react";
-import {createMaterial, deleteMaterial, updateMaterial} from "../../utils/storage/materials";
 import MaterialsAndSupplierInput from "./MaterialsAndSupplierInput";
 import {MaterialInput} from "../../types";
+import {useDispatch} from "react-redux";
+import {addMaterial, editMaterial, removeMaterial} from "../../features/materialsSlice";
+import {useNavigate} from "react-router-dom";
 
 const MaterialForm = () => {
     const {material, setMaterial} = useMaterialInput();
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             if (material.id) {
-                updateMaterial(material);
+                dispatch(editMaterial(material));
             } else {
-                createMaterial(material);
+                dispatch(addMaterial(material));
             }
         } catch (error) {
             console.error(error);
         }
+        navigate("/dashboard/materials")
+    }
+
+    const deleteHandler = () => {
+        if(!material.id) return;
+        dispatch(removeMaterial(material.id));
     }
 
     const PalletColorElement = PalletColor<MaterialInput>;
@@ -66,7 +77,7 @@ const MaterialForm = () => {
             </div>
 
             <MutateButtons id={material.id}
-                           deleteHandler={deleteMaterial}
+                           deleteHandler={deleteHandler}
             />
         </form>
     );

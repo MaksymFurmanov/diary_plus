@@ -1,13 +1,16 @@
 import PageTitle from "../components/BasicComponents/PageTitle";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {getProductById} from "../utils/storage/products";
 import ProductForm from "../components/Products/ProductForm";
 import useExitAlert from "../hooks/useExitAlert";
 import {useProductInput} from "../providers/ProductInputProvider";
+import {useSelector} from "react-redux";
+import {RootState} from "../state";
+import {selectProductById} from "../features/productsSlice";
 
 const ProductPage = ({existing}: { existing: boolean }) => {
     const {productId} = useParams();
+    const existingProduct = useSelector((state: RootState) => selectProductById(state, productId));
 
     const {product, setProduct} = useProductInput();
 
@@ -15,8 +18,7 @@ const ProductPage = ({existing}: { existing: boolean }) => {
 
     useEffect(() => {
         if (!existing) return;
-        
-        const existingProduct = getProductById(productId);
+
         if (!existingProduct) throw new Error("Product not found");
 
         setProduct(prevState => {

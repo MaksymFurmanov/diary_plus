@@ -1,21 +1,23 @@
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {useState} from "react";
 import {Order} from "../../types";
-import {getProductionProcessesByProduct} from "../../utils/storage/productionProcesses";
-import {getProductById} from "../../utils/storage/products";
 import ProcessesList from "./ProcessesList";
+import {selectProductionProcessesByProduct} from "../../features/productionProcessesSlice";
+import {useSelector} from "react-redux";
+import {RootState} from "../../state";
+import {selectProductById} from "../../features/productsSlice";
 
 const ProductionItem = ({order}: { order: Order }) => {
     const [showToggle, setShowToggle] = useState(true);
 
-    const product = getProductById(order.product_id);
+    const product = useSelector((state: RootState) => selectProductById(state, order.product_id));
     if (!product) {
         throw new Error(`Product of the order 
         ${order.customer + " " + order.volume} not found`);
     }
 
-    const production_processes =
-        getProductionProcessesByProduct(order.product_id);
+    const production_processes = useSelector((state: RootState) =>
+        selectProductionProcessesByProduct(state, order.product_id));
     if (!production_processes) {
         throw new Error(`Production of the order 
         ${order.customer + " " + product.name} not found`);
@@ -42,7 +44,7 @@ const ProductionItem = ({order}: { order: Order }) => {
                     <div className={"production-info"}>
                         <ProcessesList production_processes={production_processes}
                                        orderId={order.id}
-                                       current_id={order.production_process_id}
+                                       lastDoneId={order.production_process_id}
                         />
                     </div>
                 </div>

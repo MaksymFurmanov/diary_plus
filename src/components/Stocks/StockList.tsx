@@ -1,12 +1,13 @@
 import {RxCross2} from "react-icons/rx";
 import React, {Fragment} from "react";
 import {useUser} from "../../providers/UserProvider";
-import {updateEntryStock} from "../../utils/storage/enteryStockPlaces";
 import {DisplayPlaceData, getStockPlaceData} from "../../utils/getStockPlaceData";
 import {useSelectedStockPlaces} from "../../providers/SelectedStockPlacesProvider";
 import {isManager} from "../../utils/storage/departments";
 import {Material, Order} from "../../types";
-import {updateOutputStock} from "../../utils/storage/outputStockPlaces";
+import {useDispatch} from "react-redux";
+import {updateEntryStockPlaces} from "../../features/enteryStockPlacesSlice";
+import {updateOutputStockPlaces} from "../../features/outputStockPlacesSlice";
 
 const StockList = ({items, type}: {
     items: Material[] | Order[],
@@ -40,18 +41,22 @@ const Items = ({items, type}: {
 }) => {
     const {user} = useUser();
     if (!user) throw new Error("User not found");
-    const manager = isManager(user.employee_id, ["0"]);
+    const manager = isManager(user.employee_id, ["2"]);
 
-    const {places} = useSelectedStockPlaces();
+    const dispatch = useDispatch();
+
+    const {places, setPlaces} = useSelectedStockPlaces();
 
     const itemsData: DisplayPlaceData[] = getStockPlaceData(items, type);
 
     const submitHandler = (itemId: string) => {
         if (type === "entry") {
-            updateEntryStock(places, itemId);
+            dispatch(updateEntryStockPlaces({places, materialId: itemId}));
         } else {
-            updateOutputStock(places, itemId);
+            dispatch(updateOutputStockPlaces({places, orderId: itemId}));
         }
+
+        setPlaces([]);
     }
 
     return (
