@@ -15,7 +15,7 @@ const initialState: ProductInput = {
     type: "",
     per_pallet: 20,
     img_url: undefined,
-    imageDisplay: null,
+    imageDisplay: undefined,
     imageFile: null,
     quality_standards_url: undefined,
     standardsDisplay: null,

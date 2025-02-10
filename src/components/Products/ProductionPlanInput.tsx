@@ -55,7 +55,8 @@ const ProductionPlanInput = () => {
                 />
 
                 <AddProcessButton firstProcess={
-                    product.productionProcesses.length === 0}/>
+                    product.productionProcesses.length === 0}
+                />
             </div>
         </div>
     );

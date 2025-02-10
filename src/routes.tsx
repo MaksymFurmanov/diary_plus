@@ -87,7 +87,9 @@ const routes: Route[] = [
     },
     {
         path: "/products/new_product",
-        element: <ProductPage existing={false}/>
+        element: <ProductInputProvider>
+            <ProductPage existing={false}/>
+        </ProductInputProvider>
     },
     {
         path: "/products/:productId",

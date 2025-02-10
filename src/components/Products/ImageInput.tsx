@@ -1,6 +1,5 @@
 import {useProductInput} from "../../providers/ProductInputProvider";
 import {ChangeEvent} from "react";
-// @ts-ignore
 import ProductPlaceholder from "../../assets/images/product_placeholder.webp";
 
 const ImageInput = () => {
@@ -16,7 +15,7 @@ const ImageInput = () => {
             reader.onload = () => {
                 setProduct(prevState => ({
                     ...prevState,
-                    imageDisplay: reader.result,
+                    imageDisplay: reader.result as string,
                     imageFile: file
                 }));
             };
@@ -34,10 +33,7 @@ const ImageInput = () => {
                    onChange={imageInputHandler}
             />
             <label htmlFor={"img"}>
-                <img src={product.imageDisplay
-                    ? product.imageDisplay
-                    : ProductPlaceholder
-                }
+                <img src={product.imageDisplay || ProductPlaceholder}
                      alt={""}
                 />
             </label>

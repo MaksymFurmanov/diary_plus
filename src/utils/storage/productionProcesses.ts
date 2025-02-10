@@ -31,7 +31,6 @@ export const updateProcesses = (processes: ProductionProcess[], productId: strin
 
 export const deleteProcesses = (productId: string) => {
     const allProcesses = getProductionProcesses();
-    if (!getProductById(productId)) throw new Error("The product not Found");
 
     const updatedProcesses = allProcesses.filter(process => process.product_id !== productId);
     localStorage.setItem("productionProcesses", JSON.stringify(updatedProcesses));

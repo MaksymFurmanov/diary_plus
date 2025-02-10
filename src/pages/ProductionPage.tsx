@@ -1,4 +1,3 @@
-import {Fragment} from "react";
 import ProductionItem from "../components/Production/ProductionItem";
 import PageTitle from "../components/BasicComponents/PageTitle";
 import {useSelector} from "react-redux";

@@ -21,6 +21,12 @@ const ProductPage = ({existing}: { existing: boolean }) => {
 
         if (!existingProduct) throw new Error("Product not found");
 
+        try {
+
+        } catch (e) {
+            console.error(e);
+        }
+
         setProduct(prevState => {
             return {
                 ...prevState,

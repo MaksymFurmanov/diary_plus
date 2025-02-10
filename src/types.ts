@@ -77,7 +77,7 @@ export type ProductInput = {
     type: string,
     per_pallet: number,
     img_url?: string,
-    imageDisplay: string | ArrayBuffer | null,
+    imageDisplay?: string,
     imageFile: File | null,
     quality_standards_url?: string,
     standardsDisplay: string | null,

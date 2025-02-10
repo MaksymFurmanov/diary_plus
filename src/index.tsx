@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
-import {initLocalStorage} from "./utils/initLocalStorage";
+import {initLocalStorage} from "./utils/storage/initLocalStorage";
 import users from "./initialData/users";
 import products from "./initialData/products";
 import materials from "./initialData/materials";

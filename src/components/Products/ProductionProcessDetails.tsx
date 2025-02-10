@@ -59,7 +59,7 @@ const ProductionProcessDetails = ({
         <div className={"ProductionProcessDetails white-outline"}
              style={{
                  left: x - dimensions.width / 2 + "px",
-                 top: y - dimensions.height + "px"
+                 bottom: dimensions.height + "px"
              }}
              ref={containerRef}
         >
@@ -71,9 +71,11 @@ const ProductionProcessDetails = ({
                        onChange={inputHandler}
                 />
             </div>
+
             <DepartmentInput state={process}
                              setter={inputHandler}
             />
+
             <div>
                 <label htmlFor={"done_name"}>
                     Done label:

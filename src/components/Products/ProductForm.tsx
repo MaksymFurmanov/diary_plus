@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import {addProduct, editProduct, removeProduct} from "../../features/productsSlice";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../state";
+import uploadToStorage from "../../utils/uploadToStorage";
 
 const ProductForm = () => {
     const {product, setProduct} = useProductInput();
@@ -20,6 +21,24 @@ const ProductForm = () => {
         e.preventDefault();
 
         try {
+            if (product.imageFile) {
+                const url = await uploadToStorage(product.imageFile,
+                    `products/img`,
+                    product.img_url);
+
+                setProduct(prevState => {
+                    return {...prevState, img_url: url}
+                });
+            }
+            if (product.standardsFile) {
+                const url = await uploadToStorage(product.standardsFile,
+                    `products/quality_standards`,
+                    product.quality_standards_url);
+
+                setProduct(prevState => {
+                    return {...prevState, quality_standards_url: url}
+                });
+            }
             if (product.id) {
                 dispatch(editProduct(product));
             } else {

@@ -7,8 +7,7 @@ import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 import {Product} from "../../types";
 import {selectProducts} from "../../features/productsSlice";
 import {useSelector} from "react-redux";
-
-const Placeholder = "../../assets/product_placeholder.webp";
+import placeholder from "../../assets/images/product_placeholder.webp";
 
 const ProductsGallery = () => {
     const [cardsIndex, setCardsIndex] = useState(0);
@@ -66,7 +65,7 @@ const ProductCards = ({products}: {
             {products.map((product, index) => {
                 return (
                     <div key={index} className={"product-card"}>
-                        <img src={product.img_url || Placeholder} alt={""}/>
+                        <img src={product.img_url || placeholder} alt={""}/>
                         <p>Product: {product.name}</p>
                         <p>Type: {product.type}</p>
                         {manager && (

@@ -47,7 +47,7 @@ const LoginForm = ({setAuthError, setConnectionError}: LoginFormProps) => {
     return (
         <form onSubmit={submitHandler} className={"LogInPage"}>
             <div className="log-in-background v-center">
-                <h1>PRIHLÁSENIE</h1>
+                <h1>Log in</h1>
                 <div className={"white-outline login-inputs"}>
                     <div className={"login-input"}>
                         <label>Username</label>

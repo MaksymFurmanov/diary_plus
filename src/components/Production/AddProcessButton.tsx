@@ -8,6 +8,11 @@ const AddProcessButton = ({firstProcess}: {
 }) => {
     const [addProcessToggle, setAddProcessToggle] = useState(false);
 
+    const addHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setAddProcessToggle(!addProcessToggle);
+    }
+
     return (
         <>
             {addProcessToggle && (
@@ -16,9 +21,8 @@ const AddProcessButton = ({firstProcess}: {
                     <AddProcessInput/>
                 </>
             )}
-            <button onClick={() => {
-                setAddProcessToggle(!addProcessToggle)
-            }}>
+
+            <button onClick={(e) => addHandler(e)}>
                 <FaCirclePlus/>
             </button>
         </>

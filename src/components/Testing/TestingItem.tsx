@@ -1,6 +1,5 @@
 import {FaArrowRight} from "react-icons/fa6";
 //import {storage} from "../../firebase-config";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {MaterialsTest, ProductsTest} from "../../types";
 import getTestInfo from "../../utils/getTestInfo";
 import StatusInput from "./StatusInput";

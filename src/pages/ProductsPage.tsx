@@ -10,9 +10,10 @@ const ProductsPage = () => {
         <PageTitle name={"Produkty"}/>
         <div className={"ProductsPage"}>
             <ProductsGallery/>
-            
+
             <button className={"plus-button"}
-                    onClick={() => navigate("new_product")}>
+                    onClick={() => navigate("new_product")}
+            >
                 <BsPlusCircleFill/>
             </button>
         </div>

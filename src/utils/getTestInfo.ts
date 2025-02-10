@@ -16,7 +16,7 @@ const getTestInfo = (
         if(!material.arriving_date) throw new Error("Failed to find the arriving date");
 
         return {
-            date: material.arriving_date.toISOString(),
+            date: material.arriving_date.toString().slice(0, 10),
             name: material.name,
             details: material.supplier
         }
