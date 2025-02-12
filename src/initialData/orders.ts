@@ -28,7 +28,7 @@ const orders: Order[] = [
         customer: "Kaufland",
         volume: 200,
         deadline: new Date("2023-10-26"),
-        done_date: null,
+        done_date: new Date("2023-10-26"),
         pallet_color: "#9DB3FF",
     }
 ];

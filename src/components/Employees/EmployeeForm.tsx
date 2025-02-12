@@ -1,18 +1,21 @@
 import {useEmployeeInput} from "../../providers/EmployeeInputProvider";
 import {useNavigate} from "react-router-dom";
 import Input from "../BasicComponents/Input";
-import DepartmentInput from "../DepartmentInput";
 import PositionInput from "./PositionInput";
 import MutateButtons from "../BasicComponents/MutateButtons";
 import {ChangeEvent} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch} from "../../state";
-import {updateManager} from "../../features/departmentsSlice";
+import {selectDepartments, updateManager} from "../../features/departmentsSlice";
 import {addEmployee, editEmployee, removeEmployee} from "../../features/employeesSlice";
+import {Department} from "../../types";
 
 const EmployeeForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+
+    const departments = useSelector(selectDepartments);
+    if (!departments) throw new Error("Departments fetching failed");
 
     const {employee, setEmployee} = useEmployeeInput();
 
@@ -38,15 +41,6 @@ const EmployeeForm = () => {
         navigate("/admin");
     }
 
-    const departmentSetter = (e: ChangeEvent<HTMLSelectElement>) => {
-        setEmployee(prevState => {
-            return {
-                ...prevState,
-                department_id: e.target.value
-            }
-        })
-    }
-
     return (
         <form className={"EmployeeInfo"}
               onSubmit={submitHandler}
@@ -68,7 +62,28 @@ const EmployeeForm = () => {
                 Date of birth:
             </Input>
 
-            <DepartmentInput state={employee} setter={departmentSetter}/>
+            <Input type={"select"}
+                   name={"department_id"}
+                   value={employee.department_id}
+                   id={"department_id"}
+                   position={"close"}
+                   setter={setEmployee}
+                   state={employee}
+                   options={(
+                       <>
+                           {departments.map((department: Department,
+                                             index: number) => {
+                               return (
+                                   <option value={department.id} key={index}>
+                                       {department.name}
+                                   </option>
+                               )
+                           })}
+                       </>
+                   )}
+            >
+                Department:
+            </Input>
 
             <div className={"h-center"} style={{gap: "2em"}}
             >

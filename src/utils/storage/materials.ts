@@ -1,9 +1,10 @@
 import {Material, MaterialInput} from "../../types";
 import {nanoid} from "@reduxjs/toolkit";
+import materials from "../../initialData/materials";
 
 export const getMaterials = (): Material[] => {
     const materialsRaw = localStorage.getItem("materials");
-    return materialsRaw ? JSON.parse(materialsRaw) as Material[] : [];
+    return materialsRaw ? JSON.parse(materialsRaw) as Material[] : materials;
 };
 
 export const getMaterialById = (materialId?: string): Material | null => {

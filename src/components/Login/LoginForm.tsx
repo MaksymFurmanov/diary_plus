@@ -20,15 +20,6 @@ const LoginForm = ({setAuthError, setConnectionError}: LoginFormProps) => {
         try {
             const response = {ok: true};
             if (response.ok) {
-                const newUser: User = {
-                    employee_id: "10",
-                    login: login,
-                    password: password
-                };
-
-                setUser(newUser);
-                localStorage.setItem("user", JSON.stringify(newUser));
-
                 navigate("/navigation");
             } else {
                 setAuthError(true);

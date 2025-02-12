@@ -75,9 +75,11 @@ const ProductForm = () => {
                            setter={setProduct}
                            state={product}
                     >
-                        Typ:
+                        Type:
                     </Input>
+
                     <QualityStandardsInput/>
+
                     <Input type={"number"}
                            min={1}
                            size={2}
@@ -86,10 +88,11 @@ const ProductForm = () => {
                            setter={setProduct}
                            state={product}
                     >
-                        Počet na paletu:
+                        Amount on the pallet:
                     </Input>
                     <ProductionPlanInput/>
                 </div>
+
                 <MutateButtons id={product.id}
                                deleteHandler={deleteHandler}
                 />

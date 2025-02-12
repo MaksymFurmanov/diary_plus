@@ -1,8 +1,9 @@
 import {Department} from "../../types";
+import departments from "../../initialData/departments";
 
 export const getDepartments = (): Department[] => {
     const departmentsRaw = localStorage.getItem("departments");
-    return departmentsRaw ? JSON.parse(departmentsRaw) as Department[] : [];
+    return departmentsRaw ? JSON.parse(departmentsRaw) as Department[] : departments;
 };
 
 export const isManager = (userId?: string, departmentsIds?: string[]): boolean => {

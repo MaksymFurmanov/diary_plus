@@ -17,7 +17,7 @@ const AddProcessButton = ({firstProcess}: {
         <>
             {addProcessToggle && (
                 <>
-                    {firstProcess && <div><GoArrowRight/></div>}
+                    {!firstProcess && <div><GoArrowRight/></div>}
                     <AddProcessInput/>
                 </>
             )}

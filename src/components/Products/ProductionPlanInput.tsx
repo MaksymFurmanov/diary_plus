@@ -6,6 +6,7 @@ import AddProcessButton from "../Production/AddProcessButton";
 import {useSelector} from "react-redux";
 import {RootState} from "../../state";
 import {selectProductionProcessesByProduct} from "../../features/productionProcessesSlice";
+import {selectDepartments} from "../../features/departmentsSlice";
 
 export type DetailsBoxType = {
     process_queue: number,
@@ -17,6 +18,9 @@ const ProductionPlanInput = () => {
     const {product, setProduct} = useProductInput();
     const filteredProcesses = useSelector((state: RootState) =>
         selectProductionProcessesByProduct(state, product.id));
+
+    const departments = useSelector(selectDepartments);
+    if (!departments) throw new Error("Departments fetching failed");
 
     const [detailsBox, setDetailsBox] = useState<DetailsBoxType>({
         process_queue: -1,
@@ -33,10 +37,12 @@ const ProductionPlanInput = () => {
                 productionProcesses: filteredProcesses
             }
         });
-    }, [product.id, setProduct]);
+    }, [product.id]);
 
     const closeDetails = () => {
-        setDetailsBox({...detailsBox, toggle: false})
+        setDetailsBox((prevState) => {
+            return {...prevState, toggle: false}
+        });
     }
 
     return (
@@ -50,6 +56,7 @@ const ProductionPlanInput = () => {
                 <ProductionPlanItems setDetailsBox={setDetailsBox}/>
 
                 <ProductionProcessDetails
+                    departments={departments}
                     detailsBoxData={detailsBox}
                     closeHandler={closeDetails}
                 />

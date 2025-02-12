@@ -1,9 +1,10 @@
 import {ProductionProcess} from "../../types";
 import {getProductById} from "./products";
+import productionProcesses from "../../initialData/productionProcesses";
 
 export const getProductionProcesses = (): ProductionProcess[] => {
     const productionProcessesRaw = localStorage.getItem("productionProcesses");
-    return productionProcessesRaw ? JSON.parse(productionProcessesRaw) as ProductionProcess[] : [];
+    return productionProcessesRaw ? JSON.parse(productionProcessesRaw) as ProductionProcess[] : productionProcesses;
 };
 
 export const getProductionProcessesByProduct = (productId?: string): ProductionProcess[] => {

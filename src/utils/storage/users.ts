@@ -1,8 +1,9 @@
 import {User} from "../../types";
+import users from "../../initialData/users";
 
 export const getUsers = (): User[] => {
     const usersRaw = localStorage.getItem("users");
-    return usersRaw ? JSON.parse(usersRaw) as User[] : [];
+    return usersRaw ? JSON.parse(usersRaw) as User[] : users;
 }
 
 export const createUser = (user: User): User[] => {

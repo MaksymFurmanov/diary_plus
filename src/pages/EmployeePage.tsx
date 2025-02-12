@@ -8,12 +8,14 @@ import EmployeeForm from "../components/Employees/EmployeeForm";
 import {useSelector} from "react-redux";
 import {selectEmployeeById} from "../features/employeesSlice";
 import {RootState} from "../state";
+import {selectUserById} from "../features/usersSlice";
 
 const EmployeeInfo = ({existing}: {
     existing: boolean
 }) => {
     const {employeeId} = useParams();
     const existingEmployee = useSelector((state: RootState) => selectEmployeeById(state, employeeId));
+    const user = useSelector((state: RootState) => selectUserById(state, employeeId));
 
     const {employee, setEmployee} = useEmployeeInput();
 
@@ -23,15 +25,18 @@ const EmployeeInfo = ({existing}: {
         if (!existing) return;
 
         if (!existingEmployee) throw new Error("Employee not found");
+        if (!user) throw new Error("User not found");
 
         setEmployee((prevState) => ({
                 ...prevState,
                 ...existingEmployee,
-                manager: isManager(employeeId, [existingEmployee.department_id])
+                manager: isManager(employeeId, [existingEmployee.department_id]),
+                login: user.login,
+                password: user.password
             })
         );
 
-    }, [employeeId, existing, existingEmployee, setEmployee]);
+    }, [employeeId, existing, existingEmployee, setEmployee, user]);
 
     return <>
         <PageTitle name={existing ? "Employee" : "New employee"}

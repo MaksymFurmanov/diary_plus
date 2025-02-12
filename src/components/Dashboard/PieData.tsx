@@ -26,12 +26,15 @@ const PieData = ({type}: DashboardType) => {
                 slotProps={{
                     legend: {
                         direction: 'column',
-                        position: {vertical: 'bottom', horizontal: 'middle'},
+                        position: {
+                            vertical: 'bottom',
+                            horizontal: 'right'
+                        },
                         padding: 0,
                     },
                 }}
-                width={400}
-                height={200}
+                width={420}
+                height={250}
             />
         </div>
     );
@@ -40,10 +43,10 @@ const PieData = ({type}: DashboardType) => {
 const ordersData = (): ChartData[] => {
     const state = store.getState();
     const orders = selectOrders(state);
-    if(!orders) return [];
+    if (!orders) return [];
 
     const products = selectProducts(state);
-    if(!products) throw Error("No products found");
+    if (!products) throw Error("No products found");
 
     return orders.map((order: Order) => {
         const product = products.find(product =>
@@ -62,7 +65,7 @@ const ordersData = (): ChartData[] => {
 const materialsData = (): ChartData[] => {
     const state = store.getState();
     const materials = selectMaterials(state);
-    if(!materials) return [];
+    if (!materials) return [];
 
     return materials.map((material: Material) => {
         return {
@@ -72,4 +75,4 @@ const materialsData = (): ChartData[] => {
     });
 }
 
-export default PieData
+export default PieData;

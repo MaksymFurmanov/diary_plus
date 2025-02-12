@@ -23,6 +23,7 @@ const getTestInfo = (
     } else {
         const order = selectOrderById(state, (test as ProductsTest).order_id);
         if (!order) throw new Error("Failed to find the order for the test");
+        console.log("fsaadf", test, order)
         if(!order.done_date) throw new Error("Failed to find the done date");
 
         const product = selectProductById(state, order.product_id);

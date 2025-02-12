@@ -121,7 +121,7 @@ export type OutputStockPlace = {
 
 export type Test = {
     id: string,
-    accepted: boolean,
+    accepted: boolean | null,
     status: 0 | 1 | 2 | 3,
     document_url?: string
 }

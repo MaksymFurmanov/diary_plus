@@ -1,9 +1,10 @@
 import {EntryStockPlace} from "../../types";
 import {getMaterialById} from "./materials";
+import entryStockPlaces from "../../initialData/enteryStockPlaces";
 
 export const getEntryStockPlaces = (): EntryStockPlace[] => {
     const entryStockPlacesRaw = localStorage.getItem("entryStockPlaces");
-    return entryStockPlacesRaw ? JSON.parse(entryStockPlacesRaw) as EntryStockPlace[] : [];
+    return entryStockPlacesRaw ? JSON.parse(entryStockPlacesRaw) as EntryStockPlace[] : entryStockPlaces;
 };
 
 export const updateEntryStock = (places: string[], materialId: string): EntryStockPlace[] => {

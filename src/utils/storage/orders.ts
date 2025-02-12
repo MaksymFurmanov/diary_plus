@@ -1,10 +1,11 @@
 import {Order, OrderInput, ProductionProcess} from "../../types";
 import {nanoid} from "@reduxjs/toolkit";
 import {getProductionProcessesByProduct} from "./productionProcesses";
+import orders from "../../initialData/orders";
 
 export const getOrders = (): Order[] => {
     const ordersRaw = localStorage.getItem("orders");
-    return ordersRaw ? JSON.parse(ordersRaw) as Order[] : [];
+    return ordersRaw ? JSON.parse(ordersRaw) as Order[] : orders;
 };
 
 export const createOrder = (orderInput: OrderInput): Order[] => {

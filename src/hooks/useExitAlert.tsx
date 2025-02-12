@@ -8,11 +8,11 @@ const useExitAlert = (condition: boolean, exitRoute: string) => {
 
     const exitFunction = () => {
         if (condition) setExitAlert(true);
-        else navigate(`/${exitRoute}`);
+        else navigate(`/${exitRoute}`, { replace: true });
     }
 
     const ExitAlert = exitAlert ? (
-        <Alert yesRoute={exitRoute}
+        <Alert yesRoute={`/${exitRoute}`}
                onHide={() => setExitAlert(false)}
         >
             Exit without changes?

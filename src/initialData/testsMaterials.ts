@@ -11,14 +11,14 @@ const materialsTests: MaterialsTest[]  = [
     {
         id: "4820421",
         material_id: "1",
-        accepted: false,
+        accepted: null,
         status: 1,
         document_url: "4820421.pdf"
     },
     {
         id: "6839234",
         material_id: "2",
-        accepted: false,
+        accepted: null,
         status: 0,
         document_url: "6839234.pdf"
     }

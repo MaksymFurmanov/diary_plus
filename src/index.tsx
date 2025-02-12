@@ -17,6 +17,7 @@ import testsProducts from "./initialData/testsProducts";
 import employees from "./initialData/employees";
 import store from "./state";
 import {Provider} from 'react-redux';
+import {User} from "./types";
 
 initLocalStorage("users", users);
 initLocalStorage("departments", departments);
@@ -29,6 +30,12 @@ initLocalStorage("entryStockPlaces", entryStockPlaces);
 initLocalStorage("outputStockPlaces", outputStockPlaces);
 initLocalStorage("testsMaterials", testsMaterials);
 initLocalStorage("testsProducts", testsProducts);
+const user: User = {
+    employee_id: "10",
+    login: "",
+    password: ""
+};
+localStorage.setItem("user", JSON.stringify(user));
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

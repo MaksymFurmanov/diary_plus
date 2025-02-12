@@ -1,9 +1,10 @@
 import { MaterialsTest } from "../../types";
 import { nanoid } from "@reduxjs/toolkit";
+import materialsTests from "../../initialData/testsMaterials";
 
 export const getMaterialsTests = (): MaterialsTest[] => {
     const materialsTestsRaw = localStorage.getItem("materialsTests");
-    return materialsTestsRaw ? JSON.parse(materialsTestsRaw) as MaterialsTest[] : [];
+    return materialsTestsRaw ? JSON.parse(materialsTestsRaw) as MaterialsTest[] : materialsTests;
 };
 
 export const changeMaterialsTestResult = (testId: string, result: boolean): MaterialsTest[] => {

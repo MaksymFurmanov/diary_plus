@@ -16,6 +16,7 @@ const ProductionPlanProcess = ({process, setDetailsBox, index, last}: {
         setDetailsBox((prevState) => {
             return {
                 ...prevState,
+                toggle: true,
                 position: {x: e.pageX, y: e.pageY},
                 process_queue: queue
             }

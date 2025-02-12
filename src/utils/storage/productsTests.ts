@@ -1,9 +1,10 @@
 import {ProductsTest} from "../../types";
 import {nanoid} from "@reduxjs/toolkit";
+import products_tests from "../../initialData/testsProducts";
 
 export const getProductsTests = (): ProductsTest[] => {
     const productsTestsRaw = localStorage.getItem("productsTests");
-    return productsTestsRaw ? JSON.parse(productsTestsRaw) as ProductsTest[] : [];
+    return productsTestsRaw ? JSON.parse(productsTestsRaw) as ProductsTest[] : products_tests;
 };
 
 export const createProductsTest = (orderId: string): ProductsTest[] => {

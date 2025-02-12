@@ -31,7 +31,7 @@ const OrderPage = ({existing}: {
                 product_name: "",
                 customer: existingOrder.customer,
                 volume: existingOrder.volume,
-                deadline: existingOrder.deadline.toISOString().slice(0, 8),
+                deadline: existingOrder.deadline.toString().slice(0, 10),
                 pallet_color: existingOrder.pallet_color,
                 changed: false
             }
